@@ -3,14 +3,790 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/index.css">
-    <title>Document</title>
+    <title>Cebu Eastern College - Student Portal</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --primary-blue: #2a4b9b;
+            --primary-blue-dark: #1e3a7a;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+            --accent-red: #e74c3c;
+            --accent-green: #2ecc71;
+            --accent-orange: #f39c12;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-blue-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-blue);
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 4px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Abstract background shapes to mimic the image */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: -5%;
+            width: 60%;
+            height: 80%;
+            background: #e0f2fe;
+            border-radius: 20px;
+            transform: skewX(-15deg);
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 992px) {
+            .hero-content {
+                flex-direction: row;
+                align-items: center;
+            }
+            .hero-left {
+                flex: 1;
+            }
+            .hero-right {
+                flex: 1.2;
+            }
+        }
+
+        .hero-left h2 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .hero-left h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero-left p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 400px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Right Side - Mockup Dashboard */
+        .dashboard-mockup {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .dashboard-sidebar {
+            background-color: var(--primary-blue);
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 25px;
+        }
+
+        .dashboard-sidebar i {
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .dashboard-sidebar i:hover, .dashboard-sidebar i.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .dashboard-main {
+            flex: 1;
+            padding: 25px;
+            background-color: #fff;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header h3 {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .dashboard-header .profile-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-card p {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-card h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .stat-card span {
+            font-size: 0.65rem;
+            color: var(--text-light);
+        }
+
+        .schedule-section {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .schedule-header h4 {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .schedule-header a {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.75rem;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .schedule-item .color-bar {
+            width: 4px;
+            height: 25px;
+            border-radius: 2px;
+            margin-right: 10px;
+        }
+
+        .schedule-item .color-bar.green { background-color: var(--accent-green); }
+        .schedule-item .color-bar.red { background-color: var(--accent-red); }
+        .schedule-item .color-bar.orange { background-color: var(--accent-orange); }
+
+        .schedule-info {
+            flex: 1;
+        }
+
+        .schedule-info h5 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .schedule-info p {
+            font-size: 0.65rem;
+            color: var(--text-light);
+        }
+
+        .schedule-room {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 50px 0;
+            background-color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .feature-item {
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .feature-item p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 60px 0;
+            background-color: #eef2f9;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Abstract background pattern */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--primary-blue) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .cta-content p {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            font-size: 18px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .footer-logo p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .footer-col p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .contact-info i {
+            color: var(--primary-blue);
+            margin-top: 4px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .hero-left h1 {
+                font-size: 2.2rem;
+            }
+            .dashboard-mockup {
+                flex-direction: column;
+            }
+            .dashboard-sidebar {
+                flex-direction: row;
+                width: 100%;
+                height: 60px;
+                padding: 0 20px;
+                justify-content: space-around;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>asddsa</p>
-    <div class="container">
-        <p>asdsad</p>
-    </div>
-    <a href="./pages/login.html">Login</a>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <div class="logo-placeholder">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>CEBU EASTERN COLLEGE</h1>
+                    <p>Student Portal</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-left">
+                <h2>Welcome to</h2>
+                <h1>CEBU EASTERN<br>COLLEGE PORTAL</h1>
+                <p>To more simpler way and more connected school experience.</p>
+                <p style="font-size: 0.8rem; margin-top: -15px;">Access your academic information, class schedules, announcements, enrollment, grades, and other school services in one convenient portal.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">
+                        Log in to Portal <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </button>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+            </div>
+            
+            <div class="hero-right">
+                <div class="dashboard-mockup">
+                    <!-- Sidebar -->
+                    <div class="dashboard-sidebar">
+                        <i class="fa-solid fa-border-all active"></i>
+                        <i class="fa-regular fa-calendar"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-file-lines"></i>
+                        <i class="fa-solid fa-desktop"></i>
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <i class="fa-solid fa-rotate"></i>
+                    </div>
+                    
+                    <!-- Main Content -->
+                    <div class="dashboard-main">
+                        <div class="dashboard-header">
+                            <h3>WELCOME, STUDENTS!</h3>
+                            <div class="profile-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <p>My Classes</p>
+                                <h2>5</h2>
+                                <span>classes</span>
+                            </div>
+                            <div class="stat-card">
+                                <p>Current GPA</p>
+                                <h2>2.75</h2>
+                                <span>GPA</span>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-section">
+                            <div class="schedule-header">
+                                <h4>Upcoming Schedule</h4>
+                                <a href="#">View All</a>
+                            </div>
+                            
+                            <div class="schedule-item">
+                                <div class="color-bar green"></div>
+                                <div class="schedule-info">
+                                    <h5>Data Service</h5>
+                                    <p>9:00AM-10:00AM</p>
+                                </div>
+                                <div class="schedule-room">Room 204</div>
+                            </div>
+                            
+                            <div class="schedule-item">
+                                <div class="color-bar red"></div>
+                                <div class="schedule-info">
+                                    <h5>Web Development</h5>
+                                    <p>1:30PM-3:00PM</p>
+                                </div>
+                                <div class="schedule-room">Lab 3</div>
+                            </div>
+                            
+                            <div class="schedule-item">
+                                <div class="color-bar orange"></div>
+                                <div class="schedule-info">
+                                    <h5>Database Systems</h5>
+                                    <p>3:00PM-5:00PM</p>
+                                </div>
+                                <div class="schedule-room">Room 105</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container features-grid">
+            <div class="feature-item">
+                <i class="fa-solid fa-graduation-cap feature-icon"></i>
+                <h3>Quality Education</h3>
+                <p>Excellence in Teaching and learning</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-book-open feature-icon"></i>
+                <h3>Innovative Learning</h3>
+                <p>Creating minds through innovations</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-users feature-icon"></i>
+                <h3>Social Communication</h3>
+                <p>Building strong socials bond with others</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container cta-content">
+            <h2>READY TO ACCESS YOUR CEC PORTAL?</h2>
+            <p>Log in to manage your academic information, stay updated, and access school services anytime.</p>
+            <button class="btn btn-primary">
+                Log in to Portal <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-placeholder">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <h3>CEBU EASTERN COLLEGE</h3>
+                            <p>Student Portal</p>
+                        </div>
+                    </div>
+                    <p>Empowering students through technology. Building a future of excellence.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Contacts</a></li>
+                        <li><a href="#">Announcements</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>09111335874</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>cebueasterncollege1915@gmail.com</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Leon Kilat St., Cebu City, 6000</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy;2026 Cebu Eastern College | All Right Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
