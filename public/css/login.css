@@ -22,6 +22,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            /* background-image: url('../img/biuildingCEC.png');
+            background-size: cover; */
         }
 
         /* Header */
@@ -40,7 +42,6 @@
         .logo-placeholder {
             width: 45px;
             height: 45px;
-            background-color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -48,7 +49,12 @@
             color: var(--primary-blue);
             font-size: 22px;
         }
-
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
         .logo-text h1 {
             font-size: 1.1rem;
             font-weight: 700;
@@ -71,9 +77,10 @@
             position: relative;
             /* Simulating the faded building background */
             background: linear-gradient(rgba(230, 240, 255, 0.8), rgba(230, 240, 255, 0.8)), 
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23d0dce8" width="100" height="100"/><path d="M0 50h100M50 0v100" stroke="%23c0cedc" stroke-width="1"/></svg>');
-            background-size: cover;
-            background-position: center;
+                        url('../img/biuildingCEC.png');
+            background-position: left;
+            background-repeat: no-repeat;
+            background-size:contain;
         }
 
         /* Login Card */
@@ -118,8 +125,8 @@
         .input-wrapper {
             display: flex;
             align-items: center;
-            background-color: var(--input-bg);
-            border: 1px solid transparent;
+            /* background-color: var(--input-bg); */
+            border: 1px solid gray;
             border-radius: 6px;
             padding: 0 15px;
             transition: all 0.3s ease;
@@ -128,8 +135,8 @@
         /* Specific style for the active/focused email input shown in image */
         .input-wrapper.active {
             background-color: white;
-            border-color: #4a6cf7;
-            box-shadow: 0 0 0 1px #4a6cf7;
+            border-color: gray ;
+            /* box-shadow: 0 0 0 1px #4a6cf7; */
         }
 
         .input-wrapper i {
