@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements & Events - Cebu Eastern College</title>
+
+  <!-- Same libraries used by the existing Student Portal -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-blue: #073ca5;
+      --dark-blue: #063797;
+      --header-blue: #0b3da2;
+      --active-blue: #2864cf;
+      --page-bg: #f5f7fb;
+      --text: #18243a;
+      --muted: #8994a7;
+      --line: #e4e8ef;
+      --white: #fff;
+
+      --sidebar-width: 187px;
+      --topbar-height: 55px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--page-bg);
+    }
+
+    body {
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* =========================
+       PAGE LAYOUT
+    ========================== */
+    .portal {
+      min-height: 100vh;
+      display: flex;
+      background: var(--page-bg);
+    }
+
+    /* =========================
+       LEFT SIDEBAR
+       Uses the same general
+       structure/style as the
+       existing student portal.
+    ========================== */
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      background: #073ba1;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      height: 70px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .sidebar-logo {
+      width: 43px;
+      height: 43px;
+      flex: 0 0 43px;
+      background-image: url("../../img/cecLOGO.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .college-name {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .25px;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .college-subtitle {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .9px;
+      line-height: 1;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .portal-title {
+      color: rgba(255,255,255,.72);
+      font-size: 6px;
+      letter-spacing: 1.6px;
+      margin-top: 5px;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding-top: 24px;
+      flex: 1;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-item {
+      height: 38px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .nav-item.active {
+      background: #2865cf;
+      font-weight: 500;
+    }
+
+    .nav-item i {
+      width: 14px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* A subtle dragon-like watermark, matching the screenshot's
+       low-opacity decoration without adding another file. */
+    .sidebar-watermark {
+      position: absolute;
+      left: 14px;
+      bottom: 42px;
+      width: 150px;
+      height: 220px;
+      opacity: .11;
+      pointer-events: none;
+      transform: rotate(-8deg);
+    }
+
+    .sidebar-watermark::before,
+    .sidebar-watermark::after {
+      content: "";
+      position: absolute;
+      border: 20px solid rgba(255,255,255,.65);
+      border-radius: 55% 45% 60% 40%;
+    }
+
+    .sidebar-watermark::before {
+      width: 105px;
+      height: 160px;
+      left: 8px;
+      top: 35px;
+      transform: rotate(24deg);
+    }
+
+    .sidebar-watermark::after {
+      width: 70px;
+      height: 110px;
+      left: 52px;
+      top: 65px;
+      transform: rotate(-35deg);
+    }
+
+    /* =========================
+       MAIN AREA
+    ========================== */
+    .main-wrapper {
+      width: calc(100% - var(--sidebar-width));
+      min-height: 100vh;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      background: var(--page-bg);
+    }
+
+    /* =========================
+       TOP BAR
+    ========================== */
+    .top-bar {
+      height: var(--topbar-height);
+      flex: 0 0 var(--topbar-height);
+      background: #073ba1;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
+
+    .menu-toggle {
+      width: 35px;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .user-profile {
+      margin-left: auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 18px;
+    }
+
+    .user-avatar {
+      width: 29px;
+      height: 29px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      overflow: hidden;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .user-name {
+      font-size: 10px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .user-role {
+      font-size: 8px;
+      color: rgba(255,255,255,.62);
+      margin-top: 5px;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 34px;
+      background: rgba(255,255,255,.18);
+    }
+
+    .logout-btn {
+      height: 100%;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 10px;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,.07);
+    }
+
+    /* =========================
+       PAGE TITLE
+    ========================== */
+    .page-header {
+      height: 74px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 17px;
+      border-bottom: 1px solid #e6e9ef;
+    }
+
+    .header-icon {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      background: #2867d9;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+    }
+
+    .header-text h1 {
+      color: #0b3fa8;
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.4px;
+    }
+
+    .header-text p {
+      color: #8490a4;
+      font-size: 9px;
+      margin-top: 6px;
+    }
+
+    /* =========================
+       BLUE SEARCH BAR
+    ========================== */
+    .search-section {
+      height: 44px;
+      padding: 8px 6px;
+      background: #173f98;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box {
+      height: 25px;
+      flex: 1;
+      max-width: 540px;
+      background: #fff;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      padding: 0 9px;
+    }
+
+    .search-box i {
+      color: #7d8797;
+      font-size: 9px;
+      margin-right: 7px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      color: #344158;
+      font-size: 8px;
+      background: transparent;
+    }
+
+    .search-box input::placeholder {
+      color: #9ba4b1;
+    }
+
+    .category-button {
+      height: 25px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 4px;
+      color: #fff;
+      background: #2c60bd;
+      font-size: 8px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       CONTENT
+    ========================== */
+    .content {
+      flex: 1;
+      background: var(--page-bg);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 20px;
+      padding: 18px 17px 8px;
+    }
+
+    /* =========================
+       ANNOUNCEMENT FILTER TABS
+    ========================== */
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 3px 0 19px 5px;
+    }
+
+    .filter-tab {
+      height: 21px;
+      padding: 0 11px;
+      border: 0;
+      font-size: 8px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 0;
+    }
+
+    .filter-tab.all {
+      background: #183f97;
+    }
+
+    .filter-tab.important {
+      background: #d75c61;
+    }
+
+    .filter-tab.event {
+      background: #46b8b2;
+    }
+
+    .filter-tab.scholarship {
+      background: #d6a04b;
+    }
+
+    .filter-tab.general {
+      background: #cc9641;
+    }
+
+    .filter-tab.active {
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.18);
+    }
+
+    /* =========================
+       ANNOUNCEMENT CARDS
+    ========================== */
+    .announcement-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .announcement-card {
+      background: #fff;
+      border: 1px solid #edf0f4;
+      border-radius: 9px;
+      min-height: 100px;
+      padding: 11px 14px;
+      box-shadow: 0 2px 10px rgba(24, 43, 76, .08);
+    }
+
+    .announcement-card:hover {
+      box-shadow: 0 3px 12px rgba(24,43,76,.11);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badges {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 13px;
+      padding: 0 7px;
+      border-radius: 3px;
+      font-size: 6px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .tag-important {
+      color: #f05259;
+      background: #ffe1e2;
+    }
+
+    .tag-pinned {
+      color: #3274d5;
+      background: #eaf2ff;
+    }
+
+    .tag-event {
+      color: #149d82;
+      background: #d9f6ed;
+    }
+
+    .tag-scholarship {
+      color: #a97114;
+      background: #fff0c9;
+    }
+
+    .tag-general {
+      color: #a67720;
+      background: #f5e7d1;
+    }
+
+    .card-date {
+      color: #a1a9b7;
+      font-size: 7px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      margin-top: 7px;
+      color: #1b2638;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .card-body {
+      margin-top: 7px;
+      color: #8791a1;
+      font-size: 8px;
+      line-height: 1.45;
+    }
+
+    .card-footer {
+      margin-top: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .author {
+      color: #a0a9b6;
+      font-size: 7px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .read-more {
+      color: #064fc6;
+      font-size: 7px;
+      text-decoration: none;
+    }
+
+    .read-more:hover {
+      text-decoration: underline;
+    }
+
+    .no-results {
+      display: none;
+      text-align: center;
+      color: #8994a7;
+      background: #fff;
+      border-radius: 9px;
+      padding: 30px;
+      font-size: 10px;
+    }
+
+    /* =========================
+       UPCOMING EVENTS
+    ========================== */
+    .events-column {
+      min-width: 0;
+    }
+
+    .events-heading {
+      height: 25px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .events-heading h2 {
+      color: #0c3e9e;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .events-heading h2 i {
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .view-all {
+      color: #4267ac;
+      font-size: 7px;
+      text-decoration: none;
+      margin-top: 2px;
+    }
+
+    /* Calendar */
+    .calendar {
+      background: #1d4398;
+      border-radius: 8px;
+      padding: 10px 12px 9px;
+      color: #fff;
+      min-height: 183px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .calendar-month {
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .calendar-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .calendar-controls button {
+      color: #fff;
+      background: transparent;
+      border: 0;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .weekdays,
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+    }
+
+    .weekdays {
+      margin-bottom: 7px;
+    }
+
+    .weekdays span {
+      color: rgba(255,255,255,.76);
+      font-size: 6px;
+      font-weight: 500;
+    }
+
+    .calendar-days {
+      row-gap: 3px;
+    }
+
+    .calendar-day {
+      width: 20px;
+      height: 20px;
+      margin: auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.84);
+      font-size: 7px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .calendar-day:hover,
+    .calendar-day.selected {
+      background: #f5a623;
+      color: #fff;
+    }
+
+    .calendar-day.empty {
+      opacity: 0;
+      cursor: default;
+    }
+
+    /* Event cards */
+    .event-list {
+      margin-top: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .event-card {
+      min-height: 57px;
+      background: #fff;
+      border: 1px solid #e5e8ee;
+      border-radius: 9px;
+      box-shadow: 0 2px 8px rgba(24,43,76,.06);
+      padding: 9px;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .event-date {
+      width: 33px;
+      height: 39px;
+      border-radius: 7px;
+      color: #fff;
+      text-align: center;
+      flex: 0 0 33px;
+      padding-top: 4px;
+    }
+
+    .event-date strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .event-date span {
+      display: block;
+      font-size: 6px;
+      margin-top: 3px;
+    }
+
+    .date-blue { background: #294ba3; }
+    .date-green { background: #0db28d; }
+    .date-orange { background: #f2a313; }
+    .date-purple { background: #6861dc; }
+
+    .event-details {
+      padding-left: 8px;
+      padding-right: 58px;
+    }
+
+    .event-title {
+      color: #172235;
+      font-size: 8px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 1px 0 5px;
+    }
+
+    .event-meta {
+      color: #8d97a7;
+      font-size: 6.5px;
+      line-height: 1.4;
+    }
+
+    .event-meta i {
+      width: 9px;
+      text-align: center;
+      margin-right: 2px;
+    }
+
+    .event-tag {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 5.5px;
+      font-weight: 500;
+    }
+
+    .tag-academic {
+      color: #e5575d;
+      background: #ffe0e1;
+    }
+
+    .tag-event {
+      color: #15966f;
+      background: #ddf7ed;
+    }
+
+    .tag-holiday {
+      color: #bd8114;
+      background: #fff0c7;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+    .footer {
+      height: 30px;
+      flex: 0 0 30px;
+      background: #073da7;
+      color: rgba(255,255,255,.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 25px;
+      font-size: 7px;
+    }
+
+    /* =========================
+       SIMPLE MODAL
+    ========================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,20,55,.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(560px, 100%);
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      background: #073da7;
+      color: #fff;
+      padding: 14px 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-head h3 {
+      font-size: 13px;
+    }
+
+    .modal-close {
+      background: transparent;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 18px;
+      color: #667287;
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+    @media (max-width: 1050px) {
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr) 360px;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-wrapper {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .events-column {
+        max-width: 600px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page-header {
+        padding-left: 12px;
+      }
+
+      .header-text h1 {
+        font-size: 18px;
+      }
+
+      .content-grid {
+        padding: 12px;
+      }
+
+      .filter-tabs {
+        flex-wrap: wrap;
+      }
+
+      .user-details,
+      .header-divider {
+        display: none;
+      }
+
+      .footer {
+        gap: 10px;
+        padding: 7px;
+        height: auto;
+        min-height: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="portal">
+
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"></div>
+        <div>
+          <div class="college-name">Cebu Eastern</div>
+          <div class="college-subtitle">College</div>
+          <div class="portal-title">STUDENT PORTAL</div>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <i class="fa-solid fa-border-all"></i>
+          <span>Dashboard</span>
+        </li>
+
+        <li class="nav-item active">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span>Announcements &amp; Events</span>
+        </li>
+
+        <li class="nav-item">
+          <i class="fa-regular fa-calendar-days"></i>
+          <span>Class Schedule</span>
+        </li>
+
+        <li class="nav-item">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Grades &amp; Records</span>
+        </li>
+
+        <li class="nav-item">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <span>Tuition &amp; Assessment</span>
+        </li>
+
+        <li class="nav-item">
+          <i class="fa-regular fa-user"></i>
+          <span>My Profile</span>
+        </li>
+
+        <li class="nav-item">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-watermark"></div>
+    </aside>
+
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+    <main class="main-wrapper">
+
+      <!-- Top bar -->
+      <header class="top-bar">
+        <div class="menu-toggle" id="menuToggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-info">
+            <div class="user-avatar">
+              <i class="fa-regular fa-circle-user"></i>
+            </div>
+
+            <div class="user-details">
+              <div class="user-name">Gemar Enopia</div>
+              <div class="user-role">Student</div>
+            </div>
+          </div>
+
+          <div class="header-divider"></div>
+
+          <a href="#" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Page heading -->
+      <section class="page-header">
+        <div class="header-icon">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+
+        <div class="header-text">
+          <h1>View ALL Announcements</h1>
+          <p>Browse all announcements, events and important updates</p>
+        </div>
+      </section>
+
+      <!-- Blue search bar -->
+      <section class="search-section">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search announcements........."
+            autocomplete="off"
+          >
+        </div>
+
+        <button class="category-button" type="button">
+          All Categories
+        </button>
+      </section>
+
+      <!-- Main columns -->
+      <section class="content">
+        <div class="content-grid">
+
+          <!-- Announcements -->
+          <section class="announcements-column">
+
+            <div class="filter-tabs">
+              <button class="filter-tab all active" data-filter="all">ALL</button>
+              <button class="filter-tab important" data-filter="important">Important</button>
+              <button class="filter-tab event" data-filter="event">Event</button>
+              <button class="filter-tab scholarship" data-filter="scholarship">Scholarship</button>
+              <button class="filter-tab general" data-filter="general">General</button>
+            </div>
+
+            <div class="announcement-list" id="announcementList">
+
+              <!-- Announcement 1 -->
+              <article class="announcement-card" data-category="important">
+                <div class="card-top">
+                  <div class="badges">
+                    <span class="tag tag-important">IMPORTANT</span>
+                    <span class="tag tag-pinned">
+                      <i class="fa-solid fa-thumbtack"></i>&nbsp; Pinned
+                    </span>
+                  </div>
+
+                  <span class="card-date">September 1, 2026</span>
+                </div>
+
+                <div class="card-title">
+                  Class Suspension - Tropical Cyclone Warning
+                </div>
+
+                <div class="card-body">
+                  All in-person classes are suspended for Sept 2 due to the current weather advisory. Asynchronous module will be posted on each course page.
+                </div>
+
+                <div class="card-footer">
+                  <span class="author">
+                    <i class="fa-regular fa-user"></i>
+                    Atalaya Publication
+                  </span>
+
+                  <a href="#" class="read-more"
+                     data-title="Class Suspension - Tropical Cyclone Warning"
+                     data-date="September 1, 2026"
+                     data-author="Atalaya Publication"
+                     data-content="All in-person classes are suspended for Sept 2 due to the current weather advisory. Asynchronous modules and course updates will be posted on each respective course page.">
+                    Read more
+                  </a>
+                </div>
+              </article>
+
+              <!-- Announcement 2 -->
+              <article class="announcement-card" data-category="event">
+                <div class="card-top">
+                  <div class="badges">
+                    <span class="tag tag-event">Event</span>
+                  </div>
+
+                  <span class="card-date">January 18, 2026</span>
+                </div>
+
+                <div class="card-title">
+                  Dragon Week Opening Ceremony
+                </div>
+
+                <div class="card-body">
+                  Join the CEC community for the opening program of Dragon Week, featuring the traditional lion dance and college band performance.
+                </div>
+
+                <div class="card-footer">
+                  <span class="author">
+                    <i class="fa-regular fa-user"></i>
+                    Student Affairs Office
+                  </span>
+
+                  <a href="#" class="read-more"
+                     data-title="Dragon Week Opening Ceremony"
+                     data-date="January 18, 2026"
+                     data-author="Student Affairs Office"
+                     data-content="Join the CEC community for the opening program of Dragon Week, featuring the traditional lion dance and college band performance.">
+                    Read more
+                  </a>
+                </div>
+              </article>
+
+              <!-- Announcement 3 -->
+              <article class="announcement-card" data-category="scholarship">
+                <div class="card-top">
+                  <div class="badges">
+                    <span class="tag tag-scholarship">Scholarship</span>
+                  </div>
+
+                  <span class="card-date">October 20, 2026</span>
+                </div>
+
+                <div class="card-title">
+                  CHED Scholarship Applications for 2nd Semester Now Accepting
+                </div>
+
+                <div class="card-body">
+                  Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026. Requirements include certificate of enrollment, grades, and financial documents.
+                </div>
+
+                <div class="card-footer">
+                  <span class="author">
+                    <i class="fa-regular fa-user"></i>
+                    Scholarship Office
+                  </span>
+
+                  <a href="#" class="read-more"
+                     data-title="CHED Scholarship Applications for 2nd Semester Now Accepting"
+                     data-date="October 20, 2026"
+                     data-author="Scholarship Office"
+                     data-content="Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.">
+                    Read more
+                  </a>
+                </div>
+              </article>
+
+              <!-- Announcement 4 -->
+              <article class="announcement-card" data-category="general">
+                <div class="card-top">
+                  <div class="badges">
+                    <span class="tag tag-general">General</span>
+                  </div>
+
+                  <span class="card-date">October 15, 2026</span>
+                </div>
+
+                <div class="card-title">
+                  Library Hours Extended During Examination Period
+                </div>
+
+                <div class="card-body">
+                  The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday, from October 10 to 20, 2026.
+                </div>
+
+                <div class="card-footer">
+                  <span class="author">
+                    <i class="fa-regular fa-user"></i>
+                    Library Services
+                  </span>
+
+                  <a href="#" class="read-more"
+                     data-title="Library Hours Extended During Examination Period"
+                     data-date="October 15, 2026"
+                     data-author="Library Services"
+                     data-content="The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday, from October 10 to 20, 2026.">
+                    Read more
+                  </a>
+                </div>
+              </article>
+
+            </div>
+
+            <div class="no-results" id="noResults">
+              No announcements found.
+            </div>
+          </section>
+
+          <!-- Upcoming Events -->
+          <aside class="events-column">
+
+            <div class="events-heading">
+              <h2>
+                <i class="fa-regular fa-calendar-days"></i>
+                Upcoming Events
+              </h2>
+
+              <a href="#" class="view-all">View All</a>
+            </div>
+
+            <!-- Calendar -->
+            <div class="calendar">
+              <div class="calendar-header">
+                <span class="calendar-month" id="calendarMonth">
+                  October 2026
+                </span>
+
+                <div class="calendar-controls">
+                  <button id="prevMonth" aria-label="Previous month">‹</button>
+                  <button id="nextMonth" aria-label="Next month">›</button>
+                </div>
+              </div>
+
+              <div class="weekdays">
+                <span>SUN</span>
+                <span>MON</span>
+                <span>TUE</span>
+                <span>WED</span>
+                <span>THU</span>
+                <span>FRI</span>
+                <span>SAT</span>
+              </div>
+
+              <div class="calendar-days" id="calendarDays"></div>
+            </div>
+
+            <!-- Event cards -->
+            <div class="event-list">
+
+              <article class="event-card">
+                <div class="event-date date-blue">
+                  <strong>16</strong>
+                  <span>OCT</span>
+                </div>
+
+                <div class="event-details">
+                  <div class="event-title">Final Examinations Begin</div>
+                  <div class="event-meta">
+                    <i class="fa-regular fa-clock"></i>
+                    8:00 AM - 9:00 PM
+                  </div>
+                  <div class="event-meta">
+                    <i class="fa-solid fa-location-dot"></i>
+                    All Campus Buildings
+                  </div>
+                </div>
+
+                <span class="event-tag tag-academic">Academic</span>
+              </article>
+
+              <article class="event-card">
+                <div class="event-date date-green">
+                  <strong>11</strong>
+                  <span>SEP</span>
+                </div>
+
+                <div class="event-details">
+                  <div class="event-title">Intramurals Sports Festival Opening</div>
+                  <div class="event-meta">
+                    <i class="fa-regular fa-clock"></i>
+                    9:00 AM - 12:00 PM
+                  </div>
+                  <div class="event-meta">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Gymnasium
+                  </div>
+                </div>
+
+                <span class="event-tag tag-event">Event</span>
+              </article>
+
+              <article class="event-card">
+                <div class="event-date date-orange">
+                  <strong>22</strong>
+                  <span>DEC</span>
+                </div>
+
+                <div class="event-details">
+                  <div class="event-title">Christmas Celebration</div>
+                  <div class="event-meta">
+                    <i class="fa-regular fa-clock"></i>
+                    2:00 PM - 6:00 PM
+                  </div>
+                  <div class="event-meta">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Open Court
+                  </div>
+                </div>
+
+                <span class="event-tag tag-holiday">Holiday</span>
+              </article>
+
+              <article class="event-card">
+                <div class="event-date date-purple">
+                  <strong>10</strong>
+                  <span>JAN</span>
+                </div>
+
+                <div class="event-details">
+                  <div class="event-title">Start of 2nd Semester Classes</div>
+                  <div class="event-meta">
+                    <i class="fa-regular fa-clock"></i>
+                    All Day
+                  </div>
+                  <div class="event-meta">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Main Campus
+                  </div>
+                </div>
+
+                <span class="event-tag tag-academic">Academic</span>
+              </article>
+
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>&copy; 2026 Cebu Eastern College. All rights reserved.</span>
+        <span>Student Portal v1.0</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Read-more modal: frontend only -->
+  <div class="modal-overlay" id="announcementModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="modalTitle">Announcement</h3>
+        <button class="modal-close" id="modalClose">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p id="modalMeta"></p>
+        <br>
+        <p id="modalContent"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================
+       LOCAL FRONTEND INTERACTIONS ONLY
+       No backend/database connection.
+    ========================================== */
+
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    /* Search */
+    const searchInput = document.getElementById('searchInput');
+    const announcementCards = [
+      ...document.querySelectorAll('.announcement-card')
+    ];
+    const noResults = document.getElementById('noResults');
+
+    let activeCategory = 'all';
+
+    function updateAnnouncements() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+
+      announcementCards.forEach(card => {
+        const category = card.dataset.category;
+        const text = card.innerText.toLowerCase();
+
+        const categoryMatches =
+          activeCategory === 'all' || category === activeCategory;
+
+        const searchMatches =
+          query === '' || text.includes(query);
+
+        const show = categoryMatches && searchMatches;
+
+        card.style.display = show ? '' : 'none';
+
+        if (show) visible++;
+      });
+
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', updateAnnouncements);
+
+    /* Category tabs */
+    document.querySelectorAll('.filter-tab').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+
+        button.classList.add('active');
+        activeCategory = button.dataset.filter;
+        updateAnnouncements();
+      });
+    });
+
+    /* Read-more modal */
+    const modal = document.getElementById('announcementModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalContent = document.getElementById('modalContent');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.read-more').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+
+        modalTitle.textContent = link.dataset.title;
+        modalMeta.textContent =
+          link.dataset.date + ' • ' + link.dataset.author;
+        modalContent.textContent = link.dataset.content;
+
+        modal.classList.add('show');
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('show');
+    }
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    /* Calendar */
+    const calendarMonth = document.getElementById('calendarMonth');
+    const calendarDays = document.getElementById('calendarDays');
+    const prevMonth = document.getElementById('prevMonth');
+    const nextMonth = document.getElementById('nextMonth');
+
+    let currentDate = new Date(2026, 9, 1);
+
+    function renderCalendar() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+
+      calendarMonth.textContent = new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        year: 'numeric'
+      }).format(currentDate);
+
+      calendarDays.innerHTML = '';
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth =
+        new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('span');
+        empty.className = 'calendar-day empty';
+        calendarDays.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const button = document.createElement('button');
+        button.className = 'calendar-day';
+        button.textContent = day;
+
+        /* Matches the screenshot's highlighted October 16. */
+        if (year === 2026 && month === 9 && day === 16) {
+          button.classList.add('selected');
+        }
+
+        button.addEventListener('click', () => {
+          document
+            .querySelectorAll('.calendar-day.selected')
+            .forEach(item => item.classList.remove('selected'));
+
+          button.classList.add('selected');
+        });
+
+        calendarDays.appendChild(button);
+      }
+    }
+
+    prevMonth.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+    });
+
+    nextMonth.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    renderCalendar();
+  </script>
+</body>
+</html>
