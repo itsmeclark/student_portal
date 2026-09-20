@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements & Events - Cebu Eastern College</title>
 
-  <!-- Same libraries used by the existing Student Portal -->
+  <!-- Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -13,16 +13,17 @@
     :root {
       --primary-blue: #073ca5;
       --dark-blue: #063797;
-      --header-blue: #0b3da2;
-      --active-blue: #2864cf;
-      --page-bg: #f5f7fb;
+      --header-blue: #07348f;
+      --active-blue: #0843a9;
+      --page-bg: #f3f6fa;
       --text: #18243a;
       --muted: #8994a7;
       --line: #e4e8ef;
       --white: #fff;
 
-      --sidebar-width: 187px;
-      --topbar-height: 55px;
+      /* CHANGED TO MATCH YOUR REFERENCE */
+      --sidebar-width: 247px;
+      --topbar-height: 70px;
     }
 
     * {
@@ -46,6 +47,7 @@
     /* =========================
        PAGE LAYOUT
     ========================== */
+
     .portal {
       min-height: 100vh;
       display: flex;
@@ -54,10 +56,8 @@
 
     /* =========================
        LEFT SIDEBAR
-       Uses the same general
-       structure/style as the
-       existing student portal.
     ========================== */
+
     .sidebar {
       width: var(--sidebar-width);
       height: 100vh;
@@ -65,76 +65,101 @@
       top: 0;
       left: 0;
       z-index: 20;
-      background: #073ba1;
+      background: #07348f;
       color: #fff;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
+    /* =========================
+       SIDEBAR HEADER
+    ========================== */
+
     .sidebar-header {
-      height: 70px;
-      padding: 8px 10px;
+      height: 76px;
+      padding: 0 13px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       border-bottom: 1px solid rgba(255,255,255,.12);
+      flex-shrink: 0;
     }
+
+    /* CEC LOGO */
 
     .sidebar-logo {
       width: 43px;
       height: 43px;
-      flex: 0 0 43px;
-      background-image: url("../../img/cecLOGO.png");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      min-width: 43px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
+
+    .sidebar-logo::after {
+      content: "CEC";
+      color: #17449b;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* COLLEGE NAME */
 
     .college-name {
       color: #fff;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: .25px;
-      line-height: 1.05;
+      letter-spacing: 0;
+      line-height: 1.1;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .college-subtitle {
-      color: #fff;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .9px;
-      line-height: 1;
-      margin-top: 3px;
-      text-transform: uppercase;
-    }
+    /* STUDENT PORTAL */
 
     .portal-title {
-      color: rgba(255,255,255,.72);
-      font-size: 6px;
-      letter-spacing: 1.6px;
+      color: rgba(255,255,255,.82);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .7px;
+      line-height: 1;
       margin-top: 5px;
+      text-transform: uppercase;
     }
+
+    /* OLD COLLEGE LINE IS NOT NEEDED */
+
+    .college-subtitle {
+      display: none;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================== */
 
     .nav-menu {
       list-style: none;
-      padding-top: 24px;
+      padding-top: 20px;
+      margin: 0;
       flex: 1;
       position: relative;
       z-index: 2;
     }
 
     .nav-item {
-      height: 38px;
-      padding: 0 20px;
+      height: 43px;
+      padding: 0 19px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
       color: #fff;
       text-decoration: none;
-      font-size: 10px;
-      font-weight: 400;
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
       transition: background .2s ease;
     }
@@ -144,56 +169,63 @@
     }
 
     .nav-item.active {
-      background: #2865cf;
-      font-weight: 500;
+      background: #0843a9;
+      font-weight: 600;
     }
+
+    /* SIDEBAR ICONS */
 
     .nav-item i {
-      width: 14px;
+      width: 17px;
+      min-width: 17px;
       text-align: center;
-      font-size: 13px;
+      color: #fff;
+      font-size: 16px;
+      line-height: 1;
     }
 
-    /* A subtle dragon-like watermark, matching the screenshot's
-       low-opacity decoration without adding another file. */
+    /* =========================
+       SIDEBAR BOTTOM DESIGN
+    ========================== */
+
     .sidebar-watermark {
       position: absolute;
-      left: 14px;
-      bottom: 42px;
-      width: 150px;
-      height: 220px;
-      opacity: .11;
+      left: 27px;
+      bottom: 24px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(0, 38, 128, .45);
       pointer-events: none;
-      transform: rotate(-8deg);
-    }
-
-    .sidebar-watermark::before,
-    .sidebar-watermark::after {
-      content: "";
-      position: absolute;
-      border: 20px solid rgba(255,255,255,.65);
-      border-radius: 55% 45% 60% 40%;
+      z-index: 1;
     }
 
     .sidebar-watermark::before {
-      width: 105px;
-      height: 160px;
-      left: 8px;
-      top: 35px;
-      transform: rotate(24deg);
+      content: "";
+      position: absolute;
+      width: 145px;
+      height: 145px;
+      left: 22px;
+      top: 22px;
+      border-radius: 50%;
+      background: rgba(8, 54, 150, .65);
     }
 
     .sidebar-watermark::after {
-      width: 70px;
-      height: 110px;
-      left: 52px;
-      top: 65px;
-      transform: rotate(-35deg);
+      content: "";
+      position: absolute;
+      width: 92px;
+      height: 92px;
+      left: 49px;
+      top: 49px;
+      border-radius: 50%;
+      background: rgba(7, 55, 151, .9);
     }
 
     /* =========================
        MAIN AREA
     ========================== */
+
     .main-wrapper {
       width: calc(100% - var(--sidebar-width));
       min-height: 100vh;
@@ -206,21 +238,22 @@
     /* =========================
        TOP BAR
     ========================== */
+
     .top-bar {
       height: var(--topbar-height);
       flex: 0 0 var(--topbar-height);
-      background: #073ba1;
+      background: #07348f;
       color: #fff;
       display: flex;
       align-items: center;
-      padding: 0 16px;
+      padding: 0 22px;
       border-bottom: 1px solid rgba(255,255,255,.14);
     }
 
     .menu-toggle {
-      width: 35px;
+      width: 40px;
       color: #fff;
-      font-size: 20px;
+      font-size: 21px;
       cursor: pointer;
       line-height: 1;
     }
@@ -236,19 +269,19 @@
       height: 100%;
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       padding: 0 18px;
     }
 
     .user-avatar {
-      width: 29px;
-      height: 29px;
-      border: 2px solid #fff;
+      width: 36px;
+      height: 36px;
+      border: 3px solid #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 27px;
       overflow: hidden;
     }
 
@@ -259,32 +292,32 @@
     }
 
     .user-name {
-      font-size: 10px;
+      font-size: 13px;
       font-weight: 500;
       color: #fff;
     }
 
     .user-role {
-      font-size: 8px;
-      color: rgba(255,255,255,.62);
+      font-size: 10px;
+      color: rgba(255,255,255,.7);
       margin-top: 5px;
     }
 
     .header-divider {
       width: 1px;
-      height: 34px;
-      background: rgba(255,255,255,.18);
+      height: 36px;
+      background: rgba(255,255,255,.25);
     }
 
     .logout-btn {
       height: 100%;
-      padding: 0 18px;
+      padding: 0 20px;
       display: flex;
       align-items: center;
       gap: 9px;
       color: #fff;
       text-decoration: none;
-      font-size: 10px;
+      font-size: 13px;
     }
 
     .logout-btn:hover {
@@ -294,70 +327,72 @@
     /* =========================
        PAGE TITLE
     ========================== */
+
     .page-header {
-      height: 74px;
+      min-height: 94px;
       background: #fff;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 17px;
-      border-bottom: 1px solid #e6e9ef;
+      gap: 17px;
+      padding: 15px 38px;
+      border-bottom: 1px solid #e1e6ee;
     }
 
     .header-icon {
-      width: 44px;
-      height: 44px;
-      flex: 0 0 44px;
-      background: #2867d9;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      background: #073ca5;
       color: #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
+      font-size: 20px;
     }
 
     .header-text h1 {
-      color: #0b3fa8;
-      font-size: 23px;
+      color: #111d31;
+      font-size: 22px;
       font-weight: 700;
       line-height: 1.1;
-      letter-spacing: -.4px;
+      letter-spacing: -.3px;
     }
 
     .header-text p {
-      color: #8490a4;
-      font-size: 9px;
+      color: #8792a4;
+      font-size: 11px;
       margin-top: 6px;
     }
 
     /* =========================
-       BLUE SEARCH BAR
+       SEARCH SECTION
     ========================== */
+
     .search-section {
-      height: 44px;
-      padding: 8px 6px;
-      background: #173f98;
+      min-height: 72px;
+      padding: 15px 38px;
+      background: #f0f4f9;
       display: flex;
       align-items: center;
-      gap: 10px;
     }
 
     .search-box {
-      height: 25px;
-      flex: 1;
-      max-width: 540px;
+      height: 45px;
+      width: 100%;
+      max-width: none;
       background: #fff;
-      border-radius: 5px;
+      border: 1px solid #ccd6e3;
+      border-radius: 6px;
       display: flex;
       align-items: center;
-      padding: 0 9px;
+      padding: 0 14px;
     }
 
     .search-box i {
-      color: #7d8797;
-      font-size: 9px;
-      margin-right: 7px;
+      color: #8491a4;
+      font-size: 15px;
+      margin-right: 12px;
     }
 
     .search-box input {
@@ -366,7 +401,7 @@
       border: 0;
       outline: 0;
       color: #344158;
-      font-size: 8px;
+      font-size: 12px;
       background: transparent;
     }
 
@@ -375,19 +410,13 @@
     }
 
     .category-button {
-      height: 25px;
-      padding: 0 13px;
-      border: 0;
-      border-radius: 4px;
-      color: #fff;
-      background: #2c60bd;
-      font-size: 8px;
-      cursor: pointer;
+      display: none;
     }
 
     /* =========================
        CONTENT
     ========================== */
+
     .content {
       flex: 1;
       background: var(--page-bg);
@@ -395,33 +424,35 @@
 
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 430px;
-      gap: 20px;
-      padding: 18px 17px 8px;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      padding: 20px 38px 15px;
     }
 
     /* =========================
-       ANNOUNCEMENT FILTER TABS
+       FILTER TABS
     ========================== */
+
     .filter-tabs {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin: 3px 0 19px 5px;
+      margin: 0 0 18px 0;
     }
 
     .filter-tab {
-      height: 21px;
-      padding: 0 11px;
+      height: 28px;
+      padding: 0 13px;
       border: 0;
-      font-size: 8px;
+      font-size: 9px;
       color: #fff;
       cursor: pointer;
-      border-radius: 0;
+      border-radius: 4px;
+      font-weight: 500;
     }
 
     .filter-tab.all {
-      background: #183f97;
+      background: #173f97;
     }
 
     .filter-tab.important {
@@ -447,23 +478,24 @@
     /* =========================
        ANNOUNCEMENT CARDS
     ========================== */
+
     .announcement-list {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 14px;
     }
 
     .announcement-card {
       background: #fff;
-      border: 1px solid #edf0f4;
+      border: 1px solid #e0e5ec;
       border-radius: 9px;
-      min-height: 100px;
-      padding: 11px 14px;
-      box-shadow: 0 2px 10px rgba(24, 43, 76, .08);
+      min-height: 155px;
+      padding: 17px 18px;
+      box-shadow: 0 2px 8px rgba(24,43,76,.05);
     }
 
     .announcement-card:hover {
-      box-shadow: 0 3px 12px rgba(24,43,76,.11);
+      box-shadow: 0 4px 12px rgba(24,43,76,.09);
     }
 
     .card-top {
@@ -475,17 +507,17 @@
     .badges {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
-      height: 13px;
-      padding: 0 7px;
-      border-radius: 3px;
-      font-size: 6px;
-      font-weight: 600;
+      height: 20px;
+      padding: 0 8px;
+      border-radius: 4px;
+      font-size: 8px;
+      font-weight: 700;
       line-height: 1;
     }
 
@@ -495,8 +527,8 @@
     }
 
     .tag-pinned {
-      color: #3274d5;
-      background: #eaf2ff;
+      color: #d99300;
+      background: #fff0c7;
     }
 
     .tag-event {
@@ -515,45 +547,46 @@
     }
 
     .card-date {
-      color: #a1a9b7;
-      font-size: 7px;
+      color: #8d98aa;
+      font-size: 10px;
       white-space: nowrap;
     }
 
     .card-title {
-      margin-top: 7px;
-      color: #1b2638;
-      font-size: 10px;
+      margin-top: 11px;
+      color: #111d31;
+      font-size: 15px;
       font-weight: 700;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .card-body {
-      margin-top: 7px;
-      color: #8791a1;
-      font-size: 8px;
-      line-height: 1.45;
+      margin-top: 8px;
+      color: #65748b;
+      font-size: 11px;
+      line-height: 1.6;
     }
 
     .card-footer {
-      margin-top: 7px;
+      margin-top: 13px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .author {
-      color: #a0a9b6;
-      font-size: 7px;
+      color: #78869a;
+      font-size: 10px;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
 
     .read-more {
       color: #064fc6;
-      font-size: 7px;
+      font-size: 10px;
       text-decoration: none;
+      font-weight: 500;
     }
 
     .read-more:hover {
@@ -567,59 +600,63 @@
       background: #fff;
       border-radius: 9px;
       padding: 30px;
-      font-size: 10px;
+      font-size: 12px;
     }
 
     /* =========================
        UPCOMING EVENTS
     ========================== */
+
     .events-column {
       min-width: 0;
     }
 
     .events-heading {
-      height: 25px;
+      height: 38px;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
     }
 
     .events-heading h2 {
-      color: #0c3e9e;
-      font-size: 12px;
+      color: #073ca5;
+      font-size: 16px;
       font-weight: 700;
     }
 
     .events-heading h2 i {
-      font-size: 12px;
-      margin-right: 5px;
+      font-size: 15px;
+      margin-right: 7px;
     }
 
     .view-all {
       color: #4267ac;
-      font-size: 7px;
+      font-size: 10px;
       text-decoration: none;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
-    /* Calendar */
+    /* =========================
+       CALENDAR
+    ========================== */
+
     .calendar {
-      background: #1d4398;
-      border-radius: 8px;
-      padding: 10px 12px 9px;
+      background: #07348f;
+      border-radius: 9px;
+      padding: 16px 15px 14px;
       color: #fff;
-      min-height: 183px;
+      min-height: 217px;
     }
 
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
     .calendar-month {
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 600;
     }
 
@@ -632,7 +669,7 @@
       color: #fff;
       background: transparent;
       border: 0;
-      font-size: 16px;
+      font-size: 23px;
       cursor: pointer;
       line-height: 1;
     }
@@ -645,29 +682,29 @@
     }
 
     .weekdays {
-      margin-bottom: 7px;
+      margin-bottom: 9px;
     }
 
     .weekdays span {
       color: rgba(255,255,255,.76);
-      font-size: 6px;
-      font-weight: 500;
+      font-size: 8px;
+      font-weight: 600;
     }
 
     .calendar-days {
-      row-gap: 3px;
+      row-gap: 7px;
     }
 
     .calendar-day {
-      width: 20px;
-      height: 20px;
+      width: 28px;
+      height: 28px;
       margin: auto;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,.84);
-      font-size: 7px;
+      color: rgba(255,255,255,.9);
+      font-size: 10px;
       border: 0;
       background: transparent;
       cursor: pointer;
@@ -684,86 +721,100 @@
       cursor: default;
     }
 
-    /* Event cards */
+    /* =========================
+       EVENT CARDS
+    ========================== */
+
     .event-list {
-      margin-top: 11px;
+      margin-top: 13px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .event-card {
-      min-height: 57px;
+      min-height: 72px;
       background: #fff;
-      border: 1px solid #e5e8ee;
+      border: 1px solid #e1e6ed;
       border-radius: 9px;
-      box-shadow: 0 2px 8px rgba(24,43,76,.06);
-      padding: 9px;
+      box-shadow: 0 2px 8px rgba(24,43,76,.05);
+      padding: 10px;
       display: flex;
       align-items: flex-start;
       position: relative;
     }
 
     .event-date {
-      width: 33px;
-      height: 39px;
+      width: 43px;
+      height: 44px;
       border-radius: 7px;
       color: #fff;
       text-align: center;
-      flex: 0 0 33px;
-      padding-top: 4px;
+      flex: 0 0 43px;
+      padding-top: 5px;
     }
 
     .event-date strong {
       display: block;
-      font-size: 13px;
+      font-size: 16px;
       line-height: 1;
     }
 
     .event-date span {
       display: block;
-      font-size: 6px;
-      margin-top: 3px;
+      font-size: 7px;
+      margin-top: 4px;
     }
 
-    .date-blue { background: #294ba3; }
-    .date-green { background: #0db28d; }
-    .date-orange { background: #f2a313; }
-    .date-purple { background: #6861dc; }
+    .date-blue {
+      background: #173f97;
+    }
+
+    .date-green {
+      background: #0db28d;
+    }
+
+    .date-orange {
+      background: #f2a313;
+    }
+
+    .date-purple {
+      background: #6861dc;
+    }
 
     .event-details {
-      padding-left: 8px;
-      padding-right: 58px;
+      padding-left: 10px;
+      padding-right: 65px;
     }
 
     .event-title {
       color: #172235;
-      font-size: 8px;
+      font-size: 10px;
       font-weight: 700;
-      line-height: 1.25;
-      margin: 1px 0 5px;
+      line-height: 1.3;
+      margin: 2px 0 6px;
     }
 
     .event-meta {
       color: #8d97a7;
-      font-size: 6.5px;
-      line-height: 1.4;
+      font-size: 8px;
+      line-height: 1.5;
     }
 
     .event-meta i {
-      width: 9px;
+      width: 11px;
       text-align: center;
-      margin-right: 2px;
+      margin-right: 3px;
     }
 
     .event-tag {
       position: absolute;
       right: 10px;
-      top: 10px;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-size: 5.5px;
-      font-weight: 500;
+      top: 13px;
+      padding: 4px 7px;
+      border-radius: 4px;
+      font-size: 7px;
+      font-weight: 600;
     }
 
     .tag-academic {
@@ -784,21 +835,23 @@
     /* =========================
        FOOTER
     ========================== */
+
     .footer {
-      height: 30px;
-      flex: 0 0 30px;
+      height: 35px;
+      flex: 0 0 35px;
       background: #073da7;
       color: rgba(255,255,255,.95);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 25px;
-      font-size: 7px;
+      font-size: 8px;
     }
 
     /* =========================
-       SIMPLE MODAL
+       MODAL
     ========================== */
+
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -840,6 +893,7 @@
       color: #fff;
       font-size: 16px;
       cursor: pointer;
+      border: 0;
     }
 
     .modal-body {
@@ -852,13 +906,27 @@
     /* =========================
        RESPONSIVE
     ========================== */
-    @media (max-width: 1050px) {
+
+    @media (max-width: 1100px) {
       .content-grid {
-        grid-template-columns: minmax(0, 1fr) 360px;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+
+      .page-header {
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+
+      .search-section {
+        padding-left: 25px;
+        padding-right: 25px;
       }
     }
 
     @media (max-width: 850px) {
+
       .sidebar {
         transform: translateX(-100%);
         transition: transform .25s ease;
@@ -883,15 +951,25 @@
     }
 
     @media (max-width: 560px) {
+
       .page-header {
-        padding-left: 12px;
+        padding-left: 15px;
+        padding-right: 15px;
       }
 
       .header-text h1 {
         font-size: 18px;
       }
 
+      .header-text p {
+        font-size: 9px;
+      }
+
       .content-grid {
+        padding: 12px;
+      }
+
+      .search-section {
         padding: 12px;
       }
 
@@ -908,29 +986,48 @@
         gap: 10px;
         padding: 7px;
         height: auto;
-        min-height: 30px;
+        min-height: 35px;
+      }
+
+      .card-title {
+        font-size: 13px;
+      }
+
+      .card-body {
+        font-size: 10px;
       }
     }
   </style>
 </head>
 
 <body>
+
   <div class="portal">
 
     <!-- =========================
          SIDEBAR
-         ========================= -->
+    ========================== -->
+
     <aside class="sidebar" id="sidebar">
+
       <div class="sidebar-header">
+
         <div class="sidebar-logo"></div>
+
         <div>
-          <div class="college-name">Cebu Eastern</div>
-          <div class="college-subtitle">College</div>
-          <div class="portal-title">STUDENT PORTAL</div>
+          <div class="college-name">
+            CEBU EASTERN COLLEGE
+          </div>
+
+          <div class="portal-title">
+            STUDENT PORTAL
+          </div>
         </div>
+
       </div>
 
       <ul class="nav-menu">
+
         <li class="nav-item">
           <i class="fa-solid fa-border-all"></i>
           <span>Dashboard</span>
@@ -952,7 +1049,7 @@
         </li>
 
         <li class="nav-item">
-          <i class="fa-solid fa-money-bill-wave"></i>
+          <i class="fa-solid fa-wallet"></i>
           <span>Tuition &amp; Assessment</span>
         </li>
 
@@ -965,32 +1062,48 @@
           <i class="fa-solid fa-gear"></i>
           <span>Settings</span>
         </li>
+
       </ul>
 
       <div class="sidebar-watermark"></div>
+
     </aside>
+
 
     <!-- =========================
          MAIN CONTENT
-         ========================= -->
+    ========================== -->
+
     <main class="main-wrapper">
 
-      <!-- Top bar -->
+      <!-- TOP BAR -->
+
       <header class="top-bar">
+
         <div class="menu-toggle" id="menuToggle">
           <i class="fa-solid fa-bars"></i>
         </div>
 
         <div class="user-profile">
+
           <div class="user-info">
+
             <div class="user-avatar">
               <i class="fa-regular fa-circle-user"></i>
             </div>
 
             <div class="user-details">
-              <div class="user-name">Gemar Enopia</div>
-              <div class="user-role">Student</div>
+
+              <div class="user-name">
+                Gemar Enopia
+              </div>
+
+              <div class="user-role">
+                Student
+              </div>
+
             </div>
+
           </div>
 
           <div class="header-divider"></div>
@@ -999,66 +1112,136 @@
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Logout</span>
           </a>
+
         </div>
+
       </header>
 
-      <!-- Page heading -->
+
+      <!-- PAGE HEADER -->
+
       <section class="page-header">
+
         <div class="header-icon">
           <i class="fa-solid fa-bullhorn"></i>
         </div>
 
         <div class="header-text">
-          <h1>View ALL Announcements</h1>
-          <p>Browse all announcements, events and important updates</p>
+
+          <h1>
+            Announcements &amp; Events
+          </h1>
+
+          <p>
+            Stay updated with school-wide notices, deadlines, and upcoming activities
+          </p>
+
         </div>
+
       </section>
 
-      <!-- Blue search bar -->
+
+      <!-- SEARCH -->
+
       <section class="search-section">
+
         <div class="search-box">
+
           <i class="fa-solid fa-magnifying-glass"></i>
+
           <input
             type="text"
             id="searchInput"
-            placeholder="Search announcements........."
+            placeholder="Search announcements..."
             autocomplete="off"
           >
+
         </div>
 
-        <button class="category-button" type="button">
-          All Categories
-        </button>
       </section>
 
-      <!-- Main columns -->
+
+      <!-- MAIN CONTENT -->
+
       <section class="content">
+
         <div class="content-grid">
 
-          <!-- Announcements -->
+
+          <!-- =========================
+               ANNOUNCEMENTS
+          ========================== -->
+
           <section class="announcements-column">
 
             <div class="filter-tabs">
-              <button class="filter-tab all active" data-filter="all">ALL</button>
-              <button class="filter-tab important" data-filter="important">Important</button>
-              <button class="filter-tab event" data-filter="event">Event</button>
-              <button class="filter-tab scholarship" data-filter="scholarship">Scholarship</button>
-              <button class="filter-tab general" data-filter="general">General</button>
+
+              <button
+                class="filter-tab all active"
+                data-filter="all"
+                type="button">
+                ALL
+              </button>
+
+              <button
+                class="filter-tab important"
+                data-filter="important"
+                type="button">
+                Important
+              </button>
+
+              <button
+                class="filter-tab event"
+                data-filter="event"
+                type="button">
+                Event
+              </button>
+
+              <button
+                class="filter-tab scholarship"
+                data-filter="scholarship"
+                type="button">
+                Scholarship
+              </button>
+
+              <button
+                class="filter-tab general"
+                data-filter="general"
+                type="button">
+                General
+              </button>
+
             </div>
+
 
             <div class="announcement-list" id="announcementList">
 
-              <!-- Announcement 1 -->
-              <article class="announcement-card" data-category="important">
+
+              <!-- ANNOUNCEMENT 1 -->
+
+              <article
+                class="announcement-card"
+                data-category="important">
+
                 <div class="card-top">
+
                   <div class="badges">
-                    <span class="tag tag-important">IMPORTANT</span>
-                    <span class="tag tag-pinned">
-                      <i class="fa-solid fa-thumbtack"></i>&nbsp; Pinned
+
+                    <span class="tag tag-important">
+                      IMPORTANT
                     </span>
+
+                    <span class="tag tag-pinned">
+                      <i class="fa-solid fa-thumbtack"></i>
+                      &nbsp; PINNED
+                    </span>
+
                   </div>
 
-                  <span class="card-date">September 1, 2026</span>
+                  <span class="card-date">
+                    September 2, 2026
+                  </span>
+
                 </div>
 
                 <div class="card-title">
@@ -1066,33 +1249,53 @@
                 </div>
 
                 <div class="card-body">
-                  All in-person classes are suspended for Sept 2 due to the current weather advisory. Asynchronous module will be posted on each course page.
+                  All in-person classes are suspended on September 2 due to the current weather advisory. Students are advised to stay safe at home.
                 </div>
 
                 <div class="card-footer">
+
                   <span class="author">
                     <i class="fa-regular fa-user"></i>
                     Atalaya Publication
                   </span>
 
-                  <a href="#" class="read-more"
-                     data-title="Class Suspension - Tropical Cyclone Warning"
-                     data-date="September 1, 2026"
-                     data-author="Atalaya Publication"
-                     data-content="All in-person classes are suspended for Sept 2 due to the current weather advisory. Asynchronous modules and course updates will be posted on each respective course page.">
+                  <a
+                    href="#"
+                    class="read-more"
+                    data-title="Class Suspension - Tropical Cyclone Warning"
+                    data-date="September 2, 2026"
+                    data-author="Atalaya Publication"
+                    data-content="All in-person classes are suspended on September 2 due to the current weather advisory. Students are advised to stay safe at home.">
+
                     Read more
+
                   </a>
+
                 </div>
+
               </article>
 
-              <!-- Announcement 2 -->
-              <article class="announcement-card" data-category="event">
+
+              <!-- ANNOUNCEMENT 2 -->
+
+              <article
+                class="announcement-card"
+                data-category="event">
+
                 <div class="card-top">
+
                   <div class="badges">
-                    <span class="tag tag-event">Event</span>
+
+                    <span class="tag tag-event">
+                      EVENT
+                    </span>
+
                   </div>
 
-                  <span class="card-date">January 18, 2026</span>
+                  <span class="card-date">
+                    January 18, 2026
+                  </span>
+
                 </div>
 
                 <div class="card-title">
@@ -1100,33 +1303,53 @@
                 </div>
 
                 <div class="card-body">
-                  Join the CEC community for the opening program of Dragon Week, featuring the traditional lion dance and college band performance.
+                  Join the Cebu Eastern College community as we officially open Dragon Week! Experience the traditional lion dance, performances from student organizations, and the unveiling of the week's activities.
                 </div>
 
                 <div class="card-footer">
+
                   <span class="author">
                     <i class="fa-regular fa-user"></i>
                     Student Affairs Office
                   </span>
 
-                  <a href="#" class="read-more"
-                     data-title="Dragon Week Opening Ceremony"
-                     data-date="January 18, 2026"
-                     data-author="Student Affairs Office"
-                     data-content="Join the CEC community for the opening program of Dragon Week, featuring the traditional lion dance and college band performance.">
+                  <a
+                    href="#"
+                    class="read-more"
+                    data-title="Dragon Week Opening Ceremony"
+                    data-date="January 18, 2026"
+                    data-author="Student Affairs Office"
+                    data-content="Join the Cebu Eastern College community as we officially open Dragon Week! Experience the traditional lion dance, performances from student organizations, and the unveiling of the week's activities.">
+
                     Read more
+
                   </a>
+
                 </div>
+
               </article>
 
-              <!-- Announcement 3 -->
-              <article class="announcement-card" data-category="scholarship">
+
+              <!-- ANNOUNCEMENT 3 -->
+
+              <article
+                class="announcement-card"
+                data-category="scholarship">
+
                 <div class="card-top">
+
                   <div class="badges">
-                    <span class="tag tag-scholarship">Scholarship</span>
+
+                    <span class="tag tag-scholarship">
+                      SCHOLARSHIP
+                    </span>
+
                   </div>
 
-                  <span class="card-date">October 20, 2026</span>
+                  <span class="card-date">
+                    October 20, 2026
+                  </span>
+
                 </div>
 
                 <div class="card-title">
@@ -1134,33 +1357,53 @@
                 </div>
 
                 <div class="card-body">
-                  Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026. Requirements include certificate of enrollment, grades, and financial documents.
+                  Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.
                 </div>
 
                 <div class="card-footer">
+
                   <span class="author">
                     <i class="fa-regular fa-user"></i>
                     Scholarship Office
                   </span>
 
-                  <a href="#" class="read-more"
-                     data-title="CHED Scholarship Applications for 2nd Semester Now Accepting"
-                     data-date="October 20, 2026"
-                     data-author="Scholarship Office"
-                     data-content="Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.">
+                  <a
+                    href="#"
+                    class="read-more"
+                    data-title="CHED Scholarship Applications for 2nd Semester Now Accepting"
+                    data-date="October 20, 2026"
+                    data-author="Scholarship Office"
+                    data-content="Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.">
+
                     Read more
+
                   </a>
+
                 </div>
+
               </article>
 
-              <!-- Announcement 4 -->
-              <article class="announcement-card" data-category="general">
+
+              <!-- ANNOUNCEMENT 4 -->
+
+              <article
+                class="announcement-card"
+                data-category="general">
+
                 <div class="card-top">
+
                   <div class="badges">
-                    <span class="tag tag-general">General</span>
+
+                    <span class="tag tag-general">
+                      GENERAL
+                    </span>
+
                   </div>
 
-                  <span class="card-date">October 15, 2026</span>
+                  <span class="card-date">
+                    October 15, 2026
+                  </span>
+
                 </div>
 
                 <div class="card-title">
@@ -1168,58 +1411,115 @@
                 </div>
 
                 <div class="card-body">
-                  The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday, from October 10 to 20, 2026.
+                  The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday.
                 </div>
 
                 <div class="card-footer">
+
                   <span class="author">
                     <i class="fa-regular fa-user"></i>
                     Library Services
                   </span>
 
-                  <a href="#" class="read-more"
-                     data-title="Library Hours Extended During Examination Period"
-                     data-date="October 15, 2026"
-                     data-author="Library Services"
-                     data-content="The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday, from October 10 to 20, 2026.">
+                  <a
+                    href="#"
+                    class="read-more"
+                    data-title="Library Hours Extended During Examination Period"
+                    data-date="October 15, 2026"
+                    data-author="Library Services"
+                    data-content="The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday.">
+
                     Read more
+
                   </a>
+
                 </div>
+
               </article>
 
+
             </div>
 
-            <div class="no-results" id="noResults">
+
+            <div
+              class="no-results"
+              id="noResults">
+
               No announcements found.
+
             </div>
+
           </section>
 
-          <!-- Upcoming Events -->
+
+          <!-- =========================
+               UPCOMING EVENTS
+          ========================== -->
+
           <aside class="events-column">
 
             <div class="events-heading">
+
               <h2>
+
                 <i class="fa-regular fa-calendar-days"></i>
+
                 Upcoming Events
+
               </h2>
 
-              <a href="#" class="view-all">View All</a>
+              <a
+                href="#"
+                class="view-all">
+
+                View All
+
+              </a>
+
             </div>
 
-            <!-- Calendar -->
+
+            <!-- CALENDAR -->
+
             <div class="calendar">
+
               <div class="calendar-header">
-                <span class="calendar-month" id="calendarMonth">
+
+                <span
+                  class="calendar-month"
+                  id="calendarMonth">
+
                   October 2026
+
                 </span>
 
                 <div class="calendar-controls">
-                  <button id="prevMonth" aria-label="Previous month">‹</button>
-                  <button id="nextMonth" aria-label="Next month">›</button>
+
+                  <button
+                    id="prevMonth"
+                    aria-label="Previous month"
+                    type="button">
+
+                    ‹
+
+                  </button>
+
+                  <button
+                    id="nextMonth"
+                    aria-label="Next month"
+                    type="button">
+
+                    ›
+
+                  </button>
+
                 </div>
+
               </div>
 
+
               <div class="weekdays">
+
                 <span>SUN</span>
                 <span>MON</span>
                 <span>TUE</span>
@@ -1227,283 +1527,679 @@
                 <span>THU</span>
                 <span>FRI</span>
                 <span>SAT</span>
+
               </div>
 
-              <div class="calendar-days" id="calendarDays"></div>
+
+              <div
+                class="calendar-days"
+                id="calendarDays">
+              </div>
+
             </div>
 
-            <!-- Event cards -->
+
+            <!-- EVENT LIST -->
+
             <div class="event-list">
 
+
+              <!-- EVENT 1 -->
+
               <article class="event-card">
+
                 <div class="event-date date-blue">
-                  <strong>16</strong>
-                  <span>OCT</span>
+
+                  <strong>
+                    16
+                  </strong>
+
+                  <span>
+                    OCT
+                  </span>
+
                 </div>
 
                 <div class="event-details">
-                  <div class="event-title">Final Examinations Begin</div>
+
+                  <div class="event-title">
+                    Final Examinations Begin
+                  </div>
+
                   <div class="event-meta">
+
                     <i class="fa-regular fa-clock"></i>
                     8:00 AM - 9:00 PM
+
                   </div>
+
                   <div class="event-meta">
+
                     <i class="fa-solid fa-location-dot"></i>
                     All Campus Buildings
+
                   </div>
+
                 </div>
 
-                <span class="event-tag tag-academic">Academic</span>
+                <span class="event-tag tag-academic">
+                  ACADEMIC
+                </span>
+
               </article>
 
+
+              <!-- EVENT 2 -->
+
               <article class="event-card">
+
                 <div class="event-date date-green">
-                  <strong>11</strong>
-                  <span>SEP</span>
+
+                  <strong>
+                    11
+                  </strong>
+
+                  <span>
+                    SEP
+                  </span>
+
                 </div>
 
                 <div class="event-details">
-                  <div class="event-title">Intramurals Sports Festival Opening</div>
+
+                  <div class="event-title">
+                    Intramurals Sports Festival Opening
+                  </div>
+
                   <div class="event-meta">
+
                     <i class="fa-regular fa-clock"></i>
                     9:00 AM - 12:00 PM
+
                   </div>
+
                   <div class="event-meta">
+
                     <i class="fa-solid fa-location-dot"></i>
                     Gymnasium
+
                   </div>
+
                 </div>
 
-                <span class="event-tag tag-event">Event</span>
+                <span class="event-tag tag-event">
+                  EVENT
+                </span>
+
               </article>
 
+
+              <!-- EVENT 3 -->
+
               <article class="event-card">
+
                 <div class="event-date date-orange">
-                  <strong>22</strong>
-                  <span>DEC</span>
+
+                  <strong>
+                    22
+                  </strong>
+
+                  <span>
+                    DEC
+                  </span>
+
                 </div>
 
                 <div class="event-details">
-                  <div class="event-title">Christmas Celebration</div>
+
+                  <div class="event-title">
+                    Christmas Celebration
+                  </div>
+
                   <div class="event-meta">
+
                     <i class="fa-regular fa-clock"></i>
                     2:00 PM - 6:00 PM
+
                   </div>
+
                   <div class="event-meta">
+
                     <i class="fa-solid fa-location-dot"></i>
                     Open Court
+
                   </div>
+
                 </div>
 
-                <span class="event-tag tag-holiday">Holiday</span>
+                <span class="event-tag tag-holiday">
+                  HOLIDAY
+                </span>
+
               </article>
 
+
+              <!-- EVENT 4 -->
+
               <article class="event-card">
+
                 <div class="event-date date-purple">
-                  <strong>10</strong>
-                  <span>JAN</span>
+
+                  <strong>
+                    10
+                  </strong>
+
+                  <span>
+                    JAN
+                  </span>
+
                 </div>
 
                 <div class="event-details">
-                  <div class="event-title">Start of 2nd Semester Classes</div>
+
+                  <div class="event-title">
+                    Start of 2nd Semester Classes
+                  </div>
+
                   <div class="event-meta">
+
                     <i class="fa-regular fa-clock"></i>
                     All Day
+
                   </div>
+
                   <div class="event-meta">
+
                     <i class="fa-solid fa-location-dot"></i>
                     Main Campus
+
                   </div>
+
                 </div>
 
-                <span class="event-tag tag-academic">Academic</span>
+                <span class="event-tag tag-academic">
+                  ACADEMIC
+                </span>
+
               </article>
 
+
             </div>
+
           </aside>
+
         </div>
+
       </section>
 
+
+      <!-- FOOTER -->
+
       <footer class="footer">
-        <span>&copy; 2026 Cebu Eastern College. All rights reserved.</span>
-        <span>Student Portal v1.0</span>
+
+        <span>
+          &copy; 2026 Cebu Eastern College. All rights reserved.
+        </span>
+
+        <span>
+          Student Portal v1.0
+        </span>
+
       </footer>
+
     </main>
+
   </div>
 
-  <!-- Read-more modal: frontend only -->
-  <div class="modal-overlay" id="announcementModal">
+
+  <!-- =========================
+       READ MORE MODAL
+  ========================== -->
+
+  <div
+    class="modal-overlay"
+    id="announcementModal">
+
     <div class="modal">
+
       <div class="modal-head">
-        <h3 id="modalTitle">Announcement</h3>
-        <button class="modal-close" id="modalClose">
+
+        <h3 id="modalTitle">
+          Announcement
+        </h3>
+
+        <button
+          class="modal-close"
+          id="modalClose"
+          type="button">
+
           <i class="fa-solid fa-xmark"></i>
+
         </button>
+
       </div>
 
       <div class="modal-body">
+
         <p id="modalMeta"></p>
+
         <br>
+
         <p id="modalContent"></p>
+
       </div>
+
     </div>
+
   </div>
 
-  <script>
-    /* ==========================================
-       LOCAL FRONTEND INTERACTIONS ONLY
-       No backend/database connection.
-    ========================================== */
 
-    const sidebar = document.getElementById('sidebar');
-    const menuToggle = document.getElementById('menuToggle');
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    /* =========================
+       SIDEBAR MOBILE TOGGLE
+    ========================== */
+
+    const sidebar =
+      document.getElementById('sidebar');
+
+    const menuToggle =
+      document.getElementById('menuToggle');
 
     menuToggle.addEventListener('click', () => {
+
       sidebar.classList.toggle('open');
+
     });
 
-    /* Search */
-    const searchInput = document.getElementById('searchInput');
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    const searchInput =
+      document.getElementById('searchInput');
+
     const announcementCards = [
       ...document.querySelectorAll('.announcement-card')
     ];
-    const noResults = document.getElementById('noResults');
+
+    const noResults =
+      document.getElementById('noResults');
 
     let activeCategory = 'all';
 
+
     function updateAnnouncements() {
-      const query = searchInput.value.trim().toLowerCase();
+
+      const query =
+        searchInput.value.trim().toLowerCase();
+
       let visible = 0;
 
+
       announcementCards.forEach(card => {
-        const category = card.dataset.category;
-        const text = card.innerText.toLowerCase();
+
+        const category =
+          card.dataset.category;
+
+        const text =
+          card.innerText.toLowerCase();
+
 
         const categoryMatches =
-          activeCategory === 'all' || category === activeCategory;
+          activeCategory === 'all' ||
+          category === activeCategory;
+
 
         const searchMatches =
-          query === '' || text.includes(query);
+          query === '' ||
+          text.includes(query);
 
-        const show = categoryMatches && searchMatches;
 
-        card.style.display = show ? '' : 'none';
+        const show =
+          categoryMatches &&
+          searchMatches;
 
-        if (show) visible++;
+
+        card.style.display =
+          show ? '' : 'none';
+
+
+        if (show) {
+          visible++;
+        }
+
       });
 
-      noResults.style.display = visible === 0 ? 'block' : 'none';
+
+      noResults.style.display =
+        visible === 0 ? 'block' : 'none';
+
     }
 
-    searchInput.addEventListener('input', updateAnnouncements);
 
-    /* Category tabs */
-    document.querySelectorAll('.filter-tab').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-          tab.classList.remove('active');
+    searchInput.addEventListener(
+      'input',
+      updateAnnouncements
+    );
+
+
+    /* =========================
+       CATEGORY FILTER
+    ========================== */
+
+    document
+      .querySelectorAll('.filter-tab')
+      .forEach(button => {
+
+        button.addEventListener('click', () => {
+
+          document
+            .querySelectorAll('.filter-tab')
+            .forEach(tab => {
+
+              tab.classList.remove('active');
+
+            });
+
+
+          button.classList.add('active');
+
+          activeCategory =
+            button.dataset.filter;
+
+          updateAnnouncements();
+
         });
 
-        button.classList.add('active');
-        activeCategory = button.dataset.filter;
-        updateAnnouncements();
       });
-    });
 
-    /* Read-more modal */
-    const modal = document.getElementById('announcementModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalMeta = document.getElementById('modalMeta');
-    const modalContent = document.getElementById('modalContent');
-    const modalClose = document.getElementById('modalClose');
 
-    document.querySelectorAll('.read-more').forEach(link => {
-      link.addEventListener('click', event => {
-        event.preventDefault();
+    /* =========================
+       READ MORE MODAL
+    ========================== */
 
-        modalTitle.textContent = link.dataset.title;
-        modalMeta.textContent =
-          link.dataset.date + ' • ' + link.dataset.author;
-        modalContent.textContent = link.dataset.content;
+    const modal =
+      document.getElementById(
+        'announcementModal'
+      );
 
-        modal.classList.add('show');
+    const modalTitle =
+      document.getElementById(
+        'modalTitle'
+      );
+
+    const modalMeta =
+      document.getElementById(
+        'modalMeta'
+      );
+
+    const modalContent =
+      document.getElementById(
+        'modalContent'
+      );
+
+    const modalClose =
+      document.getElementById(
+        'modalClose'
+      );
+
+
+    document
+      .querySelectorAll('.read-more')
+      .forEach(link => {
+
+        link.addEventListener(
+          'click',
+          event => {
+
+            event.preventDefault();
+
+
+            modalTitle.textContent =
+              link.dataset.title;
+
+
+            modalMeta.textContent =
+              link.dataset.date +
+              ' • ' +
+              link.dataset.author;
+
+
+            modalContent.textContent =
+              link.dataset.content;
+
+
+            modal.classList.add('show');
+
+          }
+        );
+
       });
-    });
+
 
     function closeModal() {
+
       modal.classList.remove('show');
+
     }
 
-    modalClose.addEventListener('click', closeModal);
 
-    modal.addEventListener('click', event => {
-      if (event.target === modal) {
-        closeModal();
+    modalClose.addEventListener(
+      'click',
+      closeModal
+    );
+
+
+    modal.addEventListener(
+      'click',
+      event => {
+
+        if (event.target === modal) {
+          closeModal();
+        }
+
       }
-    });
+    );
 
-    /* Calendar */
-    const calendarMonth = document.getElementById('calendarMonth');
-    const calendarDays = document.getElementById('calendarDays');
-    const prevMonth = document.getElementById('prevMonth');
-    const nextMonth = document.getElementById('nextMonth');
 
-    let currentDate = new Date(2026, 9, 1);
+    /* =========================
+       CALENDAR
+    ========================== */
+
+    const calendarMonth =
+      document.getElementById(
+        'calendarMonth'
+      );
+
+    const calendarDays =
+      document.getElementById(
+        'calendarDays'
+      );
+
+    const prevMonth =
+      document.getElementById(
+        'prevMonth'
+      );
+
+    const nextMonth =
+      document.getElementById(
+        'nextMonth'
+      );
+
+
+    let currentDate =
+      new Date(2026, 9, 1);
+
 
     function renderCalendar() {
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
 
-      calendarMonth.textContent = new Intl.DateTimeFormat('en-US', {
-        month: 'long',
-        year: 'numeric'
-      }).format(currentDate);
+      const year =
+        currentDate.getFullYear();
+
+      const month =
+        currentDate.getMonth();
+
+
+      calendarMonth.textContent =
+        new Intl.DateTimeFormat(
+          'en-US',
+          {
+            month: 'long',
+            year: 'numeric'
+          }
+        ).format(currentDate);
+
 
       calendarDays.innerHTML = '';
 
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth =
-        new Date(year, month + 1, 0).getDate();
 
-      for (let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('span');
-        empty.className = 'calendar-day empty';
+      const firstDay =
+        new Date(
+          year,
+          month,
+          1
+        ).getDay();
+
+
+      const daysInMonth =
+        new Date(
+          year,
+          month + 1,
+          0
+        ).getDate();
+
+
+      /* EMPTY DAYS */
+
+      for (
+        let i = 0;
+        i < firstDay;
+        i++
+      ) {
+
+        const empty =
+          document.createElement('span');
+
+        empty.className =
+          'calendar-day empty';
+
         calendarDays.appendChild(empty);
+
       }
 
-      for (let day = 1; day <= daysInMonth; day++) {
-        const button = document.createElement('button');
-        button.className = 'calendar-day';
-        button.textContent = day;
 
-        /* Matches the screenshot's highlighted October 16. */
-        if (year === 2026 && month === 9 && day === 16) {
-          button.classList.add('selected');
+      /* ACTUAL DAYS */
+
+      for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+      ) {
+
+        const button =
+          document.createElement('button');
+
+
+        button.className =
+          'calendar-day';
+
+
+        button.textContent =
+          day;
+
+
+        /* HIGHLIGHT OCTOBER 16 */
+
+        if (
+          year === 2026 &&
+          month === 9 &&
+          day === 16
+        ) {
+
+          button.classList.add(
+            'selected'
+          );
+
         }
 
-        button.addEventListener('click', () => {
-          document
-            .querySelectorAll('.calendar-day.selected')
-            .forEach(item => item.classList.remove('selected'));
 
-          button.classList.add('selected');
-        });
+        button.addEventListener(
+          'click',
+          () => {
 
-        calendarDays.appendChild(button);
+            document
+              .querySelectorAll(
+                '.calendar-day.selected'
+              )
+              .forEach(item => {
+
+                item.classList.remove(
+                  'selected'
+                );
+
+              });
+
+
+            button.classList.add(
+              'selected'
+            );
+
+          }
+        );
+
+
+        calendarDays.appendChild(
+          button
+        );
+
       }
+
     }
 
-    prevMonth.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      renderCalendar();
-    });
 
-    nextMonth.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      renderCalendar();
-    });
+    /* PREVIOUS MONTH */
+
+    prevMonth.addEventListener(
+      'click',
+      () => {
+
+        currentDate.setMonth(
+          currentDate.getMonth() - 1
+        );
+
+        renderCalendar();
+
+      }
+    );
+
+
+    /* NEXT MONTH */
+
+    nextMonth.addEventListener(
+      'click',
+      () => {
+
+        currentDate.setMonth(
+          currentDate.getMonth() + 1
+        );
+
+        renderCalendar();
+
+      }
+    );
+
+
+    /* INITIAL CALENDAR */
 
     renderCalendar();
+
   </script>
+
 </body>
 </html>
