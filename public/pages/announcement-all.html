@@ -4,2202 +4,613 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements & Events - Cebu Eastern College</title>
-
-  <!-- Fonts and Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --primary-blue: #073ca5;
-      --dark-blue: #063797;
-      --header-blue: #07348f;
-      --active-blue: #0843a9;
-      --page-bg: #f3f6fa;
-      --text: #18243a;
-      --muted: #8994a7;
-      --line: #e4e8ef;
-      --white: #fff;
-
-      /* CHANGED TO MATCH YOUR REFERENCE */
-      --sidebar-width: 247px;
-      --topbar-height: 70px;
+      --primary-blue: #0033a0;
+      --primary-blue-dark: #002277;
+      --primary-blue-header: #003ba8;
+      --text-dark: #1e293b;
+      --text-light: #64748b;
+      --bg-light: #f1f5f9;
+      --border-color: #cbd5e1;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-family); }
+    html, body { height: 100%; margin: 0; padding: 0; background-color: var(--primary-blue-dark); }
+    body { display: flex; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; }
+
+    /* Sidebar Styling with Dragon Watermark */
+    .sidebar { width: 260px; background-color: var(--primary-blue-dark); color: white; display: flex; flex-direction: column; flex-shrink: 0; position: relative; overflow: hidden; }
+    .sidebar-header { padding: 20px 18px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .logo-img { width: 42px; height: 42px; border-radius: 50%; background-color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--primary-blue); font-size: 11px; text-align: center; border: 2px solid #ffffff; }
+    .college-name { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+    .portal-title { font-size: 10px; opacity: 0.75; margin-top: 2px; letter-spacing: 0.8px; }
+    
+    .nav-menu { list-style: none; padding: 20px 0; flex: 1; z-index: 2; }
+    .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; }
+    .nav-item:hover, .nav-item.active { background-color: var(--primary-blue); color: #ffffff; font-weight: 600; }
+    .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+
+    /* Dragon background motif at sidebar bottom */
+    .sidebar-dragon-bg {
+      position: absolute;
+      bottom: 0;
+      left: -20px;
+      width: 280px;
+      height: 280px;
+      opacity: 0.12;
+      pointer-events: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="%2ffffff"><path d="M464 256c0-114.9-93.1-208-208-208S48 141.1 48 256s93.1 208 208 208 208-93.1 208-208zm-208 160c-88.4 0-160-71.6-160-160S167.6 96 256 96s160 71.6 160 160-71.6 160-160 160z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: bottom left;
     }
 
-    html,
-    body {
-      min-height: 100%;
-      background: var(--page-bg);
+    /* Main Content Area */
+    .main-wrapper { flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-light); border-top-left-radius: 0px; overflow-y: auto; }
+    
+    /* Top Navigation Bar */
+    .top-bar { background-color: var(--primary-blue-dark); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; color: white; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .menu-toggle { font-size: 18px; cursor: pointer; opacity: 0.9; transition: opacity 0.2s; }
+    .menu-toggle:hover { opacity: 1; }
+
+    .user-profile { display: flex; align-items: center; gap: 20px; }
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .user-avatar { font-size: 34px; color: #ffffff; display: flex; align-items: center; justify-content: center; }
+    .user-details { display: flex; flex-direction: column; }
+    .user-name { font-weight: 400; font-size: 15px; color: #ffffff; line-height: 1.2; }
+    .user-role { font-size: 12px; color: #a4beea; font-weight: 300; margin-top: 1px; }
+    
+    .header-divider { width: 1px; height: 32px; background-color: rgba(255, 255, 255, 0.25); margin: 0 4px; }
+    
+    .logout-btn { display: flex; align-items: center; gap: 8px; color: white; background: transparent; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 15px; font-weight: 400; transition: opacity 0.2s; text-decoration: none; }
+    .logout-btn:hover { opacity: 0.8; }
+
+    /* Page Header */
+    .page-header { background: white; padding: 22px 30px; display: flex; align-items: center; gap: 18px; border-bottom: 1px solid #e2e8f0; }
+    .header-icon { width: 48px; height: 48px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .header-text h2 { font-size: 22px; color: #0f172a; font-weight: 800; letter-spacing: -0.3px; }
+    .header-text p { font-size: 13.5px; color: var(--text-light); margin-top: 2px; }
+
+    /* Search Bar Section */
+    .search-section { padding: 18px 30px 10px 30px; background: var(--bg-light); }
+    .search-box { width: 100%; position: relative; }
+    .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 15px; }
+    .search-box input { width: 100%; padding: 12px 16px 12px 44px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; background: white; transition: border-color 0.2s, box-shadow 0.2s; }
+    .search-box input:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.1); }
+
+    /* Content Layout */
+    .content-grid { flex: 1; display: grid; grid-template-columns: 1fr 340px; gap: 24px; padding: 15px 30px 30px 30px; }
+
+    /* Dynamic Search Results Title Bar */
+    .section-title-bar { margin-bottom: 14px; }
+    .search-results-heading { font-size: 18px; font-weight: 800; color: #0f172a; line-height: 1.3; }
+    .search-results-count { font-size: 13px; color: var(--text-light); font-weight: 500; margin-top: 3px; }
+
+    .standard-title-bar { display: flex; justify-content: space-between; align-items: center; }
+    .section-title { font-size: 16px; font-weight: 700; color: var(--primary-blue-dark); display: flex; align-items: center; gap: 8px; }
+    .title-actions { display: flex; gap: 14px; font-size: 13px; align-items: center; }
+    .post-btn { color: var(--primary-blue); font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+    .post-btn:hover { text-decoration: underline; }
+    .view-all { color: var(--text-light); text-decoration: none; font-size: 12px; font-weight: 500; }
+    .view-all:hover { color: var(--primary-blue); }
+
+    /* Announcement Cards */
+    .card { background: white; border-radius: 8px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; transition: border-color 0.2s; }
+    .card:hover { border-color: #cbd5e1; }
+    .card-tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+    
+    .tag { padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; }
+    .tag-important { background: #ffe4e6; color: #e11d48; }
+    .tag-pinned { background: #fef3c7; color: #d97706; }
+    .tag-event { background: #d1fae5; color: #059669; }
+    .tag-scholarship { background: #fef3c7; color: #d97706; }
+    .tag-general { background: #f1f5f9; color: #475569; }
+    .tag-academic { background: #fee2e2; color: #dc2626; }
+    .tag-holiday { background: #fef3c7; color: #d97706; }
+
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .card-title { font-size: 15px; font-weight: 700; color: #0f172a; line-height: 1.35; }
+    .card-date { font-size: 11.5px; color: #94a3b8; white-space: nowrap; margin-left: 10px; }
+    .card-body { font-size: 13px; color: #334155; line-height: 1.55; margin-bottom: 14px; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #64748b; }
+    .author { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+    .read-more { color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 12px; }
+    .read-more:hover { text-decoration: underline; }
+
+    /* "No Results Found" State Box */
+    .no-results-box {
+      background: white;
+      border-radius: 10px;
+      padding: 48px 24px;
+      text-align: center;
+      border: 1px dashed #cbd5e1;
+      margin-top: 10px;
+      display: none;
     }
-
-    body {
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* =========================
-       PAGE LAYOUT
-    ========================== */
-
-    .portal {
-      min-height: 100vh;
+    .no-results-icon {
+      width: 64px;
+      height: 64px;
+      background: #f1f5f9;
+      color: #94a3b8;
+      border-radius: 50%;
       display: flex;
-      background: var(--page-bg);
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 16px auto;
     }
+    .no-results-title { font-size: 17px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+    .no-results-desc { font-size: 13px; color: #64748b; max-width: 380px; margin: 0 auto; line-height: 1.5; }
 
-    /* =========================
-       LEFT SIDEBAR
-    ========================== */
-
-    .sidebar {
-      width: var(--sidebar-width);
-      height: 100vh;
+    /* Modal Styling */
+    .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 20;
-      background: #07348f;
-      color: #fff;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* =========================
-       SIDEBAR HEADER
-    ========================== */
-
-    .sidebar-header {
-      height: 76px;
-      padding: 0 13px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      flex-shrink: 0;
-    }
-
-    /* CEC LOGO */
-
-    .sidebar-logo {
-      width: 43px;
-      height: 43px;
-      min-width: 43px;
-      border-radius: 50%;
-      background: #fff;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-    }
-
-    .sidebar-logo::after {
-      content: "CEC";
-      color: #17449b;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    /* COLLEGE NAME */
-
-    .college-name {
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0;
-      line-height: 1.1;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    /* STUDENT PORTAL */
-
-    .portal-title {
-      color: rgba(255,255,255,.82);
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: .7px;
-      line-height: 1;
-      margin-top: 5px;
-      text-transform: uppercase;
-    }
-
-    /* OLD COLLEGE LINE IS NOT NEEDED */
-
-    .college-subtitle {
-      display: none;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================== */
-
-    .nav-menu {
-      list-style: none;
-      padding-top: 20px;
-      margin: 0;
-      flex: 1;
-      position: relative;
-      z-index: 2;
-    }
-
-    .nav-item {
-      height: 43px;
-      padding: 0 19px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background .2s ease;
-    }
-
-    .nav-item:hover {
-      background: rgba(255,255,255,.08);
-    }
-
-    .nav-item.active {
-      background: #0843a9;
-      font-weight: 600;
-    }
-
-    /* SIDEBAR ICONS */
-
-    .nav-item i {
-      width: 17px;
-      min-width: 17px;
-      text-align: center;
-      color: #fff;
-      font-size: 16px;
-      line-height: 1;
-    }
-
-    /* =========================
-       SIDEBAR BOTTOM DESIGN
-    ========================== */
-
-    .sidebar-watermark {
-      position: absolute;
-      left: 27px;
-      bottom: 24px;
-      width: 190px;
-      height: 190px;
-      border-radius: 50%;
-      background: rgba(0, 38, 128, .45);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .sidebar-watermark::before {
-      content: "";
-      position: absolute;
-      width: 145px;
-      height: 145px;
-      left: 22px;
-      top: 22px;
-      border-radius: 50%;
-      background: rgba(8, 54, 150, .65);
-    }
-
-    .sidebar-watermark::after {
-      content: "";
-      position: absolute;
-      width: 92px;
-      height: 92px;
-      left: 49px;
-      top: 49px;
-      border-radius: 50%;
-      background: rgba(7, 55, 151, .9);
-    }
-
-    /* =========================
-       MAIN AREA
-    ========================== */
-
-    .main-wrapper {
-      width: calc(100% - var(--sidebar-width));
-      min-height: 100vh;
-      margin-left: var(--sidebar-width);
-      display: flex;
-      flex-direction: column;
-      background: var(--page-bg);
-    }
-
-    /* =========================
-       TOP BAR
-    ========================== */
-
-    .top-bar {
-      height: var(--topbar-height);
-      flex: 0 0 var(--topbar-height);
-      background: #07348f;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      padding: 0 22px;
-      border-bottom: 1px solid rgba(255,255,255,.14);
-    }
-
-    .menu-toggle {
-      width: 40px;
-      color: #fff;
-      font-size: 21px;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .user-profile {
-      margin-left: auto;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .user-info {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 18px;
-    }
-
-    .user-avatar {
-      width: 36px;
-      height: 36px;
-      border: 3px solid #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 27px;
-      overflow: hidden;
-    }
-
-    .user-details {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
-
-    .user-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .user-role {
-      font-size: 10px;
-      color: rgba(255,255,255,.7);
-      margin-top: 5px;
-    }
-
-    .header-divider {
-      width: 1px;
-      height: 36px;
-      background: rgba(255,255,255,.25);
-    }
-
-    .logout-btn {
-      height: 100%;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    .logout-btn:hover {
-      background: rgba(255,255,255,.07);
-    }
-
-    /* =========================
-       PAGE TITLE
-    ========================== */
-
-    .page-header {
-      min-height: 94px;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      gap: 17px;
-      padding: 15px 38px;
-      border-bottom: 1px solid #e1e6ee;
-    }
-
-    .header-icon {
-      width: 48px;
-      height: 48px;
-      flex: 0 0 48px;
-      background: #073ca5;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .header-text h1 {
-      color: #111d31;
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -.3px;
-    }
-
-    .header-text p {
-      color: #8792a4;
-      font-size: 11px;
-      margin-top: 6px;
-    }
-
-    /* =========================
-       SEARCH SECTION
-    ========================== */
-
-    .search-section {
-      min-height: 72px;
-      padding: 15px 38px;
-      background: #f0f4f9;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-box {
-      height: 45px;
-      width: 100%;
-      max-width: none;
-      background: #fff;
-      border: 1px solid #ccd6e3;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      padding: 0 14px;
-    }
-
-    .search-box i {
-      color: #8491a4;
-      font-size: 15px;
-      margin-right: 12px;
-    }
-
-    .search-box input {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      outline: 0;
-      color: #344158;
-      font-size: 12px;
-      background: transparent;
-    }
-
-    .search-box input::placeholder {
-      color: #9ba4b1;
-    }
-
-    .category-button {
-      display: none;
-    }
-
-    /* =========================
-       CONTENT
-    ========================== */
-
-    .content {
-      flex: 1;
-      background: var(--page-bg);
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 340px;
-      gap: 24px;
-      padding: 20px 38px 15px;
-    }
-
-    /* =========================
-       FILTER TABS
-    ========================== */
-
-    .filter-tabs {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 18px 0;
-    }
-
-    .filter-tab {
-      height: 28px;
-      padding: 0 13px;
-      border: 0;
-      font-size: 9px;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 4px;
-      font-weight: 500;
-    }
-
-    .filter-tab.all {
-      background: #173f97;
-    }
-
-    .filter-tab.important {
-      background: #d75c61;
-    }
-
-    .filter-tab.event {
-      background: #46b8b2;
-    }
-
-    .filter-tab.scholarship {
-      background: #d6a04b;
-    }
-
-    .filter-tab.general {
-      background: #cc9641;
-    }
-
-    .filter-tab.active {
-      box-shadow: inset 0 -2px 0 rgba(0,0,0,.18);
-    }
-
-    /* =========================
-       ANNOUNCEMENT CARDS
-    ========================== */
-
-    .announcement-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .announcement-card {
-      background: #fff;
-      border: 1px solid #e0e5ec;
-      border-radius: 9px;
-      min-height: 155px;
-      padding: 17px 18px;
-      box-shadow: 0 2px 8px rgba(24,43,76,.05);
-    }
-
-    .announcement-card:hover {
-      box-shadow: 0 4px 12px rgba(24,43,76,.09);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .badges {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      height: 20px;
-      padding: 0 8px;
-      border-radius: 4px;
-      font-size: 8px;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .tag-important {
-      color: #f05259;
-      background: #ffe1e2;
-    }
-
-    .tag-pinned {
-      color: #d99300;
-      background: #fff0c7;
-    }
-
-    .tag-event {
-      color: #149d82;
-      background: #d9f6ed;
-    }
-
-    .tag-scholarship {
-      color: #a97114;
-      background: #fff0c9;
-    }
-
-    .tag-general {
-      color: #a67720;
-      background: #f5e7d1;
-    }
-
-    .card-date {
-      color: #8d98aa;
-      font-size: 10px;
-      white-space: nowrap;
-    }
-
-    .card-title {
-      margin-top: 11px;
-      color: #111d31;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .card-body {
-      margin-top: 8px;
-      color: #65748b;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .card-footer {
-      margin-top: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .author {
-      color: #78869a;
-      font-size: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .read-more {
-      color: #064fc6;
-      font-size: 10px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .read-more:hover {
-      text-decoration: underline;
-    }
-
-    .no-results {
-      display: none;
-      text-align: center;
-      color: #8994a7;
-      background: #fff;
-      border-radius: 9px;
-      padding: 30px;
-      font-size: 12px;
-    }
-
-    /* =========================
-       UPCOMING EVENTS
-    ========================== */
-
-    .events-column {
-      min-width: 0;
-    }
-
-    .events-heading {
-      height: 38px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-
-    .events-heading h2 {
-      color: #073ca5;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .events-heading h2 i {
-      font-size: 15px;
-      margin-right: 7px;
-    }
-
-    .view-all {
-      color: #4267ac;
-      font-size: 10px;
-      text-decoration: none;
-      margin-top: 4px;
-    }
-
-    /* =========================
-       CALENDAR
-    ========================== */
-
-    .calendar {
-      background: #07348f;
-      border-radius: 9px;
-      padding: 16px 15px 14px;
-      color: #fff;
-      min-height: 217px;
-    }
-
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .calendar-month {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .calendar-controls {
-      display: flex;
-      gap: 8px;
-    }
-
-    .calendar-controls button {
-      color: #fff;
-      background: transparent;
-      border: 0;
-      font-size: 23px;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .weekdays,
-    .calendar-days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-    }
-
-    .weekdays {
-      margin-bottom: 9px;
-    }
-
-    .weekdays span {
-      color: rgba(255,255,255,.76);
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .calendar-days {
-      row-gap: 7px;
-    }
-
-    .calendar-day {
-      width: 28px;
-      height: 28px;
-      margin: auto;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,.9);
-      font-size: 10px;
-      border: 0;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .calendar-day:hover,
-    .calendar-day.selected {
-      background: #f5a623;
-      color: #fff;
-    }
-
-    .calendar-day.empty {
+      z-index: 9999;
       opacity: 0;
-      cursor: default;
-    }
-
-    /* =========================
-       EVENT CARDS
-    ========================== */
-
-    .event-list {
-      margin-top: 13px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .event-card {
-      min-height: 72px;
-      background: #fff;
-      border: 1px solid #e1e6ed;
-      border-radius: 9px;
-      box-shadow: 0 2px 8px rgba(24,43,76,.05);
-      padding: 10px;
-      display: flex;
-      align-items: flex-start;
-      position: relative;
-    }
-
-    .event-date {
-      width: 43px;
-      height: 44px;
-      border-radius: 7px;
-      color: #fff;
-      text-align: center;
-      flex: 0 0 43px;
-      padding-top: 5px;
-    }
-
-    .event-date strong {
-      display: block;
-      font-size: 16px;
-      line-height: 1;
-    }
-
-    .event-date span {
-      display: block;
-      font-size: 7px;
-      margin-top: 4px;
-    }
-
-    .date-blue {
-      background: #173f97;
-    }
-
-    .date-green {
-      background: #0db28d;
-    }
-
-    .date-orange {
-      background: #f2a313;
-    }
-
-    .date-purple {
-      background: #6861dc;
-    }
-
-    .event-details {
-      padding-left: 10px;
-      padding-right: 65px;
-    }
-
-    .event-title {
-      color: #172235;
-      font-size: 10px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin: 2px 0 6px;
-    }
-
-    .event-meta {
-      color: #8d97a7;
-      font-size: 8px;
-      line-height: 1.5;
-    }
-
-    .event-meta i {
-      width: 11px;
-      text-align: center;
-      margin-right: 3px;
-    }
-
-    .event-tag {
-      position: absolute;
-      right: 10px;
-      top: 13px;
-      padding: 4px 7px;
-      border-radius: 4px;
-      font-size: 7px;
-      font-weight: 600;
-    }
-
-    .tag-academic {
-      color: #e5575d;
-      background: #ffe0e1;
-    }
-
-    .tag-event {
-      color: #15966f;
-      background: #ddf7ed;
-    }
-
-    .tag-holiday {
-      color: #bd8114;
-      background: #fff0c7;
-    }
-
-    /* =========================
-       FOOTER
-    ========================== */
-
-    .footer {
-      height: 35px;
-      flex: 0 0 35px;
-      background: #073da7;
-      color: rgba(255,255,255,.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 25px;
-      font-size: 8px;
-    }
-
-    /* =========================
-       MODAL
-    ========================== */
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(5,20,55,.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
       padding: 20px;
     }
-
-    .modal-overlay.show {
-      display: flex;
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
-
-    .modal {
-      width: min(560px, 100%);
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    .modal-container {
+      background: white;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
       overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
     }
-
-    .modal-head {
-      background: #073da7;
-      color: #fff;
-      padding: 14px 17px;
+    .modal-overlay.active .modal-container {
+      transform: scale(1);
+    }
+    .modal-header {
+      background: var(--primary-blue-dark);
+      color: white;
+      padding: 18px 24px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
     }
-
-    .modal-head h3 {
-      font-size: 13px;
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      padding-right: 12px;
     }
-
     .modal-close {
       background: transparent;
-      color: #fff;
-      font-size: 16px;
+      border: none;
+      color: white;
+      font-size: 20px;
       cursor: pointer;
-      border: 0;
+      opacity: 0.8;
+      transition: opacity 0.2s;
     }
-
+    .modal-close:hover { opacity: 1; }
     .modal-body {
-      padding: 18px;
-      color: #667287;
-      font-size: 10px;
-      line-height: 1.7;
+      padding: 24px;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.6;
     }
-
-    /* =========================
-       RESPONSIVE
-    ========================== */
-
-    @media (max-width: 1100px) {
-      .content-grid {
-        grid-template-columns: minmax(0, 1fr) 300px;
-        padding-left: 25px;
-        padding-right: 25px;
-      }
-
-      .page-header {
-        padding-left: 25px;
-        padding-right: 25px;
-      }
-
-      .search-section {
-        padding-left: 25px;
-        padding-right: 25px;
-      }
+    .modal-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #64748b;
     }
-
-    @media (max-width: 850px) {
-
-      .sidebar {
-        transform: translateX(-100%);
-        transition: transform .25s ease;
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .main-wrapper {
-        width: 100%;
-        margin-left: 0;
-      }
-
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .events-column {
-        max-width: 600px;
-      }
+    .modal-footer {
+      padding: 14px 24px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      text-align: right;
     }
+    .modal-btn {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-btn:hover { background: var(--primary-blue-dark); }
 
-    @media (max-width: 560px) {
+    /* Calendar & Upcoming Events Side Panel */
+    .calendar-card { background: var(--primary-blue-dark); color: white; border-radius: 8px; padding: 18px; margin-bottom: 18px; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 700; font-size: 14px; }
+    .calendar-nav { display: flex; gap: 12px; cursor: pointer; font-size: 12px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; gap: 8px 0; }
+    .day-name { opacity: 0.7; font-weight: 600; margin-bottom: 4px; font-size: 10px; }
+    .date-num { padding: 4px 0; border-radius: 50%; width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
+    .date-num:hover:not(.active) { background: rgba(255,255,255,0.15); }
+    .date-num.active { background: var(--accent-orange); font-weight: bold; color: white; }
 
-      .page-header {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
+    .event-card { background: white; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; border: 1px solid #e2e8f0; }
+    .event-date-box { width: 44px; height: 44px; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0; }
+    .event-date-box.blue { background: var(--primary-blue-dark); }
+    .event-date-box.green { background: var(--accent-green); }
+    .event-date-box.orange { background: var(--accent-orange); }
+    .event-date-box.purple { background: var(--primary-blue); }
+    
+    .event-date-num { font-size: 15px; line-height: 1; font-weight: 800; }
+    .event-date-month { font-size: 9px; text-transform: uppercase; margin-top: 1px; font-weight: 700; }
+    .event-details { flex: 1; }
+    .event-title { font-size: 13px; font-weight: 700; color: #0f172a; line-height: 1.3; }
+    .event-meta { font-size: 11px; color: #64748b; margin-top: 3px; display: flex; align-items: center; gap: 5px; }
+    .event-meta i { width: 12px; text-align: center; }
 
-      .header-text h1 {
-        font-size: 18px;
-      }
+    /* Footer */
+    .footer { text-align: center; padding: 14px 30px; font-size: 12px; color: rgba(255,255,255,0.9); background: var(--primary-blue-dark); display: flex; justify-content: space-between; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); }
 
-      .header-text p {
-        font-size: 9px;
-      }
-
-      .content-grid {
-        padding: 12px;
-      }
-
-      .search-section {
-        padding: 12px;
-      }
-
-      .filter-tabs {
-        flex-wrap: wrap;
-      }
-
-      .user-details,
-      .header-divider {
-        display: none;
-      }
-
-      .footer {
-        gap: 10px;
-        padding: 7px;
-        height: auto;
-        min-height: 35px;
-      }
-
-      .card-title {
-        font-size: 13px;
-      }
-
-      .card-body {
-        font-size: 10px;
-      }
+    /* Responsiveness */
+    @media (max-width: 992px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
     }
   </style>
 </head>
-
 <body>
 
-  <div class="portal">
-
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
-    <aside class="sidebar" id="sidebar">
-
-      <div class="sidebar-header">
-
-        <div class="sidebar-logo"></div>
-
-        <div>
-          <div class="college-name">
-            CEBU EASTERN COLLEGE
-          </div>
-
-          <div class="portal-title">
-            STUDENT PORTAL
-          </div>
-        </div>
-
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-img">CEC</div>
+      <div>
+        <div class="college-name">Cebu Eastern College</div>
+        <div class="portal-title">STUDENT PORTAL</div>
       </div>
-
-      <ul class="nav-menu">
-
-        <li class="nav-item">
-          <i class="fa-solid fa-border-all"></i>
-          <span>Dashboard</span>
-        </li>
-
-        <li class="nav-item active">
-          <i class="fa-solid fa-bullhorn"></i>
-          <span>Announcements &amp; Events</span>
-        </li>
-
-        <li class="nav-item">
-          <i class="fa-regular fa-calendar-days"></i>
-          <span>Class Schedule</span>
-        </li>
-
-        <li class="nav-item">
-          <i class="fa-regular fa-file-lines"></i>
-          <span>Grades &amp; Records</span>
-        </li>
-
-        <li class="nav-item">
-          <i class="fa-solid fa-wallet"></i>
-          <span>Tuition &amp; Assessment</span>
-        </li>
-
-        <li class="nav-item">
-          <i class="fa-regular fa-user"></i>
-          <span>My Profile</span>
-        </li>
-
-        <li class="nav-item">
-          <i class="fa-solid fa-gear"></i>
-          <span>Settings</span>
-        </li>
-
-      </ul>
-
-      <div class="sidebar-watermark"></div>
-
-    </aside>
-
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
-    <main class="main-wrapper">
-
-      <!-- TOP BAR -->
-
-      <header class="top-bar">
-
-        <div class="menu-toggle" id="menuToggle">
-          <i class="fa-solid fa-bars"></i>
-        </div>
-
-        <div class="user-profile">
-
-          <div class="user-info">
-
-            <div class="user-avatar">
-              <i class="fa-regular fa-circle-user"></i>
-            </div>
-
-            <div class="user-details">
-
-              <div class="user-name">
-                Gemar Enopia
-              </div>
-
-              <div class="user-role">
-                Student
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="header-divider"></div>
-
-          <a href="#" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-          </a>
-
-        </div>
-
-      </header>
-
-
-      <!-- PAGE HEADER -->
-
-      <section class="page-header">
-
-        <div class="header-icon">
-          <i class="fa-solid fa-bullhorn"></i>
-        </div>
-
-        <div class="header-text">
-
-          <h1>
-            Announcements &amp; Events
-          </h1>
-
-          <p>
-            Stay updated with school-wide notices, deadlines, and upcoming activities
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <!-- SEARCH -->
-
-      <section class="search-section">
-
-        <div class="search-box">
-
-          <i class="fa-solid fa-magnifying-glass"></i>
-
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search announcements..."
-            autocomplete="off"
-          >
-
-        </div>
-
-      </section>
-
-
-      <!-- MAIN CONTENT -->
-
-      <section class="content">
-
-        <div class="content-grid">
-
-
-          <!-- =========================
-               ANNOUNCEMENTS
-          ========================== -->
-
-          <section class="announcements-column">
-
-            <div class="filter-tabs">
-
-              <button
-                class="filter-tab all active"
-                data-filter="all"
-                type="button">
-                ALL
-              </button>
-
-              <button
-                class="filter-tab important"
-                data-filter="important"
-                type="button">
-                Important
-              </button>
-
-              <button
-                class="filter-tab event"
-                data-filter="event"
-                type="button">
-                Event
-              </button>
-
-              <button
-                class="filter-tab scholarship"
-                data-filter="scholarship"
-                type="button">
-                Scholarship
-              </button>
-
-              <button
-                class="filter-tab general"
-                data-filter="general"
-                type="button">
-                General
-              </button>
-
-            </div>
-
-
-            <div class="announcement-list" id="announcementList">
-
-
-              <!-- ANNOUNCEMENT 1 -->
-
-              <article
-                class="announcement-card"
-                data-category="important">
-
-                <div class="card-top">
-
-                  <div class="badges">
-
-                    <span class="tag tag-important">
-                      IMPORTANT
-                    </span>
-
-                    <span class="tag tag-pinned">
-                      <i class="fa-solid fa-thumbtack"></i>
-                      &nbsp; PINNED
-                    </span>
-
-                  </div>
-
-                  <span class="card-date">
-                    September 2, 2026
-                  </span>
-
-                </div>
-
-                <div class="card-title">
-                  Class Suspension - Tropical Cyclone Warning
-                </div>
-
-                <div class="card-body">
-                  All in-person classes are suspended on September 2 due to the current weather advisory. Students are advised to stay safe at home.
-                </div>
-
-                <div class="card-footer">
-
-                  <span class="author">
-                    <i class="fa-regular fa-user"></i>
-                    Atalaya Publication
-                  </span>
-
-                  <a
-                    href="#"
-                    class="read-more"
-                    data-title="Class Suspension - Tropical Cyclone Warning"
-                    data-date="September 2, 2026"
-                    data-author="Atalaya Publication"
-                    data-content="All in-person classes are suspended on September 2 due to the current weather advisory. Students are advised to stay safe at home.">
-
-                    Read more
-
-                  </a>
-
-                </div>
-
-              </article>
-
-
-              <!-- ANNOUNCEMENT 2 -->
-
-              <article
-                class="announcement-card"
-                data-category="event">
-
-                <div class="card-top">
-
-                  <div class="badges">
-
-                    <span class="tag tag-event">
-                      EVENT
-                    </span>
-
-                  </div>
-
-                  <span class="card-date">
-                    January 18, 2026
-                  </span>
-
-                </div>
-
-                <div class="card-title">
-                  Dragon Week Opening Ceremony
-                </div>
-
-                <div class="card-body">
-                  Join the Cebu Eastern College community as we officially open Dragon Week! Experience the traditional lion dance, performances from student organizations, and the unveiling of the week's activities.
-                </div>
-
-                <div class="card-footer">
-
-                  <span class="author">
-                    <i class="fa-regular fa-user"></i>
-                    Student Affairs Office
-                  </span>
-
-                  <a
-                    href="#"
-                    class="read-more"
-                    data-title="Dragon Week Opening Ceremony"
-                    data-date="January 18, 2026"
-                    data-author="Student Affairs Office"
-                    data-content="Join the Cebu Eastern College community as we officially open Dragon Week! Experience the traditional lion dance, performances from student organizations, and the unveiling of the week's activities.">
-
-                    Read more
-
-                  </a>
-
-                </div>
-
-              </article>
-
-
-              <!-- ANNOUNCEMENT 3 -->
-
-              <article
-                class="announcement-card"
-                data-category="scholarship">
-
-                <div class="card-top">
-
-                  <div class="badges">
-
-                    <span class="tag tag-scholarship">
-                      SCHOLARSHIP
-                    </span>
-
-                  </div>
-
-                  <span class="card-date">
-                    October 20, 2026
-                  </span>
-
-                </div>
-
-                <div class="card-title">
-                  CHED Scholarship Applications for 2nd Semester Now Accepting
-                </div>
-
-                <div class="card-body">
-                  Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.
-                </div>
-
-                <div class="card-footer">
-
-                  <span class="author">
-                    <i class="fa-regular fa-user"></i>
-                    Scholarship Office
-                  </span>
-
-                  <a
-                    href="#"
-                    class="read-more"
-                    data-title="CHED Scholarship Applications for 2nd Semester Now Accepting"
-                    data-date="October 20, 2026"
-                    data-author="Scholarship Office"
-                    data-content="Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.">
-
-                    Read more
-
-                  </a>
-
-                </div>
-
-              </article>
-
-
-              <!-- ANNOUNCEMENT 4 -->
-
-              <article
-                class="announcement-card"
-                data-category="general">
-
-                <div class="card-top">
-
-                  <div class="badges">
-
-                    <span class="tag tag-general">
-                      GENERAL
-                    </span>
-
-                  </div>
-
-                  <span class="card-date">
-                    October 15, 2026
-                  </span>
-
-                </div>
-
-                <div class="card-title">
-                  Library Hours Extended During Examination Period
-                </div>
-
-                <div class="card-body">
-                  The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday.
-                </div>
-
-                <div class="card-footer">
-
-                  <span class="author">
-                    <i class="fa-regular fa-user"></i>
-                    Library Services
-                  </span>
-
-                  <a
-                    href="#"
-                    class="read-more"
-                    data-title="Library Hours Extended During Examination Period"
-                    data-date="October 15, 2026"
-                    data-author="Library Services"
-                    data-content="The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday.">
-
-                    Read more
-
-                  </a>
-
-                </div>
-
-              </article>
-
-
-            </div>
-
-
-            <div
-              class="no-results"
-              id="noResults">
-
-              No announcements found.
-
-            </div>
-
-          </section>
-
-
-          <!-- =========================
-               UPCOMING EVENTS
-          ========================== -->
-
-          <aside class="events-column">
-
-            <div class="events-heading">
-
-              <h2>
-
-                <i class="fa-regular fa-calendar-days"></i>
-
-                Upcoming Events
-
-              </h2>
-
-              <a
-                href="#"
-                class="view-all">
-
-                View All
-
-              </a>
-
-            </div>
-
-
-            <!-- CALENDAR -->
-
-            <div class="calendar">
-
-              <div class="calendar-header">
-
-                <span
-                  class="calendar-month"
-                  id="calendarMonth">
-
-                  October 2026
-
-                </span>
-
-                <div class="calendar-controls">
-
-                  <button
-                    id="prevMonth"
-                    aria-label="Previous month"
-                    type="button">
-
-                    ‹
-
-                  </button>
-
-                  <button
-                    id="nextMonth"
-                    aria-label="Next month"
-                    type="button">
-
-                    ›
-
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <div class="weekdays">
-
-                <span>SUN</span>
-                <span>MON</span>
-                <span>TUE</span>
-                <span>WED</span>
-                <span>THU</span>
-                <span>FRI</span>
-                <span>SAT</span>
-
-              </div>
-
-
-              <div
-                class="calendar-days"
-                id="calendarDays">
-              </div>
-
-            </div>
-
-
-            <!-- EVENT LIST -->
-
-            <div class="event-list">
-
-
-              <!-- EVENT 1 -->
-
-              <article class="event-card">
-
-                <div class="event-date date-blue">
-
-                  <strong>
-                    16
-                  </strong>
-
-                  <span>
-                    OCT
-                  </span>
-
-                </div>
-
-                <div class="event-details">
-
-                  <div class="event-title">
-                    Final Examinations Begin
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-regular fa-clock"></i>
-                    8:00 AM - 9:00 PM
-
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-solid fa-location-dot"></i>
-                    All Campus Buildings
-
-                  </div>
-
-                </div>
-
-                <span class="event-tag tag-academic">
-                  ACADEMIC
-                </span>
-
-              </article>
-
-
-              <!-- EVENT 2 -->
-
-              <article class="event-card">
-
-                <div class="event-date date-green">
-
-                  <strong>
-                    11
-                  </strong>
-
-                  <span>
-                    SEP
-                  </span>
-
-                </div>
-
-                <div class="event-details">
-
-                  <div class="event-title">
-                    Intramurals Sports Festival Opening
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-regular fa-clock"></i>
-                    9:00 AM - 12:00 PM
-
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-solid fa-location-dot"></i>
-                    Gymnasium
-
-                  </div>
-
-                </div>
-
-                <span class="event-tag tag-event">
-                  EVENT
-                </span>
-
-              </article>
-
-
-              <!-- EVENT 3 -->
-
-              <article class="event-card">
-
-                <div class="event-date date-orange">
-
-                  <strong>
-                    22
-                  </strong>
-
-                  <span>
-                    DEC
-                  </span>
-
-                </div>
-
-                <div class="event-details">
-
-                  <div class="event-title">
-                    Christmas Celebration
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-regular fa-clock"></i>
-                    2:00 PM - 6:00 PM
-
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-solid fa-location-dot"></i>
-                    Open Court
-
-                  </div>
-
-                </div>
-
-                <span class="event-tag tag-holiday">
-                  HOLIDAY
-                </span>
-
-              </article>
-
-
-              <!-- EVENT 4 -->
-
-              <article class="event-card">
-
-                <div class="event-date date-purple">
-
-                  <strong>
-                    10
-                  </strong>
-
-                  <span>
-                    JAN
-                  </span>
-
-                </div>
-
-                <div class="event-details">
-
-                  <div class="event-title">
-                    Start of 2nd Semester Classes
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-regular fa-clock"></i>
-                    All Day
-
-                  </div>
-
-                  <div class="event-meta">
-
-                    <i class="fa-solid fa-location-dot"></i>
-                    Main Campus
-
-                  </div>
-
-                </div>
-
-                <span class="event-tag tag-academic">
-                  ACADEMIC
-                </span>
-
-              </article>
-
-
-            </div>
-
-          </aside>
-
-        </div>
-
-      </section>
-
-
-      <!-- FOOTER -->
-
-      <footer class="footer">
-
-        <span>
-          &copy; 2026 Cebu Eastern College. All rights reserved.
-        </span>
-
-        <span>
-          Student Portal v1.0
-        </span>
-
-      </footer>
-
-    </main>
-
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</li>
+      <li class="nav-item active"><i class="fa-solid fa-bullhorn"></i> Announcements & Events</li>
+      <li class="nav-item"><i class="fa-regular fa-calendar-days"></i> Class Schedule</li>
+      <li class="nav-item"><i class="fa-regular fa-file-lines"></i> Grades & Records</li>
+      <li class="nav-item"><i class="fa-solid fa-wallet"></i> Tuition & Assesment</li>
+      <li class="nav-item"><i class="fa-regular fa-user"></i> My Profile</li>
+      <li class="nav-item"><i class="fa-solid fa-gear"></i> Settings</li>
+    </ul>
+    <div class="sidebar-dragon-bg"></div>
   </div>
 
+  <div class="main-wrapper">
+    <div class="top-bar">
+      <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+      
+      <div class="user-profile">
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="fa-regular fa-circle-user"></i>
+          </div>
+          <div class="user-details">
+            <div class="user-name">Gemar Enopia</div>
+            <div class="user-role">Student</div>
+          </div>
+        </div>
+        
+        <div class="header-divider"></div>
 
-  <!-- =========================
-       READ MORE MODAL
-  ========================== -->
-
-  <div
-    class="modal-overlay"
-    id="announcementModal">
-
-    <div class="modal">
-
-      <div class="modal-head">
-
-        <h3 id="modalTitle">
-          Announcement
-        </h3>
-
-        <button
-          class="modal-close"
-          id="modalClose"
-          type="button">
-
-          <i class="fa-solid fa-xmark"></i>
-
-        </button>
-
+        <a href="./login.html" class="logout-btn" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
       </div>
-
-      <div class="modal-body">
-
-        <p id="modalMeta"></p>
-
-        <br>
-
-        <p id="modalContent"></p>
-
-      </div>
-
     </div>
 
+    <div class="page-header">
+      <div class="header-icon"><i class="fa-solid fa-bullhorn"></i></div>
+      <div class="header-text">
+        <h2>Announcements & Events</h2>
+        <p>Stay updated with school-wide notices, deadlines, and upcoming activities</p>
+      </div>
+    </div>
+
+    <div class="search-section">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search announcements..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="announcements-column">
+        
+        <!-- Dynamic Search Header Container -->
+        <div class="section-title-bar" id="searchTitleBar">
+          <div class="standard-title-bar">
+            <div class="section-title"><i class="fa-regular fa-bell"></i> Announcements</div>
+            <div class="title-actions">
+              <span class="post-btn"><i class="fa-solid fa-plus"></i> Post Notice</span>
+              <a href="#" class="view-all">View All</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Announcements List -->
+        <div id="announcementsList">
+          <div class="card" data-title="class suspension tropical cyclone warning" data-body="all in-person classes are suspended for sept 2 due to the current weather advisory. asynchronous module will be posted on each course page.">
+            <div class="card-tags">
+              <span class="tag tag-important">Important</span>
+              <span class="tag tag-pinned"><i class="fa-solid fa-thumbtack"></i> Pinned</span>
+            </div>
+            <div class="card-header">
+              <div class="card-title">Class Suspension - Tropical Cyclone Warning</div>
+              <div class="card-date">September 1, 2026</div>
+            </div>
+            <div class="card-body">
+              All in-person classes are suspended for Sept 2 due to the current weather advisory. Asynchronous module will be posted on each course page.
+            </div>
+            <div class="card-footer">
+              <div class="author"><i class="fa-regular fa-user"></i> Atalaya Publication</div>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Class Suspension - Tropical Cyclone Warning', 'September 2, 2026', 'Atalaya Publication', 'All in-person classes are suspended on September 2 due to the current weather advisory. Students are advised to stay safe at home.\n\nImportant Notes:\n- Asynchronous modules will be posted on each course page.\n- Check the portal regularly for updates.\n- Follow official advisories from PAGASA and the school administration.\n\nStay safe, Blue Dragons. 💙')">Read more</a>
+            </div>
+          </div>
+
+          <div class="card" data-title="dragon week opening ceremony" data-body="join the cec community for the opening program of dragon week, featuring the traditional lion dance and college band performance.">
+            <div class="card-tags">
+              <span class="tag tag-event">Event</span>
+            </div>
+            <div class="card-header">
+              <div class="card-title">Dragon Week Opening Ceremony</div>
+              <div class="card-date">January 18, 2026</div>
+            </div>
+            <div class="card-body">
+              Join the CEC community for the opening program of Dragon Week, featuring the traditional lion dance and college band performance.
+            </div>
+            <div class="card-footer">
+              <div class="author"><i class="fa-regular fa-user"></i> Student Affairs Office</div>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Dragon Week Opening Ceremony', 'January 18, 2026', 'Students Affairs Office', 'Join the Cebu Eastern College community as we officially open Dragon Week! Experience the traditional lion dance, performances from student organizations, and the unveiling of the week\'s activities.\n\nHighlights of the Program:\n- Parade of the CEC Dragons athletes and student leaders\n- Cultural presentations showcasing Cebu Eastern pride\n- Launch of competitions and friendly matches\n- Inspirational message from the Students Affairs Office.\n\nVenue: Main Campus Grounds\nTime: 9:00 AM\n\nLet\'s come together to celebrate school spirit, unity, and excellence. Show your support, wear your Blue Dragon colors, and be part of this memorable tradition!')">Read more</a>
+            </div>
+          </div>
+
+          <div class="card" data-title="ched scholarship applications for 2nd semester now accepting" data-body="eligible students may apply for ched scholarships for the upcoming semester. submit requirements to the scholarship office on or before november 2, 2026.">
+            <div class="card-tags">
+              <span class="tag tag-scholarship">Scholarship</span>
+            </div>
+            <div class="card-header">
+              <div class="card-title">CHED Scholarship Applications for 2nd Semester Now Accepting</div>
+              <div class="card-date">October 20, 2026</div>
+            </div>
+            <div class="card-body">
+              Eligible students may apply for CHED scholarships for the upcoming semester. Submit requirements to the Scholarship Office on or before November 2, 2026.
+            </div>
+            <div class="card-footer">
+              <div class="author"><i class="fa-regular fa-user"></i> Scholarship Office</div>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'CHED Scholarship Applications for 2nd Semester Now Accepting', 'October 20, 2026', 'Scholarship Office', 'The Scholarship and Financial Assistance Office announces that the application period for the Commission on Higher Education (CHED) Tertiary Education Subsidy (TES) and Merit Scholarship Program for the 2nd Semester AY 2025-2026 is now officially open.\n\nEligibility Criteria:\n- Must be a bona fide Filipino student enrolled at Cebu Eastern College\n- General Weighted Average (GWA) of at least 85% with no failing or incomplete grades\n- Combined annual family income not exceeding PHP 300,000.00\n\nDocumentary Requirements:\n1. Duly accomplished CHED Application Form (Form 2026-A)\n2. Certified True Copy of Grades for 1st Semester AY 2025-2026\n3. Latest Income Tax Return (ITR) or Certificate of Indigency\n4. Photocopy of valid Student ID\n\nSubmit all physical documents in a long brown envelope to Room 204, Student Services Center.')">Read more</a>
+            </div>
+          </div>
+
+          <div class="card" data-title="library hours extended during examination period" data-body="the college library will extend its operating hours during the final examination period. the library will be open from 7:00 am to 9:00 pm, monday to saturday.">
+            <div class="card-tags">
+              <span class="tag tag-general">General</span>
+            </div>
+            <div class="card-header">
+              <div class="card-title">Library Hours Extended During Examination Period</div>
+              <div class="card-date">October 15, 2026</div>
+            </div>
+            <div class="card-body">
+              The College Library will extend its operating hours during the final examination period. The library will be open from 7:00 AM to 9:00 PM, Monday to Saturday.
+            </div>
+            <div class="card-footer">
+              <div class="author"><i class="fa-regular fa-user"></i> Library Services</div>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Library Hours Extended During Examination Period', 'October 15, 2026', 'Library Services', 'In support of students preparing for the forthcoming Final Examination week, the Cebu Eastern College Main Library and Learning Resource Center will observe extended operating hours.\n\nSchedule of Services (Oct 10 - Oct 20, 2026):\n- Monday to Friday: 7:00 AM \u2013 9:00 PM\n- Saturday: 8:00 AM \u2013 7:00 PM\n\nAdditional Amenities:\n- High-speed research Wi-Fi bandwidth boosted in Discussion Pods.\n- Laptop charging stations available in the Quiet Study Wing.\n- Free warm water dispenser accessible at the entrance hall.')">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results Empty State Display -->
+        <div class="no-results-box" id="noResultsBox">
+          <div class="no-results-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="no-results-title" id="noResultsTitle">No results found</div>
+          <div class="no-results-desc">
+            Try checking for spelling errors or searching for different keywords.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="events-column">
+        <div class="section-title-bar">
+          <div class="section-title"><i class="fa-regular fa-calendar"></i> Upcoming Events</div>
+        </div>
+
+        <div class="calendar-card">
+          <div class="calendar-header">
+            <span>October 2026</span>
+            <div class="calendar-nav"><i class="fa-solid fa-chevron-left"></i> <i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+          <div class="calendar-grid">
+            <div class="day-name">SUN</div><div class="day-name">MON</div><div class="day-name">TUE</div><div class="day-name">WED</div><div class="day-name">THU</div><div class="day-name">FRI</div><div class="day-name">SAT</div>
+            <div class="date-num">8</div><div class="date-num">9</div><div class="date-num">10</div><div class="date-num">11</div><div class="date-num">12</div><div class="date-num">13</div><div class="date-num">14</div>
+            <div class="date-num">15</div><div class="date-num active">16</div><div class="date-num">17</div><div class="date-num">18</div><div class="date-num">19</div><div class="date-num">20</div><div class="date-num">21</div>
+            <div class="date-num">22</div><div class="date-num">23</div><div class="date-num">24</div><div class="date-num">25</div><div class="date-num">26</div><div class="date-num">27</div><div class="date-num">28</div>
+            <div class="date-num">29</div><div class="date-num">30</div><div class="date-num">31</div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date-box blue">
+            <span class="event-date-num">16</span>
+            <span class="event-date-month">OCT</span>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Final Examinations Begin</div>
+            <div class="event-meta"><i class="fa-regular fa-clock"></i> 8:00 AM - 9:00 PM</div>
+            <div class="event-meta"><i class="fa-solid fa-location-dot"></i> All Campus Buildings</div>
+          </div>
+          <span class="tag tag-academic">Academic</span>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date-box green">
+            <span class="event-date-num">11</span>
+            <span class="event-date-month">SEP</span>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Intramurals Sports Festival Opening</div>
+            <div class="event-meta"><i class="fa-regular fa-clock"></i> 9:00 AM - 12:00 PM</div>
+            <div class="event-meta"><i class="fa-solid fa-location-dot"></i> Gymnasium</div>
+          </div>
+          <span class="tag tag-event">Event</span>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date-box orange">
+            <span class="event-date-num">22</span>
+            <span class="event-date-month">DEC</span>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Christmas Celebration</div>
+            <div class="event-meta"><i class="fa-regular fa-clock"></i> 2:00 PM - 6:00 PM</div>
+            <div class="event-meta"><i class="fa-solid fa-location-dot"></i> Open Court</div>
+          </div>
+          <span class="tag tag-holiday">Holiday</span>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date-box purple">
+            <span class="event-date-num">10</span>
+            <span class="event-date-month">JAN</span>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Start of 2nd Semester Classes</div>
+            <div class="event-meta"><i class="fa-regular fa-clock"></i> All Day</div>
+            <div class="event-meta"><i class="fa-solid fa-location-dot"></i> Main Campus</div>
+          </div>
+          <span class="tag tag-academic">Academic</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>&copy; 2026 Cebu Eastern College. All rights reserved.</span>
+      <span>Student Portal v1.0</span>
+    </div>
   </div>
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
+  <!-- Announcement Detail Modal -->
+  <div class="modal-overlay" id="announcementModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Announcement Detail</div>
+        <button class="modal-close" onclick="closeAnnouncementModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span><i class="fa-regular fa-calendar"></i> <span id="modalDate"></span></span>
+          <span><i class="fa-regular fa-user"></i> <span id="modalAuthor"></span></span>
+        </div>
+        <div id="modalContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn" onclick="closeAnnouncementModal()">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
+    const searchInput = document.getElementById('searchInput');
+    const searchTitleBar = document.getElementById('searchTitleBar');
+    const cards = document.querySelectorAll('#announcementsList .card');
+    const noResultsBox = document.getElementById('noResultsBox');
+    const noResultsTitle = document.getElementById('noResultsTitle');
 
-    /* =========================
-       SIDEBAR MOBILE TOGGLE
-    ========================== */
+    // Modal logic
+    const announcementModal = document.getElementById('announcementModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDate = document.getElementById('modalDate');
+    const modalAuthor = document.getElementById('modalAuthor');
+    const modalContent = document.getElementById('modalContent');
 
-    const sidebar =
-      document.getElementById('sidebar');
+    function openAnnouncementModal(e, title, date, author, content) {
+      if (e) e.preventDefault();
+      modalTitle.innerText = title;
+      modalDate.innerText = date;
+      modalAuthor.innerText = author;
+      modalContent.innerText = content;
+      announcementModal.classList.add('active');
+    }
 
-    const menuToggle =
-      document.getElementById('menuToggle');
+    function closeAnnouncementModal() {
+      announcementModal.classList.remove('active');
+    }
 
-    menuToggle.addEventListener('click', () => {
-
-      sidebar.classList.toggle('open');
-
+    announcementModal.addEventListener('click', (e) => {
+      if (e.target === announcementModal) {
+        closeAnnouncementModal();
+      }
     });
 
+    searchInput.addEventListener('input', (e) => {
+      const rawQuery = e.target.value;
+      const query = rawQuery.trim().toLowerCase();
+      let visibleCount = 0;
 
-    /* =========================
-       SEARCH
-    ========================== */
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title');
+        const body = card.getAttribute('data-body');
 
-    const searchInput =
-      document.getElementById('searchInput');
-
-    const announcementCards = [
-      ...document.querySelectorAll('.announcement-card')
-    ];
-
-    const noResults =
-      document.getElementById('noResults');
-
-    let activeCategory = 'all';
-
-
-    function updateAnnouncements() {
-
-      const query =
-        searchInput.value.trim().toLowerCase();
-
-      let visible = 0;
-
-
-      announcementCards.forEach(card => {
-
-        const category =
-          card.dataset.category;
-
-        const text =
-          card.innerText.toLowerCase();
-
-
-        const categoryMatches =
-          activeCategory === 'all' ||
-          category === activeCategory;
-
-
-        const searchMatches =
-          query === '' ||
-          text.includes(query);
-
-
-        const show =
-          categoryMatches &&
-          searchMatches;
-
-
-        card.style.display =
-          show ? '' : 'none';
-
-
-        if (show) {
-          visible++;
+        if (query === '' || title.includes(query) || body.includes(query)) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
         }
-
       });
 
+      // Update Header Title depending on search status
+      if (query !== '') {
+        searchTitleBar.innerHTML = `
+          <div class="search-results-heading">Search Results for: "${rawQuery}"</div>
+          <div class="search-results-count">${visibleCount} result${visibleCount === 1 ? '' : 's'} found</div>
+        `;
 
-      noResults.style.display =
-        visible === 0 ? 'block' : 'none';
-
-    }
-
-
-    searchInput.addEventListener(
-      'input',
-      updateAnnouncements
-    );
-
-
-    /* =========================
-       CATEGORY FILTER
-    ========================== */
-
-    document
-      .querySelectorAll('.filter-tab')
-      .forEach(button => {
-
-        button.addEventListener('click', () => {
-
-          document
-            .querySelectorAll('.filter-tab')
-            .forEach(tab => {
-
-              tab.classList.remove('active');
-
-            });
-
-
-          button.classList.add('active');
-
-          activeCategory =
-            button.dataset.filter;
-
-          updateAnnouncements();
-
-        });
-
-      });
-
-
-    /* =========================
-       READ MORE MODAL
-    ========================== */
-
-    const modal =
-      document.getElementById(
-        'announcementModal'
-      );
-
-    const modalTitle =
-      document.getElementById(
-        'modalTitle'
-      );
-
-    const modalMeta =
-      document.getElementById(
-        'modalMeta'
-      );
-
-    const modalContent =
-      document.getElementById(
-        'modalContent'
-      );
-
-    const modalClose =
-      document.getElementById(
-        'modalClose'
-      );
-
-
-    document
-      .querySelectorAll('.read-more')
-      .forEach(link => {
-
-        link.addEventListener(
-          'click',
-          event => {
-
-            event.preventDefault();
-
-
-            modalTitle.textContent =
-              link.dataset.title;
-
-
-            modalMeta.textContent =
-              link.dataset.date +
-              ' • ' +
-              link.dataset.author;
-
-
-            modalContent.textContent =
-              link.dataset.content;
-
-
-            modal.classList.add('show');
-
-          }
-        );
-
-      });
-
-
-    function closeModal() {
-
-      modal.classList.remove('show');
-
-    }
-
-
-    modalClose.addEventListener(
-      'click',
-      closeModal
-    );
-
-
-    modal.addEventListener(
-      'click',
-      event => {
-
-        if (event.target === modal) {
-          closeModal();
+        if (visibleCount === 0) {
+          noResultsBox.style.display = 'block';
+          noResultsTitle.innerText = `No results found for "${rawQuery}"`;
+        } else {
+          noResultsBox.style.display = 'none';
         }
-
+      } else {
+        // Reset to Default Section Header
+        searchTitleBar.innerHTML = `
+          <div class="standard-title-bar">
+            <div class="section-title"><i class="fa-regular fa-bell"></i> Announcements</div>
+            <div class="title-actions">
+              <span class="post-btn"><i class="fa-solid fa-plus"></i> Post Notice</span>
+              <a href="#" class="view-all">View All</a>
+            </div>
+          </div>
+        `;
+        noResultsBox.style.display = 'none';
       }
-    );
-
-
-    /* =========================
-       CALENDAR
-    ========================== */
-
-    const calendarMonth =
-      document.getElementById(
-        'calendarMonth'
-      );
-
-    const calendarDays =
-      document.getElementById(
-        'calendarDays'
-      );
-
-    const prevMonth =
-      document.getElementById(
-        'prevMonth'
-      );
-
-    const nextMonth =
-      document.getElementById(
-        'nextMonth'
-      );
-
-
-    let currentDate =
-      new Date(2026, 9, 1);
-
-
-    function renderCalendar() {
-
-      const year =
-        currentDate.getFullYear();
-
-      const month =
-        currentDate.getMonth();
-
-
-      calendarMonth.textContent =
-        new Intl.DateTimeFormat(
-          'en-US',
-          {
-            month: 'long',
-            year: 'numeric'
-          }
-        ).format(currentDate);
-
-
-      calendarDays.innerHTML = '';
-
-
-      const firstDay =
-        new Date(
-          year,
-          month,
-          1
-        ).getDay();
-
-
-      const daysInMonth =
-        new Date(
-          year,
-          month + 1,
-          0
-        ).getDate();
-
-
-      /* EMPTY DAYS */
-
-      for (
-        let i = 0;
-        i < firstDay;
-        i++
-      ) {
-
-        const empty =
-          document.createElement('span');
-
-        empty.className =
-          'calendar-day empty';
-
-        calendarDays.appendChild(empty);
-
-      }
-
-
-      /* ACTUAL DAYS */
-
-      for (
-        let day = 1;
-        day <= daysInMonth;
-        day++
-      ) {
-
-        const button =
-          document.createElement('button');
-
-
-        button.className =
-          'calendar-day';
-
-
-        button.textContent =
-          day;
-
-
-        /* HIGHLIGHT OCTOBER 16 */
-
-        if (
-          year === 2026 &&
-          month === 9 &&
-          day === 16
-        ) {
-
-          button.classList.add(
-            'selected'
-          );
-
-        }
-
-
-        button.addEventListener(
-          'click',
-          () => {
-
-            document
-              .querySelectorAll(
-                '.calendar-day.selected'
-              )
-              .forEach(item => {
-
-                item.classList.remove(
-                  'selected'
-                );
-
-              });
-
-
-            button.classList.add(
-              'selected'
-            );
-
-          }
-        );
-
-
-        calendarDays.appendChild(
-          button
-        );
-
-      }
-
-    }
-
-
-    /* PREVIOUS MONTH */
-
-    prevMonth.addEventListener(
-      'click',
-      () => {
-
-        currentDate.setMonth(
-          currentDate.getMonth() - 1
-        );
-
-        renderCalendar();
-
-      }
-    );
-
-
-    /* NEXT MONTH */
-
-    nextMonth.addEventListener(
-      'click',
-      () => {
-
-        currentDate.setMonth(
-          currentDate.getMonth() + 1
-        );
-
-        renderCalendar();
-
-      }
-    );
-
-
-    /* INITIAL CALENDAR */
-
-    renderCalendar();
-
+    });
   </script>
-
 </body>
 </html>
