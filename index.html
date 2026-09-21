@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEC Student Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container sidebar-open" id="appContainer">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <div class="sidebar-header">
+        <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle Navigation Menu">☰</button>
+        <div class="logo">
+          <img src="logo cec.jpg" alt="Cebu Eastern College Logo" class="logo-img">
+          <div class="logo-text">
+            <h2>CEBU EASTERN COLLEGE</h2>
+            <p>Student Portal</p>
+          </div>
+        </div>
+      </div>
+
+      <nav id="sidebarNav">
+        <a href="#"><i class="fa-solid fa-border-all"></i> <span class="nav-text">Dashboard</span></a>
+        <a href="#"><i class="fa-solid fa-bullhorn"></i> <span class="nav-text">Announcements & Events</span></a>
+        <a href="#"><i class="fa-regular fa-calendar-days"></i> <span class="nav-text">Class Schedule</span></a>
+        <a href="#" class="active"><i class="fa-regular fa-folder-open"></i> <span class="nav-text">Grades & Records</span></a>
+        <a href="#"><i class="fa-regular fa-credit-card"></i> <span class="nav-text">Tuition Assessment</span></a>
+        <a href="#"><i class="fa-regular fa-user"></i> <span class="nav-text">Profile Management</span></a>
+      </nav>
+    </div>
+
+    <!-- VERTICAL DRAGON WATERMARK AT LOWER LEFT SIDEBAR -->
+    <div class="sidebar-dragon-bg">
+      <img src="dragons 2.jpg" alt="" aria-hidden="true">
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HEADER DRAGON WATERMARK -->
+    <div class="header-watermark">
+      <img src="dragon 1.jpg" alt="" aria-hidden="true">
+    </div>
+
+    <header>
+      <button id="menuBtn" aria-label="Toggle Navigation Menu">☰</button>
+
+      <div class="admin">
+        <div class="profile"><i class="fa-solid fa-user"></i></div>
+        <div>
+          <b>Gemar Enopia</b>
+          <small>Admin</small>
+        </div>
+
+        <button id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+      </div>
+    </header>
+
+    <section class="content">
+      <h1>User Management</h1>
+      <div class="tab-container">
+        <button class="tab-btn active">Student</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Manage Student Accounts</h2>
+          <div class="header-actions">
+            <input type="text" id="search" placeholder="Search...">
+            <button class="btn-primary-add" id="topAddStudentBtn">ADD STUDENT</button>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentTable">
+            <!-- Table rows generated dynamically -->
+          </tbody>
+        </table>
+
+        <button class="add-button" id="bottomAddStudentBtn">+</button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- MODALS -->
+<div class="modal" id="studentModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modalTitle"><i class="fa-solid fa-file-pen"></i> ADD STUDENT</h2>
+      <button id="closeModal">×</button>
+    </div>
+
+    <form id="studentForm">
+      <div class="section-header">
+        <h3>A. STUDENT INFORMATION</h3>
+        <span class="badge" id="autoFilledBadge">Auto-filled</span>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label>Student ID</label>
+          <input type="text" id="studentId" placeholder="0000000" required>
+        </div>
+
+        <div>
+          <label>Full Name</label>
+          <input type="text" id="fullName" placeholder="Full Name" required>
+        </div>
+
+        <div>
+          <label>Program</label>
+          <select id="program" required>
+            <option value="">Select Program</option>
+            <option value="Bachelor of Science in Information Technology (BSIT)">Bachelor of Science in Information Technology (BSIT)</option>
+            <option value="BS Hospitality Management">BS Hospitality Management</option>
+            <option value="BS Criminology">BS Criminology</option>
+            <option value="BS Tourism Management">BS Tourism Management</option>
+          </select>
+        </div>
+
+        <div>
+          <label>College Email</label>
+          <input type="email" id="email" placeholder="*******_******@gmail.com" required>
+        </div>
+      </div>
+
+      <h3>B. ENROLLMENT DETAILS</h3>
+
+      <div class="form-grid">
+        <div>
+          <label>Academic Year</label>
+          <input type="text" id="academicYear" value="2025-2026" required>
+        </div>
+
+        <div>
+          <label>Semester</label>
+          <select id="semester">
+            <option>1st Semester</option>
+            <option>2nd Semester</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Year Level</label>
+          <select id="yearLevel">
+            <option value="1ST YEAR">1st Year</option>
+            <option value="2ND YEAR">2nd Year</option>
+            <option value="3RD YEAR">3rd Year</option>
+            <option value="4TH YEAR">4th Year</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Enrollment Type</label>
+          <select id="enrollmentType">
+            <option>Regular</option>
+            <option>Irregular</option>
+            <option>Transferee</option>
+          </select>
+        </div>
+      </div>
+
+      <h3>C. INFORMATION</h3>
+
+      <div class="form-grid">
+        <div>
+          <label>Contact Number</label>
+          <input type="text" id="contact" placeholder="(63) 999999999">
+        </div>
+
+        <div>
+          <label>Emergency Contact Name</label>
+          <input type="text" id="emergencyName" placeholder="Full Name">
+        </div>
+
+        <div>
+          <label>Current Address</label>
+          <input type="text" id="address" placeholder="House no.,Street, Barangay, City">
+        </div>
+
+        <div>
+          <label>Status</label>
+          <select id="status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Emergency Contact Number</label>
+          <input type="text" id="emergencyContact" placeholder="(63) 0000000">
+        </div>
+
+        <div>
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Enter Password">
+        </div>
+      </div>
+
+      <label class="agreement">
+        <input type="checkbox" id="agreement" required>
+        I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability
+      </label>
+
+      <button type="submit" class="submit" id="submitBtn">ADD STUDENT</button>
+      <p class="form-footer-note" id="formFooterNote">Please fill in all required fields and check the agreement to submit</p>
+      <button type="button" class="cancel-link hidden" id="cancelForm">cancel</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="deleteModal">
+  <div class="delete-box">
+    <h2>Are you sure you want to<br>delete this acc?</h2>
+    <div class="delete-actions">
+      <button class="btn-delete-confirm" id="confirmDeleteBtn">Delete Account</button>
+      <button class="btn-delete-cancel" id="cancelDeleteBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
