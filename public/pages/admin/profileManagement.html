@@ -80,7 +80,7 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="students_table"">
+                    <tbody id="students_table">
                         <!-- Row 1 -->
                         <!-- <tr>
                             <td>Student 1</td>
@@ -167,7 +167,7 @@
                 <h3><i class="fas fa-graduation-cap"></i> ADD STUDENT</h3>
                 <button class="close-btn" onclick="closeModal('addModal')"><i class="fas fa-times-circle"></i></button>
             </div>
-            <form action="">
+            <form id="addStudent_form">
             <div class="modal-body">
                 <!-- Section A -->
                 <div class="form-section">
@@ -175,11 +175,13 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Student ID</label>
-                            <input type="text" placeholder="0000000" id="Id_number" required>
+                            <!-- <input type="text" placeholder="0000000" id="Id_number" required> -->
+                            <input type="text" inputmode="numeric" maxlength="7" pattern="\d{7}" placeholder="2026000"  id="Id_number" required>
+
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" placeholder="" id="fullName" required>
+                            <input type="text" placeholder="Last name, First name" id="fullName" required>
                         </div>
                         <div class="form-group">
                             <label>Program</label>
@@ -192,7 +194,7 @@
                         </div>
                         <div class="form-group">
                             <label>College Email</label>
-                            <input type="email" placeholder="********_******@gmail.com" id="Email">
+                            <input type="email" placeholder="email@gmail.com" id="Email" required>
                         </div>
                     </div>
                 </div>
@@ -203,11 +205,11 @@
                     <div class="form-grid enrollment-grid">
                         <div class="form-group">
                             <label>Academic Year</label>
-                            <input type="text" placeholder="2025-2026" id="Academic_year">
+                            <input type="text" placeholder="2025-2026" id="Academic_year" required>
                         </div>
                         <div class="form-group">
                             <label>Semester</label>
-                            <select id="Semester">
+                            <select id="Semester" required>
                                 <option value="">Select Semester</option>
                                 <option value="1st">1st Semester</option>
                                 <option value="2nd">2nd Semester</option>
@@ -215,12 +217,12 @@
                         </div>
                         <div class="form-group">
                             <label>Year Level</label>
-                            <select id="year_level">
+                            <select id="Current_year_level" required>
                                 <option value="">Select Year Level</option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -235,9 +237,14 @@
                             <label>Gender</label>
                             <select id="Gender" name="Gender" required>
                                 <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Section</label>
+                            <select id="Section_id" required>
+                                <option value="">Select Section</option>
                             </select>
                         </div>
                     </div>
@@ -249,29 +256,29 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="text" placeholder="(63) 9999999999">
+                            <input type="text" placeholder="+(63) 123-456-7890" id="Contact_num" required>
                         </div>
                         <div class="form-group">
                             <label>Emergency Contact Name</label>
-                            <input type="text" placeholder="Full Name">
+                            <input type="text" placeholder="Last name, First name" id="Emergency_contact_name" required> 
                         </div>
                         <div class="form-group">
                             <label>Current Address</label>
-                            <input type="text" placeholder="House no.,Street, Barangay, City">
+                            <input type="text" placeholder="House no.,Street, Barangay, City" id="Current_address" required>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" placeholder="Enter Password">
+                            <input type="password" placeholder="Enter Password" id="Student_password" required>
                         </div>
                         <div class="form-group">
                             <label>Emergency Contact Number</label>
-                            <input type="text" placeholder="(63) 0000000">
+                            <input type="text" placeholder="(+63) 123-456-7890" id="Emergency_contact_num" required>
                         </div>
                     </div>
-                    <div class="checkbox-group">
+                    <!-- <div class="checkbox-group">
                         <input type="checkbox" id="certifyAdd">
                         <label for="certifyAdd">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="modal-footer">

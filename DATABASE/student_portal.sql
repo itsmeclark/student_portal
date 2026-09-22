@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 22, 2026 at 11:08 AM
+-- Generation Time: Sep 22, 2026 at 08:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,7 +56,8 @@ INSERT INTO `STUDENTS` (`Student_id`, `First_name`, `Last_name`, `Course`, `Curr
 (2, 'Maria', 'Santos', 'BSIT', '1st Year', '2026002', 'maria.santos@email.com', 'BSIT-1A', 'pass123', '09172222222', 'Quezon City', 'Pedro Santos', '09182222222', 'ACTIVE', '2026-09-21 21:52:50', 'STUDENT', 'MALE'),
 (3, 'Pedro', 'Reyes', 'BSIT', '1st Year', '2026003', 'pedro.reyes@email.com', 'BSIT-1B', 'pass123', '09173333333', 'Makati', 'Ana Reyes', '09183333333', 'ACTIVE', '2026-09-21 21:52:50', 'STUDENT', 'MALE'),
 (4, 'Ana', 'Bautista', 'BSIT', '2nd Year', '2026004', 'ana.bautista@email.com', 'BSIT-2A', 'pass123', '09174444444', 'Pasig', 'Luis Bautista', '09184444444', 'ACTIVE', '2026-09-21 21:52:50', 'STUDENT', 'MALE'),
-(5, 'Jose', 'Rizal', 'BSIT', '2nd Year', '2026005', 'jose.rizal@email.com', 'BSIT-2A', 'pass123', '09175555555', 'Calamba', 'Teodora Rizal', '09185555555', 'ACTIVE', '2026-09-21 21:52:50', 'STUDENT', 'MALE');
+(5, 'Jose', 'Rizal', 'BSIT', '2nd Year', '2026005', 'jose.rizal@email.com', 'BSIT-2A', 'pass123', '09175555555', 'Calamba', 'Teodora Rizal', '09185555555', 'ACTIVE', '2026-09-21 21:52:50', 'STUDENT', 'MALE'),
+(10, 'bolhog', 'cardo', 'BSIT', '1st Year', '2026007', 'cardo@gmail.com', 'BSIT-1B', '123123', '09123456789', 'tondo', 'cardo bolhug', '09123123123', 'ACTIVE', '2026-09-22 23:54:15', 'STUDENT', 'MALE');
 
 --
 -- Indexes for dumped tables
@@ -78,7 +79,7 @@ ALTER TABLE `STUDENTS`
 -- AUTO_INCREMENT for table `STUDENTS`
 --
 ALTER TABLE `STUDENTS`
-  MODIFY `Student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
