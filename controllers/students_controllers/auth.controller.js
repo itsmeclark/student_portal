@@ -19,14 +19,14 @@ export const findIdNumberController = (req, res) => {
 
         try{
             const user = results[0];
-            if(user.student_password !== password) {
+            if(user.Student_password !== password) {
                 return res.status(401).json({ error: 'Invalid password' });
             }
-
             const token = jwt.sign({
-                id: user.studentID,
-                name: user.student_name,
-                email: user.email
+                id: user.Id_number,
+                name: user.First_name,
+                email: user.Email,
+                role: user.Role
             }, process.env.JWT_SECRET, { expiresIn: '1h' });
             
             res.cookie('token', token, {

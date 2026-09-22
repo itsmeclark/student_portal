@@ -1,10 +1,11 @@
-import {getUser} from "../../models/students_models/home.model.js";
-import jwt from "jsonwebtoken";
+import {getAdminName} from '../../models/admin/dashboard.model.js'
+import jwt from 'jsonwebtoken'
 
-export const getUserController = (req, res) => {
-   const decode = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-   const student_id = decode.id;
-    getUser(student_id, (err, results) => {
+export const findAdmin = (req, res) => {
+    const decode = jwt.verify(req.cookies.token, process.env.JWT_SECRET)
+    const admin_name = decode.admin_name
+
+    getAdminName(admin_name, (err, results)=>{
         if (err) {
             console.error('Error fetching user info:', err);
             return res.status(500).json({ error: 'Internal Server Error' });
@@ -14,7 +15,7 @@ export const getUserController = (req, res) => {
         }
 
         const userInfo = results[0];
-        const {Student_password : _, ...userWithoutPassword} = userInfo
+        const {Admin_password : _, ...userWithoutPassword} = userInfo
         res.status(200).json({ user: userWithoutPassword });
-    });
+    })
 }

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cebu Eastern College - Student Portal</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Your Custom CSS -->
+    <link href="../../css/admin/profileManagement.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <i class="fas fa-bars burger-menu" id="burgerMenu"></i>
+            <div class="logo-container">
+                <!-- Placeholder for College Logo -->
+                <img src="https://via.placeholder.com/50/ffffff/1a3b8b?text=CEC" alt="CEC Logo">
+                <div class="brand-text">
+                    <h1>CEBU EASTERN COLLEGE</h1>
+                    <h2>Student Portal</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <div class="user-details">
+                    <span>Gemar Enopia</span>
+                    <span>Admin</span>
+                </div>
+            </div>
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <a href="../admin/adminDashboard.html"><li><i class="fas fa-th-large"></i> Dashboard</li></a>
+            <li><i class="fas fa-bullhorn"></i> Announcements & Events</li>
+            <li><i class="fas fa-calendar-alt"></i> Class Schedule</li>
+            <li><i class="fas fa-file-alt"></i> Grades & Records</li>
+            <li><i class="fas fa-money-bill-wave"></i> Tuition Assessment</li>
+            <a href="../admin/profileManagement.html"><li><i class="fas fa-user-cog"></i> Profile Management</li></a>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="page-title">User Management</div>
+        
+        <div class="tabs">
+            <button class="tab active">Student</button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Manage Student Accounts</h2>
+                <div class="search-add">
+                    <input type="text" class="search-box" placeholder="Search...">
+                    <button class="btn-add" id="openAddModal">ADD STUDENT</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Year</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students_table"">
+                        <!-- Row 1 -->
+                        <!-- <tr>
+                            <td>Student 1</td>
+                            <td>student1@gmail.com</td>
+                            <td>IT Department</td>
+                            <td>1ST YEAR</td>
+                            <td class="status-active">Active</td>
+                            <td class="actions">
+                                <button class="btn-action btn-edit" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn-action btn-delete" onclick="openDeleteModal()"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr> -->
+                        <!-- Row 2 -->
+                        <!-- <tr>
+                            <td>Student 2</td>
+                            <td>student2@gmail.com</td>
+                            <td>HTM Department</td>
+                            <td>3RD YEAR</td>
+                            <td class="status-active">Active</td>
+                            <td class="actions">
+                                <button class="btn-action btn-edit" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn-action btn-delete" onclick="openDeleteModal()"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr> -->
+                        <!-- Row 3 -->
+                        <!-- <tr>
+                            <td>Student 3</td>
+                            <td>student3@gmail.com</td>
+                            <td>CTE Department</td>
+                            <td>2ND YEAR</td>
+                            <td class="status-active">Active</td>
+                            <td class="actions">
+                                <button class="btn-action btn-edit" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn-action btn-delete" onclick="openDeleteModal()"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr> -->
+                        <!-- Row 4 -->
+                        <!-- <tr>
+                            <td>Student 4</td>
+                            <td>student4@gmail.com</td>
+                            <td>CRIM Department</td>
+                            <td>2ND YEAR</td>
+                            <td class="status-active">Active</td>
+                            <td class="actions">
+                                <button class="btn-action btn-edit" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn-action btn-delete" onclick="openDeleteModal()"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr> -->
+                        <!-- Row 5 -->
+                        <!-- <tr>
+                            <td>Student 5</td>
+                            <td>student5@gmail.com</td>
+                            <td>HTM Department</td>
+                            <td>3RD YEAR</td>
+                            <td class="status-active">Active</td>
+                            <td class="actions">
+                                <button class="btn-action btn-edit" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn-action btn-delete" onclick="openDeleteModal()"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr> -->
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="add-icon-row" id="openAddModalIcon">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-delete">
+            <h3>Are you sure you want to delete this acc?</h3>
+            <button class="btn-confirm-delete">Delete Account</button>
+            <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal-form">
+            <div class="modal-header">
+                <h3><i class="fas fa-graduation-cap"></i> ADD STUDENT</h3>
+                <button class="close-btn" onclick="closeModal('addModal')"><i class="fas fa-times-circle"></i></button>
+            </div>
+            <form action="">
+            <div class="modal-body">
+                <!-- Section A -->
+                <div class="form-section">
+                    <div class="section-title">A. STUDENT INFORMATION <span>Auto-filled</span></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Student ID</label>
+                            <input type="text" placeholder="0000000" id="Id_number" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Program</label>
+                            <select id="Course" required>
+                                <option value="">Select Program</option>
+                                <option value="BSIT">BS Information Technology</option>
+                                <option value="BSHM">BS Hospitality Management</option>
+                                <option value="BSTM">BS Tourism Management</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>College Email</label>
+                            <input type="email" placeholder="********_******@gmail.com" id="Email">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B -->
+                <div class="form-section">
+                    <div class="section-title">B. ENROLLMENT DETAILS</div>
+                    <div class="form-grid enrollment-grid">
+                        <div class="form-group">
+                            <label>Academic Year</label>
+                            <input type="text" placeholder="2025-2026" id="Academic_year">
+                        </div>
+                        <div class="form-group">
+                            <label>Semester</label>
+                            <select id="Semester">
+                                <option value="">Select Semester</option>
+                                <option value="1st">1st Semester</option>
+                                <option value="2nd">2nd Semester</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Year Level</label>
+                            <select id="year_level">
+                                <option value="">Select Year Level</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Enrollment Type</label>
+                            <select id="Enrollment_type" required>
+                                <option value="">Select Type</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Irregular">Irregular</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="Gender" name="Gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C -->
+                <div class="form-section">
+                    <div class="section-title">C. INFORMATION</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" placeholder="(63) 9999999999">
+                        </div>
+                        <div class="form-group">
+                            <label>Emergency Contact Name</label>
+                            <input type="text" placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Current Address</label>
+                            <input type="text" placeholder="House no.,Street, Barangay, City">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="Enter Password">
+                        </div>
+                        <div class="form-group">
+                            <label>Emergency Contact Number</label>
+                            <input type="text" placeholder="(63) 0000000">
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="certifyAdd">
+                        <label for="certifyAdd">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-submit" type="submit">ADD STUDENT</button>
+                <span class="footer-note">Please fill in all required fields and check the agreement to submit</span>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Student Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-form">
+            <div class="modal-header">
+                <h3><i class="fas fa-pen"></i> EDIT STUDENT INFORMATION</h3>
+                <button class="close-btn" onclick="closeModal('editModal')"><i class="fas fa-times-circle"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Section A -->
+                <div class="form-section">
+                    <div class="section-title">A. STUDENT INFORMATION <span>Auto-filled</span></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Student ID</label>
+                            <input type="text" value="1234-5678">
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" value="Gemar Enopia">
+                        </div>
+                        <div class="form-group">
+                            <label>Program</label>
+                            <select>
+                                <option value="BSIT" selected>Bachelor of Science in Information Technology (BSIT)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>College Email</label>
+                            <input type="email" value="gemarenopia123@gmail.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B -->
+                <div class="form-section">
+                    <div class="section-title">B. ENROLLMENT DETAILS</div>
+                    <div class="form-grid enrollment-grid">
+                        <div class="form-group">
+                            <label>Academic Year</label>
+                            <input type="text" value="2025-2026">
+                        </div>
+                        <div class="form-group">
+                            <label>Semester</label>
+                            <select>
+                                <option value="1st" selected>1st Semester</option>
+                                <option value="2nd">2nd Semester</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Year Level</label>
+                            <select>
+                                <option value="3" selected>3rd year</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Enrollment Type</label>
+                            <select>
+                                <option value="Regular" selected>Regular</option>
+                                <option value="Irregular">Irregular</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="editGender" name="Gender">
+                                <option value="Male" selected>Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C -->
+                <div class="form-section">
+                    <div class="section-title">C. INFORMATION</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" value="(63) 946 364 7654">
+                        </div>
+                        <div class="form-group">
+                            <label>Emergency Contact Name</label>
+                            <input type="text" value="Andoni Donairs">
+                        </div>
+                        <div class="form-group">
+                            <label>Current Address</label>
+                            <input type="text" value="123 Emilio Compound, Inayawan, Cebu City">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select>
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Emergency Contact Number</label>
+                            <input type="text" value="(63) 959 438 4838">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" value="GemAr343132">
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="certifyEdit" checked>
+                        <label for="certifyEdit">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-submit">UPDATE STUDENT INFORMATION</button>
+                <span class="footer-note" style="cursor: pointer;" onclick="closeModal('editModal')">cancel</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactivity -->
+    <script src="../../js/admin/profileManagement.js"></script>
+</body>
+</html>

@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/login.css">
+    <style>
+     
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -64,7 +67,47 @@
             </form>
         </div>
     </main>
+
+    <!-- ========== POPUP OVERLAY (added) ========== -->
+    <div class="popup-overlay" id="rolePopup">
+        <div class="popup-card">
+            <!-- Logo + "Hello, Easternians!" -->
+            <div class="popup-logo">
+                <img src="../img/cecLOGO.png" alt="CEC Logo">
+                <span>Hello, Easternians!</span>
+            </div>
+
+            <h3>Welcome back to the Portal!</h3>
+            <p class="popup-sub">Please select your role to log in and personalize dashboard.</p>
+
+            <!-- Role cards: Student & Admin -->
+            <div class="role-grid" id="roleGrid">
+                <!-- Student card -->
+                <div class="role-card" data-role="student">
+                    <div class="role-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="role-name">Student</div>
+                    <div class="role-desc">Access courses, schedules, and grades.</div>
+                </div>
+
+                <!-- Admin card -->
+                <div class="role-card" data-role="admin">
+                    <div class="role-icon"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="role-name">Admin</div>
+                    <div class="role-desc">Manage portal, dashboards, and reports.</div>
+                </div>
+            </div>
+
+            <!-- Continue button + note -->
+            <div class="popup-actions">
+                <button class="btn-popup-continue" id="continueBtn" disabled>Continue to Login</button>
+                <div class="popup-note">Select a role to continue</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- existing scripts -->
     <script src="../js/student_page/login.js"></script>
 
+   
 </body>
 </html>

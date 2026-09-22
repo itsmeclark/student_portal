@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Cebu Eastern College</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== RESET & BASE ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background-color: #f0f2f7;
+            color: #0b1e4b;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0b1e4b 0%, #132a5e 50%, #1a3a7a 100%);
+            color: #fff;
+            padding: 20px 0 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            color: #fff;
+        }
+
+        .sidebar-header p {
+            font-size: 0.7rem;
+            color: #a0b4d0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 18px;
+            border-radius: 10px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            letter-spacing: 0.2px;
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: #2e3192;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(46, 49, 146, 0.5);
+        }
+
+        .nav-item.active i {
+            color: #fff;
+        }
+
+        /* Sidebar Logout */
+        .sidebar-logout {
+            padding: 12px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 8px;
+        }
+
+        .sidebar-logout .nav-item {
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            justify-content: center;
+            padding: 12px 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .sidebar-logout .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== TOP HEADER ========== */
+        .top-header {
+            background: #1a3a7a;
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .burger-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            display: none; /* shown via media query */
+            flex-shrink: 0;
+        }
+
+        .burger-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .header-brand img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .header-brand-text h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .header-brand-text p {
+            font-size: 0.7rem;
+            color: #a0b4d0;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+     
+        /* ========== SEARCH BAR ========== */
+        .search-section {
+            padding: 18px 28px 6px;
+            background: #f0f2f7;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 30px;
+            padding: 0 20px;
+            height: 46px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            max-width: 700px;
+        }
+
+        .search-wrapper:focus-within {
+            border-color: #2e3192;
+            box-shadow: 0 0 0 4px rgba(46, 49, 146, 0.1);
+        }
+
+        .search-wrapper i {
+            color: #8899b0;
+            font-size: 1rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.9rem;
+            color: #0b1e4b;
+            width: 100%;
+            height: 100%;
+        }
+
+        .search-wrapper input::placeholder {
+            color: #8899b0;
+        }
+
+        /* ========== WELCOME BANNER ========== */
+        .welcome-banner {
+            background: #1a3a7a;
+            margin: 12px 28px 0;
+            border-radius: 16px;
+            padding: 22px 28px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 20px rgba(26, 58, 122, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .welcome-text h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .welcome-text h2 span {
+            color: #7eb8ff;
+        }
+
+        .welcome-text p {
+            font-size: 0.85rem;
+            color: #b8c9e8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .welcome-text p i {
+            font-size: 1rem;
+        }
+
+        /* ========== DASHBOARD GRID ========== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            padding: 24px 28px 32px;
+            align-items: start;
+        }
+
+        /* ========== LEFT COLUMN ========== */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 0;
+        }
+
+        /* ----- Stats Row ----- */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px 16px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e9eef6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0b1e4b;
+            line-height: 1.1;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7c99;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        .stat-card .stat-sub {
+            font-size: 0.7rem;
+            color: #8899b0;
+            margin-top: 4px;
+        }
+
+        /* Stat card color variants */
+        .stat-card.total .stat-icon {
+            background: #2e3192;
+        }
+
+        .stat-card.hm .stat-icon {
+            background: #e63946;
+        }
+
+        .stat-card.tm .stat-icon {
+            background: #f4c430;
+        }
+
+        .stat-card.crim .stat-icon {
+            background: #7b2d8e;
+        }
+
+        .stat-card.it .stat-icon {
+            background: #2ecc71;
+        }
+
+        .stat-card.bsed .stat-icon {
+            background: #3498db;
+        }
+
+        .stat-card.beed .stat-icon {
+            background: #e91e8c;
+        }
+
+        /* ----- Department Summary Table ----- */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0b1e4b;
+            margin-bottom: 14px;
+            letter-spacing: -0.2px;
+        }
+
+        .table-wrapper {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e9eef6;
+            overflow-x: auto;
+        }
+
+        .dept-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 580px;
+        }
+
+        .dept-table thead {
+            background: #1a3a7a;
+            color: #fff;
+        }
+
+        .dept-table thead th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .dept-table tbody tr {
+            border-bottom: 1px solid #eef2f8;
+            transition: background 0.15s;
+        }
+
+        .dept-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .dept-table tbody tr:hover {
+            background: #f7f9fd;
+        }
+
+        .dept-table tbody td {
+            padding: 13px 16px;
+            color: #2c3e5c;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .dept-table tbody td:first-child {
+            font-weight: 700;
+            color: #0b1e4b;
+        }
+
+        .dept-table tfoot {
+            background: #eef3fc;
+            font-weight: 700;
+        }
+
+        .dept-table tfoot td {
+            padding: 14px 16px;
+            color: #0b1e4b;
+            font-weight: 700;
+            border-top: 2px solid #d0dcee;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        /* ========== RIGHT COLUMN ========== */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ----- Quick Actions ----- */
+        .quick-actions {
+            background: #dce8fa;
+            border-radius: 16px;
+            padding: 20px 18px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            border: 1px solid #c8d9f0;
+        }
+
+        .quick-actions h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0b1e4b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-actions h3 i {
+            color: #2e3192;
+            font-size: 1.1rem;
+        }
+
+        .quick-action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quick-action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 10px;
+            background: #fff;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0b1e4b;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2eaf6;
+            text-align: center;
+        }
+
+        .quick-action-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(46, 49, 146, 0.15);
+            border-color: #b6c9e8;
+        }
+
+        .quick-action-item .qa-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2e3192;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* ----- Upcoming Events ----- */
+        .upcoming-events {
+            background: #f7f9fd;
+            border-radius: 16px;
+            padding: 20px 18px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2eaf6;
+        }
+
+        .upcoming-events h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0b1e4b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .upcoming-events h3 i {
+            color: #2e3192;
+            font-size: 1.1rem;
+        }
+
+        .upcoming-events h3 a {
+            font-size: 0.7rem;
+            color: #2e3192;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .upcoming-events h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .event-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2eaf6;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            background: #dce8fa;
+            border-radius: 10px;
+            padding: 8px 10px;
+            text-align: center;
+            flex-shrink: 0;
+            min-width: 52px;
+            border: 1px solid #c8d9f0;
+        }
+
+        .event-date .month {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #2e3192;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .event-date .day {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0b1e4b;
+            line-height: 1.1;
+        }
+
+        .event-info h4 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #0b1e4b;
+            margin-bottom: 2px;
+        }
+
+        .event-info p {
+            font-size: 0.7rem;
+            color: #6b7c99;
+            line-height: 1.4;
+        }
+
+        .event-info p i {
+            font-size: 0.65rem;
+            margin-right: 4px;
+            color: #8899b0;
+        }
+
+        /* ========== FOOTER ========== */
+        .main-footer {
+            background: #1a3a7a;
+            color: #a0b4d0;
+            text-align: center;
+            padding: 16px 28px;
+            font-size: 0.75rem;
+            margin-top: auto;
+            letter-spacing: 0.3px;
+        }
+
+        .main-footer a {
+            color: #7eb8ff;
+            text-decoration: none;
+        }
+
+        /* ========== SIDEBAR OVERLAY (mobile) ========== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 300px;
+                gap: 20px;
+                padding: 20px 20px 28px;
+            }
+
+            .search-section {
+                padding: 16px 20px 4px;
+            }
+
+            .welcome-banner {
+                margin: 12px 20px 0;
+                padding: 18px 22px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .burger-btn {
+                display: block;
+            }
+
+            .sidebar-overlay {
+                display: block;
+            }
+
+            .header-brand-text h1 {
+                font-size: 1rem;
+            }
+
+            .header-brand-text p {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .right-column {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .quick-actions,
+            .upcoming-events {
+                height: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-header {
+                padding: 10px 16px;
+            }
+
+            .search-section {
+                padding: 14px 16px 2px;
+            }
+
+            .welcome-banner {
+                margin: 10px 16px 0;
+                padding: 16px 18px;
+                border-radius: 14px;
+            }
+
+            .welcome-text h2 {
+                font-size: 1.25rem;
+            }
+
+            .welcome-text p {
+                font-size: 0.78rem;
+            }
+
+            .dashboard-grid {
+                padding: 16px 16px 24px;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 14px 10px 12px;
+            }
+
+            .stat-card .stat-value {
+                font-size: 1.3rem;
+            }
+
+            .stat-card .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .right-column {
+                grid-template-columns: 1fr;
+            }
+
+           
+        }
+
+        @media (max-width: 560px) {
+            .header-brand-text h1 {
+                font-size: 0.85rem;
+                white-space: normal;
+                line-height: 1.15;
+            }
+
+            .header-brand-text p {
+                font-size: 0.55rem;
+            }
+
+            .header-brand img {
+                width: 32px;
+                height: 32px;
+            }
+
+           
+
+            .search-wrapper {
+                height: 40px;
+                padding: 0 14px;
+            }
+
+            .search-wrapper input {
+                font-size: 0.8rem;
+            }
+
+            .welcome-banner {
+                padding: 14px 16px;
+            }
+
+            .welcome-text h2 {
+                font-size: 1.05rem;
+            }
+
+            .welcome-text p {
+                font-size: 0.7rem;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 12px 8px 10px;
+                border-radius: 12px;
+            }
+
+            .stat-card .stat-value {
+                font-size: 1.1rem;
+            }
+
+            .stat-card .stat-label {
+                font-size: 0.62rem;
+            }
+
+            .stat-card .stat-sub {
+                font-size: 0.6rem;
+            }
+
+            .stat-card .stat-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 0.9rem;
+                margin-bottom: 6px;
+            }
+
+            .section-title {
+                font-size: 1.05rem;
+            }
+
+            .dept-table {
+                font-size: 0.75rem;
+                min-width: 420px;
+            }
+
+            .dept-table thead th,
+            .dept-table tbody td,
+            .dept-table tfoot td {
+                padding: 10px 12px;
+            }
+
+            .quick-actions,
+            .upcoming-events {
+                padding: 16px 14px;
+            }
+
+            .main-footer {
+                font-size: 0.65rem;
+                padding: 12px 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header-brand-text h1 {
+                font-size: 0.75rem;
+            }
+
+            .header-brand-text p {
+                font-size: 0.5rem;
+            }
+
+            .header-brand img {
+                width: 28px;
+                height: 28px;
+            }
+
+            .burger-btn {
+                font-size: 1.2rem;
+                padding: 2px 6px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-card .stat-value {
+                font-size: 1rem;
+            }
+        }
+
+        /* ========== UTILITY ========== */
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== SIDEBAR OVERLAY ========== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../img/cecLOGO.png" alt="Cebu Eastern College">
+            </div>
+            <h2>CEBU EASTERN<br>COLLEGE</h2>
+            <p>Student Portal</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="../admin/adminDashboard.html" class="nav-item active">
+                <i class="fa-solid fa-table-columns"></i>
+                Dashboard
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-bullhorn"></i>
+                Announcements &amp; Events
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-calendar-days"></i>
+                Class Schedule
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-file-lines"></i>
+                Grades &amp; Records
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Tuition Assessment
+            </a>
+            <a href="../admin/profileManagement.html" class="nav-item">
+                <i class="fa-solid fa-user-gear"></i>
+                Profile Management
+            </a>
+        </nav>
+
+        <div class="sidebar-logout">
+            <a href="" class="nav-item">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                LOGOUT
+            </a>
+        </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main-content" id="mainContent">
+
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="burger-btn" id="burgerBtn" aria-label="Toggle sidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-brand">
+                    <img src="../img/cecLOGO.png" alt="CEC Logo">
+                    <div class="header-brand-text">
+                        <h1>CEBU EASTERN COLLEGE</h1>
+                        <p>Admin Portal</p>
+                    </div>
+                </div>
+            </div>
+           
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-section">
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search students, faculty, or records...">
+            </div>
+        </div>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>Welcome back, <span>Admin!</span></h2>
+                <p><i class="fa-regular fa-calendar-check"></i> Here's what's happening with your institution today.</p>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+
+            <!-- LEFT COLUMN -->
+            <div class="left-column">
+
+                <!-- Stats Cards -->
+                <div class="stats-row">
+                    <div class="stat-card total">
+                        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                        <div class="stat-value">2,845</div>
+                        <div class="stat-label">Total Students</div>
+                        <div class="stat-sub">↑ 12% vs last semester</div>
+                    </div>
+                    <div class="stat-card hm">
+                        <div class="stat-icon"><i class="fa-solid fa-utensils"></i></div>
+                        <div class="stat-value">432</div>
+                        <div class="stat-label">HM</div>
+                        <div class="stat-sub">students</div>
+                    </div>
+                    <div class="stat-card tm">
+                        <div class="stat-icon"><i class="fa-solid fa-gear"></i></div>
+                        <div class="stat-value">398</div>
+                        <div class="stat-label">TM</div>
+                        <div class="stat-sub">students</div>
+                    </div>
+                    <div class="stat-card crim">
+                        <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="stat-value">512</div>
+                        <div class="stat-label">CRIM</div>
+                        <div class="stat-sub">students</div>
+                    </div>
+                    <div class="stat-card it">
+                        <div class="stat-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                        <div class="stat-value">476</div>
+                        <div class="stat-label">IT</div>
+                        <div class="stat-sub">students</div>
+                    </div>
+                    <div class="stat-card bsed">
+                        <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="stat-value">363</div>
+                        <div class="stat-label">BSED</div>
+                        <div class="stat-sub">students</div>
+                    </div>
+                    <div class="stat-card beed">
+                        <div class="stat-icon"><i class="fa-solid fa-children"></i></div>
+                        <div class="stat-value">664</div>
+                        <div class="stat-label">BEED</div>
+                        <div class="stat-sub">students</div>
+                    </div>
+                </div>
+
+                <!-- Department Summary Table -->
+                <div>
+                    <h3 class="section-title">Department Student Summary</h3>
+                    <div class="table-wrapper">
+                        <table class="dept-table">
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>Students</th>
+                                    <th>Male</th>
+                                    <th>Female</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>HM</td>
+                                    <td>520</td>
+                                    <td>272</td>
+                                    <td>248</td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TM</td>
+                                    <td>430</td>
+                                    <td>228</td>
+                                    <td>202</td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CRIM</td>
+                                    <td>610</td>
+                                    <td>224</td>
+                                    <td>286</td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>IT</td>
+                                    <td>380</td>
+                                    <td>208</td>
+                                    <td>172</td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>BSED</td>
+                                    <td>500</td>
+                                    <td>260</td>
+                                    <td>240</td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>BEED</td>
+                                    <td>405</td>
+                                    <td>220</td>
+                                    <td>185</td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>2,845</td>
+                                    <td>1,512</td>
+                                    <td>1,333</td>
+                                    <td>Active</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="right-column">
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+                    <div class="quick-action-list">
+                        <a href="#" class="quick-action-item">
+                            <div class="qa-icon"><i class="fa-solid fa-user-plus"></i></div>
+                            Add Student
+                        </a>
+                        <a href="#" class="quick-action-item">
+                            <div class="qa-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
+                            Upload Grades
+                        </a>
+                        <a href="#" class="quick-action-item">
+                            <div class="qa-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                            Post Announcement
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="upcoming-events">
+                    <h3>
+                        <span><i class="fa-solid fa-calendar-days"></i> Upcoming Events</span>
+                        <a href="#">View Calendar</a>
+                    </h3>
+
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="month">May</div>
+                            <div class="day">11</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Final Exam Schedule</h4>
+                            <p>All departments</p>
+                            <p><i class="fa-regular fa-clock"></i> 7:30 AM - 9:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="month">June</div>
+                            <div class="day">19</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Faculty Development Program</h4>
+                            <p>Audio Visual Room</p>
+                            <p><i class="fa-regular fa-clock"></i> 9:00 AM - 12:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="month">Aug</div>
+                            <div class="day">28</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Enrollment for SY 2025-2026</h4>
+                            <p>Registrar</p>
+                            <p><i class="fa-regular fa-clock"></i> All day</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            &copy; 2025 Cebu Eastern College | All Rights Reserved
+        </footer>
+    </div>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script src="../../js/admin/adminDashboard.js">
+        
+    </script>
+</body>
+</html>

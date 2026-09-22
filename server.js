@@ -1,13 +1,13 @@
 import express from "express";
-import db from "./config/db.js";
 import dotenv from "dotenv";
 import path from "path";
 import authRoutes from "./routes/student_routes/auth.routes.js";
 import { fileURLToPath } from "url";
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import homeRoutes from "./routes/student_routes/home.routes.js";
-
+import adminRoutes from "./routes/admin/auth.admin.routes.js";
+import adminDashboard from './routes/admin/dashboard.admin.routes.js'
+import profileManagement from './routes/admin/profileManagement.routes.js'
 dotenv.config();
 
 const app = express();
@@ -23,6 +23,9 @@ app.use(cookieParser());
 app.use("/auth", authRoutes);
 app.use("/home", homeRoutes);
 
+app.use("/auth/admin", adminRoutes);
+app.use('/admin', adminDashboard)
+app.use('/profileManagement', profileManagement)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

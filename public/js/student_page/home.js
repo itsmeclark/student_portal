@@ -59,13 +59,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     const data = await response.json();
-    console.log("User:", data.user);
+    console.log("User:", data);
     // render data.user on the page
-    greetingsElement.textContent = `WELCOME BACK, ${data.user.first_name.toUpperCase()}!`;
-    studentNameElement.innerHTML = `<span>Name:</span> ${data.user.first_name} ${data.user.last_name}`;
-    studentCourseElement.innerHTML = `<span>Course:</span> ${data.user.course}`;
-    studentIdElement.innerHTML = `<span>ID:</span> ${data.user.studentID}`;
-    studentYearLevelElement.innerHTML = `<span>Year Level:</span> ${data.user.year_lvl}`;
+    greetingsElement.textContent = `WELCOME BACK, ${data.user.First_name.toUpperCase()}!`;
+    studentNameElement.innerHTML = `<span>Name:</span> ${data.user.First_name} ${data.user.Last_name}`;
+    studentCourseElement.innerHTML = `<span>Course:</span> ${data.user.Course}`;
+    studentIdElement.innerHTML = `<span>ID:</span> ${data.user.Id_number}`;
+    studentYearLevelElement.innerHTML = `<span>Year Level:</span> ${data.user.Current_year_level}`;
   } catch (error) {
     console.error("Error loading dashboard:", error);
   }
