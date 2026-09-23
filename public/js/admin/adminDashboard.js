@@ -85,7 +85,9 @@
         console.log(err)
     }
 })()
-document.querySelector('.sidebar-logout').addEventListener('click', async () => {
+document.querySelector('.sidebar-logout').addEventListener('click', async (e) => {
+    // Prevent the empty link from reloading the page mid-logout
+    e.preventDefault();
     try{
         const response = await fetch('/auth/admin/logout', {
             method : 'POST',

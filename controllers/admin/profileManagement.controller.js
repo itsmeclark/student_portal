@@ -1,4 +1,4 @@
-import { displayStudent, addStudent, getSections } from "../../models/admin/profileManagement.model.js";
+import { displayStudent, addStudent, getSections, getStudentById as getStudentByIdModel, updateStudent as updateStudentModel, deleteStudent as deleteStudentModel } from "../../models/admin/profileManagement.model.js";
 
 export const displayAllStudents = (req, res) => {
     displayStudent((err, results) => {
@@ -20,7 +20,7 @@ export const displaySections = (req, res) => {
     });
 }
 
-export const addStudentInfo = (req, res) => {
+const parseStudentInput = (body) => {
     const {
         Full_name,
         Course,
@@ -36,10 +36,10 @@ export const addStudentInfo = (req, res) => {
         Gender,
         Academic_year,
         Semester,
-        Enrollment_type
-    } = req.body;
+        Enrollment_type,
+        Status
+    } = body;
 
-    // --- Validation: required fields ---
     const required = {
         Full_name,
         Course,
@@ -62,15 +62,13 @@ export const addStudentInfo = (req, res) => {
         .map(([key]) => key);
 
     if (missing.length > 0) {
-        return res.status(400).json({ error: `Missing required fields: ${missing.join(', ')}` });
+        return { error: { status: 400, message: `Missing required fields: ${missing.join(', ')}` } };
     }
 
     if (isNaN(Number(Section_id))) {
-        return res.status(400).json({ error: 'Invalid section selected' });
+        return { error: { status: 400, message: 'Invalid section selected' } };
     }
 
-    // --- Split Full Name -> First_name / Last_name ---
-    // Supports "Last name, First name" (with comma) and "First name Last name" (no comma)
     const trimmedName = String(Full_name).trim().replace(/\s+/g, ' ');
     let First_name, Last_name;
     if (trimmedName.includes(',')) {
@@ -83,20 +81,27 @@ export const addStudentInfo = (req, res) => {
         Last_name = spaceIndex === -1 ? '' : trimmedName.slice(spaceIndex + 1).trim();
     }
     if (!First_name || !Last_name) {
-        return res.status(400).json({ error: 'Full name must include a first and last name (e.g. Dela Cruz, Juan)' });
+        return { error: { status: 400, message: 'Full name must include a first and last name (e.g. Dela Cruz, Juan)' } };
     }
 
-    // --- Normalize formats to match existing data ---
     const gender = String(Gender).toUpperCase();
     if (gender !== 'MALE' && gender !== 'FEMALE') {
-        return res.status(400).json({ error: 'Gender must be MALE or FEMALE' });
+        return { error: { status: 400, message: 'Gender must be MALE or FEMALE' } };
     }
 
-    const semesterWord = String(Semester).trim().split(' ')[0]; // "1st" | "1st Semester" | "1"
+    const semesterWord = String(Semester).trim().split(' ')[0];
     const Semester_value = `${semesterWord} Semester`;
 
     const yearLevel = String(Current_year_level).trim();
     const enrollmentType = String(Enrollment_type).trim().toUpperCase();
+
+    let status = 'ACTIVE';
+    if (Status !== undefined && String(Status).trim() !== '') {
+        status = String(Status).trim().toUpperCase();
+        if (!['ACTIVE', 'INACTIVE', 'DROPOUT'].includes(status)) {
+            return { error: { status: 400, message: 'Status must be ACTIVE or INACTIVE' } };
+        }
+    }
 
     const student = {
         First_name,
@@ -110,7 +115,8 @@ export const addStudentInfo = (req, res) => {
         Current_address: String(Current_address).trim(),
         Emergency_contact_name: String(Emergency_contact_name).trim(),
         Emergency_contact_num: String(Emergency_contact_num).trim(),
-        Gender: gender
+        Gender: gender,
+        Status: status
     };
 
     const enrollment = {
@@ -121,28 +127,100 @@ export const addStudentInfo = (req, res) => {
         Enrollment_type: enrollmentType
     };
 
-    addStudent(student, enrollment, (err, result) => {
+    return { student, enrollment };
+};
+
+const sendInputError = (res, err, context) => {
+    if (err.code === 'ER_DUP_ENTRY') {
+        const message = err.sqlMessage || '';
+        if (message.includes('Id_number')) {
+            return res.status(409).json({ error: 'A student with that ID number already exists' });
+        }
+        if (message.includes('Email')) {
+            return res.status(409).json({ error: 'A student with that email already exists' });
+        }
+        return res.status(409).json({ error: 'Duplicate student record' });
+    }
+    if (err.status === 400 || err.status === 404) {
+        return res.status(err.status).json({ error: err.message });
+    }
+    console.error(context, err);
+    return res.status(500).json({ error: `Failed to ${context}` });
+};
+
+export const addStudentInfo = (req, res) => {
+    const parsed = parseStudentInput(req.body);
+    if (parsed.error) {
+        return res.status(parsed.error.status).json({ error: parsed.error.message });
+    }
+
+    addStudent(parsed.student, parsed.enrollment, (err, result) => {
         if (err) {
-            if (err.code === 'ER_DUP_ENTRY') {
-                const message = err.sqlMessage || '';
-                if (message.includes('Id_number')) {
-                    return res.status(409).json({ error: 'A student with that ID number already exists' });
-                }
-                if (message.includes('Email')) {
-                    return res.status(409).json({ error: 'A student with that email already exists' });
-                }
-                return res.status(409).json({ error: 'Duplicate student record' });
-            }
-            if (err.status === 400) {
-                return res.status(400).json({ error: err.message });
-            }
-            console.error('Error adding student:', err);
-            return res.status(500).json({ error: 'Failed to add student' });
+            return sendInputError(res, err, 'add student');
         }
 
         return res.status(200).json({
             message: 'ADDED SUCCESSFULLY',
             studentId: result.studentId
         });
+    });
+};
+
+export const getStudentById = (req, res) => {
+    const studentId = Number(req.params.id);
+    if (isNaN(studentId)) {
+        return res.status(400).json({ error: 'Invalid student id' });
+    }
+
+    getStudentByIdModel(studentId, (err, result) => {
+        if (err) {
+            console.error('Error fetching student:', err);
+            return res.status(500).json({ error: 'Failed to load student' });
+        }
+        if (!result) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+        res.status(200).json(result);
+    });
+};
+
+export const updateStudentInfo = (req, res) => {
+    const studentId = Number(req.params.id);
+    if (isNaN(studentId)) {
+        return res.status(400).json({ error: 'Invalid student id' });
+    }
+
+    const parsed = parseStudentInput(req.body);
+    if (parsed.error) {
+        return res.status(parsed.error.status).json({ error: parsed.error.message });
+    }
+
+    updateStudentModel(studentId, parsed.student, parsed.enrollment, (err) => {
+        if (err) {
+            return sendInputError(res, err, 'update student');
+        }
+
+        return res.status(200).json({
+            message: 'UPDATED SUCCESSFULLY',
+            studentId
+        });
+    });
+};
+
+export const deleteStudentById = (req, res) => {
+    const studentId = Number(req.params.id);
+    if (isNaN(studentId)) {
+        return res.status(400).json({ error: 'Invalid student id' });
+    }
+
+    deleteStudentModel(studentId, (err, result) => {
+        if (err) {
+            console.error('Error deleting student:', err);
+            return res.status(500).json({ error: 'Failed to delete student' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+        res.status(200).json({ message: 'DELETED SUCCESSFULLY', studentId });
     });
 };

@@ -33,7 +33,7 @@
                     <span>Admin</span>
                 </div>
             </div>
-            <button class="logout-btn">
+            <button class="logout-btn" id="headerLogoutBtn">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
@@ -48,6 +48,9 @@
             <li><i class="fas fa-file-alt"></i> Grades & Records</li>
             <li><i class="fas fa-money-bill-wave"></i> Tuition Assessment</li>
             <a href="../admin/profileManagement.html"><li><i class="fas fa-user-cog"></i> Profile Management</li></a>
+        </ul>
+        <ul class="sidebar-logout">
+            <li class="logout-item" id="sidebarLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</li>
         </ul>
     </nav>
 
@@ -154,7 +157,7 @@
     <!-- Delete Confirmation Modal -->
     <div class="modal-overlay" id="deleteModal">
         <div class="modal-delete">
-            <h3>Are you sure you want to delete this acc?</h3>
+            <h3>Are you sure you want to delete this student?</h3>
             <button class="btn-confirm-delete">Delete Account</button>
             <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
         </div>
@@ -275,10 +278,10 @@
                             <input type="text" placeholder="(+63) 123-456-7890" id="Emergency_contact_num" required>
                         </div>
                     </div>
-                    <!-- <div class="checkbox-group">
+                    <div class="checkbox-group">
                         <input type="checkbox" id="certifyAdd">
-                        <label for="certifyAdd">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label>
-                    </div> -->
+                        <!-- <label for="certifyAdd">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label> -->
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -296,6 +299,7 @@
                 <h3><i class="fas fa-pen"></i> EDIT STUDENT INFORMATION</h3>
                 <button class="close-btn" onclick="closeModal('editModal')"><i class="fas fa-times-circle"></i></button>
             </div>
+            <form id="editStudent_form">
             <div class="modal-body">
                 <!-- Section A -->
                 <div class="form-section">
@@ -303,21 +307,24 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Student ID</label>
-                            <input type="text" value="1234-5678">
+                            <input type="text" inputmode="numeric" maxlength="7" pattern="\d{7}" placeholder="2026000" id="editId_number" required>
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" value="Gemar Enopia">
+                            <input type="text" placeholder="Last name, First name" id="editFullName" required>
                         </div>
                         <div class="form-group">
                             <label>Program</label>
-                            <select>
-                                <option value="BSIT" selected>Bachelor of Science in Information Technology (BSIT)</option>
+                            <select id="editCourse" required>
+                                <option value="">Select Program</option>
+                                <option value="BSIT">BS Information Technology</option>
+                                <option value="BSHM">BS Hospitality Management</option>
+                                <option value="BSTM">BS Tourism Management</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>College Email</label>
-                            <input type="email" value="gemarenopia123@gmail.com">
+                            <input type="email" id="editEmail" required>
                         </div>
                     </div>
                 </div>
@@ -328,37 +335,46 @@
                     <div class="form-grid enrollment-grid">
                         <div class="form-group">
                             <label>Academic Year</label>
-                            <input type="text" value="2025-2026">
+                            <input type="text" placeholder="2025-2026" id="editAcademic_year" required>
                         </div>
                         <div class="form-group">
                             <label>Semester</label>
-                            <select>
-                                <option value="1st" selected>1st Semester</option>
+                            <select id="editSemester" required>
+                                <option value="">Select Semester</option>
+                                <option value="1st">1st Semester</option>
                                 <option value="2nd">2nd Semester</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Year Level</label>
-                            <select>
-                                <option value="3" selected>3rd year</option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="4">4th Year</option>
+                            <select id="editCurrent_year_level" required>
+                                <option value="">Select Year Level</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Enrollment Type</label>
-                            <select>
-                                <option value="Regular" selected>Regular</option>
+                            <select id="editEnrollment_type" required>
+                                <option value="">Select Type</option>
+                                <option value="Regular">Regular</option>
                                 <option value="Irregular">Irregular</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Gender</label>
-                            <select id="editGender" name="Gender">
-                                <option value="Male" selected>Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                            <select id="editGender" name="Gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Section</label>
+                            <select id="editSection_id" required>
+                                <option value="">Select Section</option>
                             </select>
                         </div>
                     </div>
@@ -370,42 +386,39 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="text" value="(63) 946 364 7654">
+                            <input type="text" placeholder="+(63) 123-456-7890" id="editContact_num" required>
                         </div>
                         <div class="form-group">
                             <label>Emergency Contact Name</label>
-                            <input type="text" value="Andoni Donairs">
+                            <input type="text" placeholder="Full Name" id="editEmergency_contact_name" required>
                         </div>
                         <div class="form-group">
                             <label>Current Address</label>
-                            <input type="text" value="123 Emilio Compound, Inayawan, Cebu City">
+                            <input type="text" placeholder="House no, Street, City" id="editCurrent_address" required>
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select>
-                                <option value="Active" selected>Active</option>
-                                <option value="Inactive">Inactive</option>
+                            <select id="editStatus" required>
+                                <option value="ACTIVE">Active</option>
+                                <option value="INACTIVE">Inactive</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Emergency Contact Number</label>
-                            <input type="text" value="(63) 959 438 4838">
+                            <input type="text" placeholder="+(63) 123-456-7890" id="editEmergency_contact_num" required>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="text" value="GemAr343132">
+                            <input type="password" id="editPassword" required>
                         </div>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="certifyEdit" checked>
-                        <label for="certifyEdit">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-submit">UPDATE STUDENT INFORMATION</button>
+                <button class="btn-submit" type="submit">UPDATE STUDENT INFORMATION</button>
                 <span class="footer-note" style="cursor: pointer;" onclick="closeModal('editModal')">cancel</span>
             </div>
+            </form>
         </div>
     </div>
 
