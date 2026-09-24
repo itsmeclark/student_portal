@@ -6,6 +6,7 @@
     <title>Admin Login - Cebu Eastern College</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/password-toggle.css">
     <style>
         /* ----- RESET & BASE ----- */
         * {
@@ -291,6 +292,7 @@
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" id="adminPassword" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle" data-password-toggle="adminPassword" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
                     </div>
                 </div>
 
@@ -300,5 +302,6 @@
         </div>
     </main>
 <script src="../js/admin.js"></script>
+<script src="../js/password-toggle.js"></script>
 </body>
 </html>

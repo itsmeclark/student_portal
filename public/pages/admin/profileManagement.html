@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Your Custom CSS -->
     <link href="../../css/admin/profileManagement.css" rel="stylesheet">
+    <link href="../../css/password-toggle.css" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
@@ -271,17 +272,20 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" placeholder="Enter Password" id="Student_password" required>
+                            <div class="password-field">
+                                <input type="password" placeholder="Enter Password" id="Student_password" required>
+                                <button type="button" class="password-toggle" data-password-toggle="Student_password" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Emergency Contact Number</label>
                             <input type="text" placeholder="(+63) 123-456-7890" id="Emergency_contact_num" required>
                         </div>
                     </div>
-                    <div class="checkbox-group">
+                    <!-- <div class="checkbox-group">
                         <input type="checkbox" id="certifyAdd">
-                        <!-- <label for="certifyAdd">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label> -->
-                    </div>
+                        <label for="certifyAdd">I certify that all information provided is accurate and complete. I understand that my course schedule will be automatically assigned by the registrar and is subject to availability</label>
+                    </div> -->
                 </div>
             </div>
             <div class="modal-footer">
@@ -409,7 +413,10 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" id="editPassword" required>
+                            <div class="password-field">
+                                <input type="password" id="editPassword" required>
+                                <button type="button" class="password-toggle" data-password-toggle="editPassword" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -424,5 +431,6 @@
 
     <!-- JavaScript for Interactivity -->
     <script src="../../js/admin/profileManagement.js"></script>
+    <script src="../../js/password-toggle.js"></script>
 </body>
 </html>

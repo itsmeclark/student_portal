@@ -161,7 +161,8 @@ export const addStudentInfo = (req, res) => {
 
         return res.status(200).json({
             message: 'ADDED SUCCESSFULLY',
-            studentId: result.studentId
+            studentId: result.studentId,
+            subjectsAssigned: result.subjectsAssigned
         });
     });
 };
@@ -195,14 +196,15 @@ export const updateStudentInfo = (req, res) => {
         return res.status(parsed.error.status).json({ error: parsed.error.message });
     }
 
-    updateStudentModel(studentId, parsed.student, parsed.enrollment, (err) => {
+    updateStudentModel(studentId, parsed.student, parsed.enrollment, (err, result) => {
         if (err) {
             return sendInputError(res, err, 'update student');
         }
 
         return res.status(200).json({
             message: 'UPDATED SUCCESSFULLY',
-            studentId
+            studentId,
+            subjectsAssigned: result ? result.subjectsAssigned : undefined
         });
     });
 };
