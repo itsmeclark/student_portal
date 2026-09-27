@@ -10,6 +10,11 @@ export const getSections = (callback) => {
     db.query(sql, callback)
 }
 
+export const searchStudentById = (idQuery, callback) => {
+    const sql = "SELECT * FROM STUDENTS WHERE CAST(Student_id AS CHAR) LIKE ?";
+    db.query(sql, [`%${idQuery}%`], callback)
+}
+
 // --- Section -> subjects helpers (no schema change: the section's subject list is
 //     derived from the existing ENROLLMENT_SUBJECTS rows of students in that section) ---
 

@@ -1,4 +1,4 @@
-import { displayStudent, addStudent, getSections, getStudentById as getStudentByIdModel, updateStudent as updateStudentModel, deleteStudent as deleteStudentModel } from "../../models/admin/profileManagement.model.js";
+import { displayStudent, addStudent, getSections, getStudentById as getStudentByIdModel, updateStudent as updateStudentModel, deleteStudent as deleteStudentModel, searchStudentById } from "../../models/admin/profileManagement.model.js";
 
 export const displayAllStudents = (req, res) => {
     displayStudent((err, results) => {
@@ -17,6 +17,21 @@ export const displaySections = (req, res) => {
             return res.status(500).json({ error: 'Failed to load sections' });
         }
         res.status(200).json({ sections: results });
+    });
+}
+
+export const searchStudentsById = (req, res) => {
+    const idQuery = String(req.params.id).trim();
+    if (!idQuery) {
+        return res.status(400).json({ error: 'Search query is required' });
+    }
+
+    searchStudentById(idQuery, (err, results) => {
+        if (err) {
+            console.error('Error searching students:', err);
+            return res.status(500).json({ error: 'Failed to search students' });
+        }
+        res.status(200).json({ students: results });
     });
 }
 

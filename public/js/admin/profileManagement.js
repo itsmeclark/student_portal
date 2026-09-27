@@ -2,10 +2,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sidebar Toggle
     const burgerMenu = document.getElementById('burgerMenu');
     const sidebar = document.getElementById('sidebar');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+    function openSidebar() {
+        sidebar.classList.add('active');
+        if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('active');
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+    }
 
     if (burgerMenu && sidebar) {
         burgerMenu.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
+            sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
+        });
+    }
+
+    // Overlay behavior: clicking the dark backdrop closes the drawer
+    if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+    }
+
+    // Highlight the current page's nav item to match the active-pill design
+    if (sidebar) {
+        const currentPath = window.location.pathname.split('/').pop();
+        sidebar.querySelectorAll('ul a[href]').forEach(link => {
+            const linkPath = link.getAttribute('href').split('/').pop();
+            if (linkPath === currentPath) {
+                link.classList.add('active-link');
+            }
         });
     }
 
@@ -128,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 credentials: 'include'
             });
             if (response.ok) {
-                window.location.href = '/pages/admin.login.html';
+                window.location.href = '/pages/login.html';
             } else {
                 alert('Logout failed. Please try again.');
             }
@@ -182,7 +209,8 @@ async function loadStudents() {
         }
 
         tableBody.innerHTML = data.students.map(student => `
-            <tr>
+            <tr data-id-number="${student.Id_number}">
+                <td>${student.Id_number}</td>
                 <td>${student.First_name} ${student.Last_name}</td>
                 <td>${student.Email}</td>
                 <td>${student.Course}</td>
@@ -230,6 +258,57 @@ async function loadSections() {
 
 loadStudents();
 const sectionsReady = loadSections();
+
+// ---------- SEARCH STUDENTS BY ID ----------
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+    // Enforce numeric-only input with max 7 digits on each keystroke
+    searchInput.addEventListener('input', () => {
+        // Strip non-numeric characters and limit to 7 digits
+        searchInput.value = searchInput.value.replace(/\D/g, '').slice(0, 7);
+    });
+
+    // Filter table rows as the user types
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim();
+        const tableBody = document.querySelector('#students_table');
+        const rows = tableBody.querySelectorAll('tr:not(.no-results-row)');
+
+        // If search is cleared, show all rows and remove no-results message
+        if (query === '') {
+            rows.forEach(row => row.style.display = '');
+            const noResultsRow = tableBody.querySelector('.no-results-row');
+            if (noResultsRow) noResultsRow.remove();
+            return;
+        }
+
+        let visibleCount = 0;
+        rows.forEach(row => {
+            // Match against the student's Id_number (e.g. 2026000)
+            const idNumber = row.getAttribute('data-id-number') || '';
+
+            if (idNumber.includes(query)) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Show "no results" message if nothing matches
+        let noResultsRow = tableBody.querySelector('.no-results-row');
+        if (visibleCount === 0) {
+            if (!noResultsRow) {
+                noResultsRow = document.createElement('tr');
+                noResultsRow.className = 'no-results-row';
+                noResultsRow.innerHTML = '<td colspan="7" style="text-align: center; color: #888; padding: 20px;">No student found with that ID.</td>';
+                tableBody.appendChild(noResultsRow);
+            }
+        } else if (noResultsRow) {
+            noResultsRow.remove();
+        }
+    });
+}
 
 // ---------- ADD STUDENT FORM SUBMISSION ----------
 document.querySelector('#addStudent_form').addEventListener('submit', async (event) => {

@@ -95,7 +95,7 @@ document.querySelector('.sidebar-logout').addEventListener('click', async (e) =>
     })
         if(response.ok){
             console.log()
-            window.location.href = '/pages/admin.login.html'
+            window.location.href = '/pages/login.html'
         }else{
             alert('LOGOUT FAILED. Please try again')
         }
