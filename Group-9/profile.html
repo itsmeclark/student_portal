@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>My Profile - Cebu Eastern College</title>
+  <link rel="icon" type="image/png" href="assets/cec-logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/cec-logo.png" class="logo" alt="CEBU EASTERN COLLEGE logo">
+      <div>
+        <div class="brand-title">CEBU EASTERN COLLEGE</div>
+        <div class="brand-subtitle">STUDENT PORTAL</div>
+      </div>
+    </div>
+    <div class="user-area">
+      <a class="user-profile-link" href="profile.html" aria-label="Open My Profile">
+        <div class="user-icon">●</div>
+        <div>
+          <div class="user-name">Gemar Enopia</div>
+          <div class="user-role">Student</div>
+        </div>
+      </a>
+      <button class="logout" id="logoutButton" type="button">Logout</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <img src="assets/cec-logo.png" class="side-logo-watermark" alt="Cebu Eastern College watermark">
+      <img src="assets/Blue_Dragon_Logo.png" class="dragon-logo-watermark" alt="Blue dragon watermark">
+      <div class="side-brand">CEBU<br>EASTERN<br>COLLEGE</div>
+      <nav class="menu" aria-label="Main navigation">
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/dashboard-icon.png" alt="Dashboard icon">Dashboard</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/announcement-icon.png" alt="Announcements and events icon">Announcements &amp; Events</a>
+        <a href="class-schedule.html"><img class="icon" src="assets/schedule-icon.png" alt="Class schedule icon">Class Schedule</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/grades-icon.png" alt="Grades and records icon">Grades &amp; Records</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/tuition-icon.png" alt="Tuition assessment icon">Tuition Assessment</a>
+        <a class="active" href="profile.html"><img class="icon" src="assets/profile-icon.png" alt="My profile icon">My Profile</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/setting-icon.png" alt="Settings icon">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="panel">
+        <div class="page-title">
+          <span class="circle" aria-disabled="true"><img class="icon" src="assets/profile-icon.png" alt="Profile icon"></span>
+          
+          <div>
+            
+            My Profile
+            <div class="small">Select and enroll in your desired courses for the upcoming term.</div>
+          </div>
+          
+        </div>
+<div class="profile-main-logo" aria-label="Blue dragon logo">
+            <img src="assets/Blue_Dragon_Logo.png" alt="Blue dragon logo">
+          </div>
+        <div class="card profile-top">
+          
+          <div>
+            <div class="avatar" id="profileAvatar">
+              <img src="assets/profile-icon.png" alt="Default profile icon">
+              <a class="camera" aria-disabled="true"><img class="icon" src="assets/camera-icon.png" alt="Camera icon"></a>
+            </div>
+            <input id="photoInput" type="file" accept="image/*" hidden>
+            <button class="change-photo" type="button" id="changePhotoBtn">Change Photo</button>
+          </div>
+
+          <div class="profile-lines">
+            <div>
+              <div class="label">Name</div>
+              <div class="value" id="profileNameLabel">Gemar Enopia</div>
+            </div>
+            <div>
+              <div class="label">Email</div>
+              <div class="value under" id="profileEmailLabel">gemarenopia@gmail.com</div>
+            </div>
+            <div>
+              <div class="label">Role</div>
+              <div class="value">Student</div>
+            </div>
+          </div>
+        </div>
+
+        <form id="profileForm">
+          <div class="card">
+            <div class="section-title">STUDENT INFORMATION</div>
+            <div class="form-grid">
+              <div class="field"><label>Student ID</label><input value="2026-00142" readonly></div>
+              <div class="field"><label>Program</label><input value="Bachelor of Science in Information Technology" readonly></div>
+              <div class="field"><label for="fullNameInput">Full Name</label><input id="fullNameInput" name="name" value="Gemar Enopia" required></div>
+              <div class="field"><label for="emailInput">College Email</label><input id="emailInput" name="email" type="email" value="gemarenopia@gmail.com" required></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">ENROLLMENT DETAILS</div>
+            <div class="form-grid">
+              <div class="field"><label>Academic Year</label><input value="2025-2026" readonly></div>
+              <div class="field"><label>Semester</label><input value="Summer" readonly></div>
+              <div class="field"><label>Year Level</label><input value="3rd Year" readonly></div>
+              <div class="field"><label>Enrollment Type</label><input value="Regular" readonly></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">CONTACT INFORMATION</div>
+            <div class="form-grid">
+              <div class="field"><label for="contactInput">Contact Number</label><input id="contactInput" name="contact" type="tel" value="09123456789"></div>
+              <div class="field"><label for="addressInput">Current Address</label><input id="addressInput" name="address" value="Cebu City"></div>
+              <div class="field"><label for="emergencyNumberInput">Emergency Contact Number</label><input id="emergencyNumberInput" name="emergencyNumber" type="tel" value="09112233445"></div>
+              <div class="field"><label for="emergencyNameInput">Emergency Contact Name</label><input id="emergencyNameInput" name="emergencyName" value="Maria Enopia"></div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="change-password" type="button" id="changePasswordBtn">Change Password</button>
+            <button class="save-btn" type="submit">Save Changes</button>
+          </div>
+        </form>
+        <p class="portal-status" id="profileStatus" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="passwordModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="passwordTitle">
+      <div class="modal-header">
+        <h3 id="passwordTitle">Change Password</h3>
+        <button class="close-modal" type="button" aria-label="Close dialog">×</button>
+      </div>
+      <form id="passwordForm">
+        <div class="admin-form-grid">
+          <div class="field admin-form-full">
+            <label>Current Password</label>
+            <input type="password" placeholder="Enter current password" required>
+          </div>
+          <div class="field admin-form-full">
+            <label>New Password</label>
+            <input type="password" placeholder="Enter new password" required>
+          </div>
+          <div class="field admin-form-full">
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Confirm new password" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="secondary-btn" type="button" id="cancelPasswordBtn">Cancel</button>
+          <button class="primary-btn" type="submit">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="portal.js"></script>
+  <script>
+    const profileForm = document.getElementById('profileForm');
+    const fullNameInput = document.getElementById('fullNameInput');
+    const profileNameLabel = document.getElementById('profileNameLabel');
+    const passwordModal = document.getElementById('passwordModal');
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+    const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+    const closeModalBtn = document.querySelector('#passwordModal .close-modal');
+    const profileEmailLabel = document.getElementById('profileEmailLabel');
+    const profileStatus = document.getElementById('profileStatus');
+    const photoInput = document.getElementById('photoInput');
+    const profileAvatar = document.getElementById('profileAvatar');
+    let profilePhoto = '';
+
+    function showProfileStatus(message, isError) {
+      profileStatus.textContent = message;
+      profileStatus.classList.toggle('is-error', isError);
+    }
+
+    fullNameInput.addEventListener('input', () => {
+      profileNameLabel.textContent = fullNameInput.value.trim() || 'Gemar Enopia';
+    });
+
+    try {
+      const savedProfile = window.PortalData.loadProfile();
+      Object.entries(savedProfile).forEach(([field, value]) => {
+        const input = profileForm.elements.namedItem(field);
+        if (input) input.value = value;
+      });
+      profileNameLabel.textContent = savedProfile.name;
+      profileEmailLabel.textContent = savedProfile.email;
+      document.querySelector('.user-name').textContent = savedProfile.name;
+      if (savedProfile.photo) {
+        profilePhoto = savedProfile.photo;
+      }
+      renderPhoto();
+      window.PortalData.renderTopNavigationPhoto(profilePhoto);
+    } catch (error) {
+      showProfileStatus(error.message, true);
+    }
+
+    profileForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const profile = Object.fromEntries(
+        ['name', 'email', 'contact', 'address', 'emergencyNumber', 'emergencyName'].map((field) => [
+          field,
+          String(profileForm.elements.namedItem(field).value).trim()
+        ])
+      );
+      profile.photo = profilePhoto;
+      try {
+        window.PortalData.saveProfile(profile);
+        profileNameLabel.textContent = profile.name;
+        profileEmailLabel.textContent = profile.email;
+        showProfileStatus('Profile changes saved in this browser.', false);
+      } catch (error) {
+        showProfileStatus(error.message, true);
+      }
+    });
+
+    function renderPhoto() {
+      let image = profileAvatar.querySelector('img');
+      if (!image) {
+        image = document.createElement('img');
+        profileAvatar.prepend(image);
+      }
+      image.src = profilePhoto || 'assets/profile-icon.png';
+      image.alt = profilePhoto ? 'Student profile photo' : 'Default profile icon';
+    }
+
+    document.getElementById('changePhotoBtn').addEventListener('click', () => photoInput.click());
+    photoInput.addEventListener('change', () => {
+      const file = photoInput.files && photoInput.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showProfileStatus('Please choose an image file.', true);
+        photoInput.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        if (typeof reader.result !== 'string') {
+          showProfileStatus('Could not preview this image.', true);
+          return;
+        }
+        profilePhoto = reader.result;
+        renderPhoto();
+        window.PortalData.renderTopNavigationPhoto(profilePhoto);
+        showProfileStatus('Photo selected. Save Changes to keep it in this browser.', false);
+      });
+      reader.addEventListener('error', () => showProfileStatus('Could not read the selected image.', true));
+      reader.readAsDataURL(file);
+    });
+
+    function openPasswordModal() {
+      passwordModal.classList.remove('hidden');
+      passwordModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePasswordModal() {
+      passwordModal.classList.add('hidden');
+      passwordModal.setAttribute('aria-hidden', 'true');
+      document.getElementById('passwordForm').reset();
+    }
+
+    changePasswordBtn.addEventListener('click', openPasswordModal);
+    cancelPasswordBtn.addEventListener('click', closePasswordModal);
+    closeModalBtn.addEventListener('click', closePasswordModal);
+    passwordModal.addEventListener('click', (event) => {
+      if (event.target === passwordModal) closePasswordModal();
+    });
+
+    document.getElementById('passwordForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const inputs = Array.from(event.currentTarget.querySelectorAll('input'));
+      if (inputs[1].value.length < 8) {
+        inputs[1].setCustomValidity('Use at least 8 characters.');
+        inputs[1].reportValidity();
+        inputs[1].setCustomValidity('');
+        return;
+      }
+      if (inputs[1].value !== inputs[2].value) {
+        inputs[2].setCustomValidity('The new passwords do not match.');
+        inputs[2].reportValidity();
+        inputs[2].setCustomValidity('');
+        return;
+      }
+      window.alert('Password changes require a connected authentication service. No password was changed.');
+      closePasswordModal();
+    });
+  </script>
+</body>
+</html>

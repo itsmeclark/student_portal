@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Class Schedule - Cebu Eastern College</title>
+  <link rel="icon" type="image/png" href="assets/cec-logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/cec-logo.png" class="logo" alt="CEBU EASTERN COLLEGE logo">
+      <div>
+        <div class="brand-title">CEBU EASTERN COLLEGE</div>
+        <div class="brand-subtitle">STUDENT PORTAL</div>
+      </div>
+    </div>
+    <div class="user-area">
+      <a class="user-profile-link" href="profile.html" aria-label="Open My Profile">
+        <div class="user-icon">●</div>
+        <div>
+          <div class="user-name">Gemar Enopia</div>
+          <div class="user-role">Student</div>
+        </div>
+      </a>
+      <button class="logout" id="logoutButton" type="button">Logout</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <img src="assets/cec-logo.png" class="side-logo-watermark" alt="Cebu Eastern College watermark">
+      <img src="assets/Blue_Dragon_Logo.png" class="dragon-logo-watermark" alt="Blue dragon watermark">
+      <div class="side-brand">CEBU<br>EASTERN<br>COLLEGE</div>
+      <nav class="menu" aria-label="Main navigation">
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/dashboard-icon.png" alt="Dashboard icon">Dashboard</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/announcement-icon.png" alt="Announcements and events icon">Announcements &amp; Events</a>
+        <a class="active" href="class-schedule.html"><img class="icon" src="assets/schedule-icon.png" alt="Class schedule icon">Class Schedule</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/grades-icon.png" alt="Grades and records icon">Grades &amp; Records</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/tuition-icon.png" alt="Tuition assessment icon">Tuition Assessment</a>
+        <a href="profile.html"><img class="icon" src="assets/profile-icon.png" alt="My profile icon">My Profile</a>
+        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/setting-icon.png" alt="Settings icon">Settings</a>
+      </nav>
+    </aside>
+
+  <main class="main class-schedule-main">
+    <section class="panel">
+      <div class="page-title">
+        <span class="circle">◷</span>
+        <div>CLASS SCHEDULE</div>
+        <div class="semester">2ND SEMESTER S.Y. 2026-2027</div>
+      </div>
+
+      <div class="schedule-wrap">
+        <div class="schedule-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+              </tr>
+            </thead>
+            <tbody id="studentScheduleBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="note">ⓘ &nbsp; Note: Schedule may change. Please always check for latest updates.</div>
+      <p class="portal-status" id="studentScheduleStatus" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  </div>
+  <script src="portal.js"></script>
+  <script>
+    const dayNames = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+    const scheduleBody = document.getElementById('studentScheduleBody');
+    const scheduleStatus = document.getElementById('studentScheduleStatus');
+
+    function minutes(time) {
+      const match = time.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!match) return Number.MAX_SAFE_INTEGER;
+      let hour = Number(match[1]) % 12;
+      if (match[3].toUpperCase() === 'PM') hour += 12;
+      return hour * 60 + Number(match[2]);
+    }
+
+    function readableTime(time) {
+      return time.replace(/\s*-\s*/, ' – ');
+    }
+
+    try {
+      const schedules = window.PortalData.loadSchedules();
+      try {
+        const profile = window.PortalData.loadProfile();
+        document.querySelector('.user-name').textContent = profile.name;
+        window.PortalData.renderTopNavigationPhoto(profile.photo);
+      } catch (error) {
+        scheduleStatus.textContent = error.message;
+        scheduleStatus.classList.add('is-error');
+      }
+      const slots = [...new Set(schedules.map((item) => item.time))].sort((left, right) => minutes(left.split('-')[0]) - minutes(right.split('-')[0]));
+      slots.forEach((time) => {
+        const row = document.createElement('tr');
+        const timeCell = document.createElement('td');
+        timeCell.className = 'time';
+        timeCell.textContent = readableTime(time);
+        row.appendChild(timeCell);
+        dayNames.forEach((day) => {
+          const cell = document.createElement('td');
+          schedules.filter((item) => item.day.toUpperCase() === day && item.time === time).forEach((item) => {
+            const entry = document.createElement('b');
+            entry.textContent = `${item.subject}\n${item.room}\n${item.instructor}`;
+            entry.style.whiteSpace = 'pre-line';
+            cell.appendChild(entry);
+          });
+          row.appendChild(cell);
+        });
+        scheduleBody.appendChild(row);
+      });
+      if (schedules.length === 0) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 7;
+        cell.textContent = 'No classes are scheduled.';
+        row.appendChild(cell);
+        scheduleBody.appendChild(row);
+      }
+    } catch (error) {
+      scheduleStatus.textContent = error.message;
+      scheduleStatus.classList.add('is-error');
+    }
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'cec-portal-schedules' || event.key === 'cec-portal-profile') {
+        window.location.reload();
+      }
+    });
+  </script>
+</body>
+</html>
