@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cebu Eastern College – Admin Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <button class="close" id="closeSide" aria-label="Close menu">&times;</button>
+    <div class="brand"><img class="logo-img" src="logo.png" alt="Cebu Eastern College logo">
+      <div><b>CEBU EASTERN<br>COLLEGE</b><small>STUDENT PORTAL</small></div></div>
+    <nav id="sideNav">
+      <a href="#dashboard" data-view="dashboard">▦ Dashboard</a>
+      <a href="#students" data-view="students">👥 Student Records</a>
+      <a href="#announcements" data-view="announcements">📢 Announcements &amp; Events</a>
+      <a href="#schedule" data-view="schedule">📅 Class Schedule</a>
+      <a href="#grades" data-view="grades">📄 Grades &amp; Records</a>
+      <a href="#tuition" data-view="tuition">💳 Tuition Assessment</a>
+      <a href="#profile" data-view="profile">👤 Profile Management</a>
+    </nav>
+  </aside>
+  <div id="overlay"></div>
+
+
+  <header class="topbar">
+    <button type="button" class="burger" id="burger" aria-label="Open menu">☰</button>
+    <img class="logo-img sm" src="logo.png" alt="Cebu Eastern College logo">
+    <div class="title"><b>CEBU EASTERN COLLEGE</b><span>Admin Portal</span></div>
+    <nav class="topnav" id="topNav">
+      <a href="#dashboard" data-view="dashboard">Home</a>
+      <a href="#about" data-view="about">About</a>
+      <a href="#contact" data-view="contact">Contact</a>
+      <a href="#logout" class="logout-link" data-logout>Log out</a>
+    </nav>
+    <div class="dd" id="dd">
+      <button type="button" id="ddBtn" aria-expanded="false">Menu ▾</button>
+      <div id="ddMenu" class="hidden">
+        <a href="#dashboard" data-view="dashboard">Home</a>
+        <a href="#students" data-view="students">Student Records</a>
+        <a href="#about" data-view="about">About</a>
+        <a href="#contact" data-view="contact">Contact</a>
+        <a href="#logout" class="logout-link" data-logout>Log out</a>
+        <hr>
+        <a href="#announcements" data-view="announcements">Announcements &amp; Events</a>
+        <a href="#schedule" data-view="schedule">Class Schedule</a>
+        <a href="#grades" data-view="grades">Grades &amp; Records</a>
+        <a href="#tuition" data-view="tuition">Tuition Assessment</a>
+        <a href="#profile" data-view="profile">Profile Management</a>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+    <div class="searchwrap"><span>🔍</span>
+      <input id="search" placeholder="Search students, faculty, or records...">
+    </div>
+
+
+    <section class="view" id="v-dashboard">
+      <div class="welcome"><p>Welcome back,</p><h1>Admin!</h1>
+        <small>Here's what's happening with your institution today.</small></div>
+      <div class="grid">
+        <div class="left">
+          <div class="cards">
+            <div class="total"><div class="ico">🎓</div><p>Total Students</p><strong>2,845</strong>
+              <em>12 %</em><span>↑</span><small>vs. last semester</small></div>
+            <button class="stat" style="background:#ff4545" data-dep="HM"><span>🍴</span><b>HM</b><i>432</i><small>students</small></button>
+            <button class="stat" style="background:#ffe933" data-dep="TM"><span>⚙</span><b>TM</b><i>398</i><small>students</small></button>
+            <button class="stat" style="background:#8a82a8" data-dep="CRIM"><span>🛡</span><b>CRIM</b><i>512</i><small>students</small></button>
+            <button class="stat" style="background:#17d44d" data-dep="IT"><span>🖥</span><b>IT</b><i>476</i><small>students</small></button>
+            <button class="stat" style="background:#1a80d6;color:#fff" data-dep="BSED"><span>📘</span><b>BSED</b><i>363</i><small>students</small></button>
+            <button class="stat" style="background:#ff6ee0" data-dep="BEED"><span>👥</span><b>BEED</b><i>664</i><small>students</small></button>
+          </div>
+          <h2 class="sec">Department Student Summary</h2>
+          <div class="tablebox">
+            <table id="deptTable">
+              <thead><tr><th>Department</th><th>Students</th><th>Male</th><th>Female</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>HM</td><td>520</td><td>272</td><td>246</td><td>Active</td></tr>
+                <tr><td>TM</td><td>430</td><td>228</td><td>202</td><td>Active</td></tr>
+                <tr><td>CRIM</td><td>610</td><td>224</td><td>286</td><td>Active</td></tr>
+                <tr><td>IT</td><td>380</td><td>208</td><td>172</td><td>Active</td></tr>
+                <tr><td>BSED</td><td>500</td><td>260</td><td>240</td><td>Active</td></tr>
+                <tr><td>BEED</td><td>405</td><td>220</td><td>185</td><td>Active</td></tr>
+              </tbody>
+              <tfoot><tr><td>Total</td><td>2,845</td><td>1512</td><td>1,333</td><td>Active</td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="right">
+          <div class="panel quick"><h3>⚡ Quick Actions</h3>
+            <button data-modal="Add Student" class="qa"><i style="background:#1a5fb4">👤</i>Add Student</button>
+            <button data-modal="Upload Grades" class="qa"><i style="background:#17c653">📗</i>Upload Grades</button>
+            <button data-modal="Post Announcement" class="qa"><i style="background:#bbb">📣</i>Post Announcement</button>
+          </div>
+          <div class="panel events"><div class="evhead"><h3>📅 Upcoming Events</h3>
+            <a href="#announcements" data-view="announcements">View Calendar</a></div>
+            <div class="ev"><div class="date"><small>May</small><b>11</b></div><div><b>Final Exam Schedule</b><span>All departments</span><span>7:30 AM - 9:00 PM</span></div></div>
+            <div class="ev"><div class="date"><small>June</small><b>19</b></div><div><b>Faculty Development Program</b><span>Audio Visual Room</span><span>9:00 AM - 12:00 PM</span></div></div>
+            <div class="ev"><div class="date"><small>Aug</small><b>28</b></div><div><b>Enrollment for SY 2025-2026</b><span>Registrar</span><span>All day</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="view hidden" id="v-page"></section>
+  </main>
+  <footer>©2026 Cebu Eastern College | All Right Reserved.</footer>
+</div>
+
+
+<div id="modal" class="hidden"><div class="mbox">
+  <h3 id="mTitle"></h3><div id="mBody"></div>
+  <div class="mact"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn" id="mSave">Save</button></div>
+</div></div>
+<div id="loggedout" class="hidden"><div class="lo-box">
+  <img class="logo-img" src="logo.png" alt="Cebu Eastern College logo">
+  <h2>You have been logged out</h2><p>Thank you for using the CEC Admin Portal.</p>
+  <button class="btn" id="loginAgain">Log back in</button>
+</div></div>
+<div id="toast"></div>
+<script src="dashboard.js"></script>
+</body>
+</html>
