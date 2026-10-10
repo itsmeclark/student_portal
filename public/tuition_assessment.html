@@ -1,51 +1,65 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123eaa">
-  <title>Tuition &amp; Assessment | Cebu Eastern College</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#182f70">
+  <title>Tuition Assessment | Cebu Eastern College</title>
   <link rel="stylesheet" href="tuition_assessment.css">
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="side-heading">Main Menu</div>
-      <nav class="side-nav" aria-label="Main navigation">
-        <div id="sideNav"></div>
-      </nav>
-      <img class="dragon-mark" src="tuition_assessment_dragon.png" alt="" aria-hidden="true">
-      <div class="sidebar-foot">CEC <span>STUDENT PORTAL</span></div>
-    </aside>
-
-    <main class="main-frame">
-      <header class="topbar">
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="true">☰</button>
-        <div class="brand-lockup">
-          <img class="seal" src="tuition_assessment_logo.png" alt="Cebu Eastern College seal">
-          <div class="brand-name">CEBU EASTERN<br>COLLEGE<small>STUDENT PORTAL</small></div>
+  <div class="portal-app" id="portalApp">
+  <header class="top-header">
+    <div class="school-brand">
+      <div class="cec-logo"><img src="tuition_assessment_logo.png" alt="Cebu Eastern College Logo"></div>
+      <div class="school-title"><h1>CEBU EASTERN COLLEGE</h1><span>Student Portal</span></div>
+    </div>
+    <div class="header-actions">
+      <div class="student-profile">
+        <div class="student-name"><strong id="profileName">Gemar Enopia</strong><button type="button" id="roleButton" class="role-switch" aria-expanded="false"><span id="roleLabel">Student</span> <span aria-hidden="true">⌄</span></button></div>
+        <div class="role-menu" id="roleMenu" hidden>
+          <button type="button" data-role="student">Student view</button>
+          <button type="button" data-role="admin">Administrator view</button>
         </div>
-        <div class="topbar-spacer"></div>
-        <div class="account-wrap">
-          <button class="account-button" id="accountButton" aria-expanded="false">
-            <span class="avatar">◉</span><span class="account-copy"><strong id="accountName">Gemar Enopia</strong><small id="accountRole">Administrator</small></span><span class="chevron">⌄</span>
-          </button>
-          <div class="account-menu" id="accountMenu">
-            <button data-role="admin">Switch to Administrator</button>
-            <button data-role="student">Switch to Student</button>
-            <button id="logoutButton">Log out</button>
-          </div>
-        </div>
-        <button class="logout-button" id="logoutTop"><span>⇥</span> Logout</button>
-      </header>
+        <div class="profile-icon" aria-hidden="true">♙</div>
+      </div>
+      <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+    </div>
+  </header>
 
-      <section class="content-area" id="contentArea" aria-live="polite"></section>
-    </main>
+  <nav class="navigation" aria-label="Main navigation">
+    <a href="#dashboard" class="nav-item" data-section="dashboard"><span class="nav-icon">⊞</span>Dashboard</a>
+    <a href="#announcements" class="nav-item" data-section="announcements"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+    <a href="#schedule" class="nav-item" data-section="schedule"><span class="nav-icon">□</span>Class Schedule</a>
+    <a href="#grades" class="nav-item" data-section="grades"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+    <a href="#tuition-assessment" class="nav-item active" data-section="tuition-assessment"><span class="nav-icon">▭</span>Tuition Assessment</a>
+    <a href="#profile" class="nav-item" data-section="profile"><span class="nav-icon">♙</span>My Profile</a>
+    <a href="#settings" class="nav-item" data-section="settings"><span class="nav-icon">☼</span>Settings</a>
+  </nav>
+
+  <main class="main-container" id="mainContent" aria-live="polite"></main>
   </div>
-  <div class="toast" id="toast" role="status"></div>
+
+  <main class="login-screen" id="loginScreen" hidden>
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="login-brand">
+        <img src="tuition_assessment_logo.png" alt="Cebu Eastern College Logo">
+        <div><strong>CEBU EASTERN COLLEGE</strong><span>Student Portal</span></div>
+      </div>
+      <h1 id="loginTitle">Welcome back</h1>
+      <p class="login-intro">Sign in to continue to Tuition Assessment.</p>
+      <form id="loginForm">
+        <label class="login-field"><span>Sign in as</span><select id="loginRole" name="role"><option value="student">Student</option><option value="admin">Administrator</option></select></label>
+        <label class="login-field"><span id="loginIdLabel">Student ID or email</span><input id="loginIdentifier" name="identifier" type="text" autocomplete="username" placeholder="Enter your student ID or email" required></label>
+        <label class="login-field"><span>Password</span><span class="password-row"><input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button type="button" id="togglePassword" aria-pressed="false">Show</button></span></label>
+        <div class="login-options"><label><input id="rememberLogin" type="checkbox"> Remember me</label><button type="button" id="forgotPassword">Forgot password?</button></div>
+        <button type="submit" class="login-submit">Sign In</button>
+      </form>
+      <p class="login-demo-note">Demo sign-in: enter any ID/email and password to continue. Real account verification requires a connected school login service.</p>
+    </section>
+  </main>
+
+  <div class="module-toast" id="toast" role="status" aria-live="polite"></div>
   <script src="tuition_assessment.js"></script>
 </body>
 </html>
