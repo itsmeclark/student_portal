@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Records | Cebu Eastern College</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER (sticky) ================= -->
+    <header class="top-header">
+
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="cec-logo.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Student Portal</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong>Gemar Enopia</strong>
+                    <span>Student</span>
+                </div>
+                <div class="profile-icon">♙</div>
+            </div>
+            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+        </div>
+
+    </header>
+
+    <!-- ================= NAVIGATION (sticky) ================= -->
+    <nav class="navigation">
+        <a href="#" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
+        <a href="#" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+        <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
+        <a href="#" class="nav-item active"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+        <a href="#" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
+        <a href="#" class="nav-item"><span class="nav-icon">♙</span>My Profile</a>
+        <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
+    </nav>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-container">
+
+        <section class="filter-card">
+            <h2>Academic Records</h2>
+
+            <div class="filter-row">
+
+                <div class="filter-group">
+                    <label for="term">TERM</label>
+                    <div class="select-wrapper">
+                        <select id="term">
+                            <!-- value must match a key in grades-data.js -->
+                            <option value="2026-1">First Semester A.Y. 2026-2027</option>
+                            <option value="2025-2">Second Semester A.Y. 2025-2026</option>
+                            <option value="2025-1">First Semester A.Y. 2025-2026</option>
+                            <option value="2024-2">Second Semester A.Y. 2024-2025</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group period-group">
+                    <label for="period">PERIOD</label>
+                    <div class="select-wrapper">
+                        <select id="period">
+                            <option value="All">All Periods</option>
+                            <option value="Prelim">Prelim</option>
+                            <option value="Midterm">Midterm</option>
+                            <option value="Semifinal">Semifinal</option>
+                            <option value="Final">Final</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" id="viewAllBtn" class="secondary-button active">
+                    View All Grades
+                </button>
+
+            </div>
+        </section>
+
+        <section class="records-card">
+
+            <h2 class="program-title">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h2>
+
+            <div class="student-information">
+                <div class="left-info">
+                    <p><strong>ID Number:</strong> 2986789</p>
+                    <p><strong>Name:</strong> GEMAR E. ENOPIA</p>
+                </div>
+                <div class="right-info">
+                    <p><strong>Section:</strong> <span id="infoSection"></span></p>
+                    <p><strong>Year level:</strong> <span id="infoYear"></span></p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-col="always">EDP CODE</th>
+                            <th data-col="always">SUBJECT</th>
+                            <th data-col="prelim">PRELIM</th>
+                            <th data-col="midterm">MIDTERM</th>
+                            <th data-col="semifinal">SEMIFINAL</th>
+                            <th data-col="final_period">FINAL</th>
+                            <th data-col="final_grade">FINAL GRADE</th>
+                        </tr>
+                    </thead>
+                    <!-- rows are generated from grades-data.js -->
+                    <tbody id="gradesBody"></tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="grades-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
