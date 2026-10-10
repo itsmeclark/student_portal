@@ -147,3 +147,48 @@ footer{background:var(--navy);color:#fff;text-align:center;font-size:9px;padding
 .lo-box{background:#fff;border-radius:20px;padding:34px 38px;text-align:center;width:min(380px,92vw);box-shadow:0 10px 30px #0006}
 .lo-box .logo-img{width:90px;margin:0 auto 12px;filter:none}
 .lo-box h2{margin:0 0 6px;font-size:20px}.lo-box p{margin:0 0 18px;font-size:13px;color:#555}
+/* ================================
+   STICKY HEADER + TOP NAVIGATION
+   (z-index stays below the sidebar (30) and overlay (20))
+================================ */
+.topbar{
+  position:sticky; top:0; z-index:15;
+  height:70px;
+}
+
+.navigation{
+  position:sticky; top:70px;      /* = .topbar height */
+  z-index:14;
+  min-height:59px;
+  width:100%;
+  background:#263f88;
+  display:flex;
+  align-items:stretch;
+  padding:0 18px;
+  box-shadow:0 2px 6px rgba(23,43,82,.15);
+}
+
+.nav-item{
+  flex:1 1 0;
+  min-width:0;
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  gap:8px;
+  padding:0 10px;
+  text-align:center;
+  font-size:13px; font-weight:600;
+  border-bottom:4px solid transparent;
+  transition:.2s;
+}
+.nav-item:hover{ background:rgba(255,255,255,.08); }
+.nav-item.active{ background:#fff; color:#1b3477; border-bottom:4px solid #ffc400; }
+.nav-icon{ font-size:19px; line-height:1; }
+
+@media(max-width:1050px){
+  .navigation{ padding:0 8px; }
+  .nav-item{ padding:0 6px; font-size:12px; gap:5px; }
+}
+@media(max-width:750px){
+  .navigation{ overflow-x:auto; padding:0; }
+  .nav-item{ flex:0 0 auto; padding:0 12px; white-space:nowrap; }
+}
