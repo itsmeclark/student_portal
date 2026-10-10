@@ -2,7 +2,7 @@
     --dragon: url("../img/dragon.png");
     --blue: #0b3a91;
     --head: #0a2f7b;
-    --side: #0c3c93;
+    --side: #19498f;
     --accent: #0a62d6;
     --purple: #4a4ae0;
     --lilac: #9b8cf0;
@@ -24,7 +24,7 @@ html {
 body {
     margin: 0;
     font-family: Poppins, "Segoe UI", Arial, sans-serif;
-    background: #cfcfa6;
+    background: var(--blue);
     color: #111;
 }
 
@@ -35,6 +35,7 @@ body {
     background: var(--blue);
     position: relative;
     overflow: hidden;
+    zoom: .84;
 }
 
 
@@ -129,18 +130,18 @@ header {
     top: 140px;
     width: 100%;
     height: 64px;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     background: var(--side);
 }
 
 .nav-item {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 0 12px;
+    gap: 8px;
+    min-width: 0;
+    padding: 0 8px;
     color: #fff;
     text-decoration: none;
     font-size: 15.5px;
@@ -189,6 +190,18 @@ header {
     background: var(--card);
     border-radius: 10px;
     overflow: hidden;
+}
+
+.wm-sidebar {
+    position: absolute;
+    left: 0;
+    bottom: 28px;
+    width: 189px;
+    height: 360px;
+    background: var(--dragon) center / contain no-repeat;
+    opacity: .25;
+    mix-blend-mode: multiply;
+    pointer-events: none;
 }
 
 .wm {
