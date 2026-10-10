@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Announcements & Events / Admin – Cebu Eastern College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <img src="cec logo.png" alt="Cebu Eastern College Logo" class="brand-logo">
+      <div class="brand-text"><strong>CEBU EASTERN<br>COLLEGE</strong><span>STUDENT PORTAL</span></div>
+    </div>
+    <div class="page-title">
+      <h1 id="pageTitle">Announcements &amp; Events / Admin</h1>
+      <small id="pageCrumb">Admin Panel / Announcements &amp; Events</small>
+    </div>
+    <div class="user">
+      <div class="user-info"><strong>Gemar Enopia</strong><span>Admin</span></div>
+      <div class="acct">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0b3a9a" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </div>
+        <button class="logout" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </div>
+  </header>
+
+
+  <aside class="sidebar">
+    <nav id="nav">
+      <a href="#dashboard" data-view="dashboard"><span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.4"><rect x="2" y="2" width="5" height="5"/><rect x="9" y="2" width="5" height="5"/><rect x="2" y="9" width="5" height="5"/><rect x="9" y="9" width="5" height="5"/></svg></span>Dashboard</a>
+      <a href="#announcements" data-view="announcements" class="active"><span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M2 6v4h2.5L10 13V3L4.5 6z"/><path d="M12 5.5c1 1.5 1 3.5 0 5"/></svg></span>Announcements &amp; Events</a>
+      <a href="#schedule" data-view="schedule"><span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1"/><path d="M2 7h12M5 1.5v3M11 1.5v3"/></svg></span>Class Schedule</a>
+      <a href="#grades" data-view="grades"><span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M9.5 1.5v3h3M5.5 8h5M5.5 11h5"/></svg></span>Grades &amp; Records</a>
+      <a href="#tuition" data-view="tuition"><span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.4"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><circle cx="8" cy="8" r="2"/></svg></span>Tuition&nbsp; Assessment</a>
+      <a href="#profile" data-view="profile"><span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.4"><circle cx="8" cy="8" r="6.5"/><circle cx="8" cy="6.5" r="2.2"/><path d="M3.8 12.6c1-1.7 2.4-2.3 4.2-2.3s3.2.6 4.2 2.3"/></svg></span>Profile Management</a>
+    </nav>
+    <img src="dragons.png" alt="Dragon Emblem" class="dragon-img" aria-hidden="true">
+  </aside>
+
+
+  <main class="content" id="main">
+    <section class="view" data-view="announcements">
+      <div class="head-row">
+        <div>
+          <h2>Manage notices</h2>
+          <p class="sub">Create, edit, pin, or remove announcements shown to students</p>
+        </div>
+        <button class="btn-post" id="postBtn" type="button"><svg viewBox="0 0 12 12" width="8" height="8" aria-hidden="true"><circle cx="6" cy="6" r="5.5" fill="#fff"/><path d="M6 3v6M3 6h6" stroke="#0a3d9c" stroke-width="1.3"/></svg>Post Notice</button>
+      </div>
+
+
+      <section class="stats">
+        <div class="stat"><strong id="statActive">4</strong><span>Active Notices</span></div>
+        <div class="stat"><strong id="statPinned">1</strong><span>Pinned</span></div>
+        <div class="stat"><strong id="statDraft">0</strong><span>Draft</span></div>
+        <div class="stat"><strong>1,204</strong><span>Views this week</span></div>
+      </section>
+
+
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="search" type="text" placeholder="Search notices by title or department...">
+        </label>
+        <div class="filters" id="filters">
+          <button class="pill active" data-cat="All">All</button>
+          <button class="pill" data-cat="Important">Important</button>
+          <button class="pill" data-cat="Event">Event</button>
+          <button class="pill" data-cat="Scholarship">Scholarship</button>
+          <button class="pill" data-cat="General">General</button>
+        </div>
+      </div>
+
+
+      <section class="table-card">
+        <div class="row head">
+          <div>Notice</div><div class="c">Category</div><div class="c">Department</div><div class="c">Date posted</div><div class="c">Status</div><div class="c">Actions</div>
+        </div>
+        <div id="rows">
+          <!-- Dynamically populated via script.js -->
+        </div>
+        <div class="empty" id="empty" hidden><p>No notices found.</p><button type="button" class="btn-post" id="restoreBtn" hidden>Restore the 4 notices</button></div>
+      </section>
+    </section>
+
+
+    <section class="view" data-view="dashboard" hidden>
+      <h2>Dashboard</h2><p class="sub">Overview of the student portal</p>
+      <div class="stats">
+        <div class="stat"><strong id="dActive">0</strong><span>Active Notices</span></div>
+        <div class="stat"><strong>3,482</strong><span>Enrolled Students</span></div>
+        <div class="stat"><strong>126</strong><span>Classes Today</span></div>
+        <div class="stat"><strong>1,204</strong><span>Views this week</span></div>
+      </div>
+      <h3 class="sec">Latest notices</h3>
+      <ul class="latest" id="latest"></ul>
+      <div class="quick">
+        <a href="#announcements" class="btn-post">Manage notices</a>
+        <a href="#schedule" class="btn-post">Class schedule</a>
+        <a href="#tuition" class="btn-post">Tuition assessment</a>
+      </div>
+    </section>
+
+
+    <section class="view" data-view="schedule" hidden>
+      <h2>Class Schedule</h2><p class="sub">Weekly classes for the current semester</p>
+      <div class="table-card simple">
+        <table>
+          <thead><tr><th>Time</th><th>Subject</th><th>Day</th><th>Room</th><th>Instructor</th></tr></thead>
+          <tbody>
+            <tr><td>7:30 – 9:00 AM</td><td>IT 301 – Web Systems</td><td>Mon / Wed</td><td>Lab 2</td><td>Prof. Reyes</td></tr>
+            <tr><td>9:00 – 10:30 AM</td><td>MATH 201 – Discrete Math</td><td>Tue / Thu</td><td>Rm 204</td><td>Prof. Dela Cruz</td></tr>
+            <tr><td>1:00 – 2:30 PM</td><td>ENG 102 – Technical Writing</td><td>Mon / Wed</td><td>Rm 110</td><td>Prof. Santos</td></tr>
+            <tr><td>2:30 – 4:00 PM</td><td>IT 305 – Database Systems</td><td>Tue / Thu</td><td>Lab 1</td><td>Prof. Lim</td></tr>
+            <tr><td>8:00 – 11:00 AM</td><td>PE 4 – Team Sports</td><td>Fri</td><td>Gym</td><td>Coach Ramos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <section class="view" data-view="grades" hidden>
+      <h2>Grades & Records</h2><p class="sub">Academic standing and final grades</p>
+      <div class="table-card simple">
+        <table>
+          <thead><tr><th>Subject</th><th>Units</th><th>Midterm</th><th>Final</th><th>Remarks</th></tr></thead>
+          <tbody>
+            <tr><td>IT 301 – Web Systems</td><td>3</td><td>1.50</td><td>1.25</td><td>Passed</td></tr>
+            <tr><td>MATH 201 – Discrete Math</td><td>3</td><td>1.75</td><td>1.75</td><td>Passed</td></tr>
+            <tr><td>ENG 102 – Technical Writing</td><td>3</td><td>1.25</td><td>1.50</td><td>Passed</td></tr>
+            <tr><td>IT 305 – Database Systems</td><td>3</td><td>2.00</td><td>1.75</td><td>Passed</td></tr>
+            <tr><td>PE 4 – Team Sports</td><td>2</td><td>1.00</td><td>1.00</td><td>Passed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note"><b>General Weighted Average:</b> 1.45</p>
+    </section>
+
+
+    <section class="view" data-view="tuition" hidden>
+      <h2>Tuition Assessment</h2><p class="sub">Fees for the current semester</p>
+      <div class="table-card simple">
+        <table>
+          <thead><tr><th>Fee</th><th>Amount (PHP)</th></tr></thead>
+          <tbody>
+            <tr><td>Tuition (21 units)</td><td>21,000.00</td></tr>
+            <tr><td>Laboratory fees</td><td>3,500.00</td></tr>
+            <tr><td>Library &amp; Registration</td><td>1,800.00</td></tr>
+            <tr><td>Miscellaneous</td><td>2,200.00</td></tr>
+            <tr><td><b>Total assessment</b></td><td><b>28,500.00</b></td></tr>
+            <tr><td>Total payments</td><td>20,000.00</td></tr>
+            <tr><td><b>Remaining balance</b></td><td><b>8,500.00</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <section class="view" data-view="profile" hidden>
+      <h2>Profile Management</h2><p class="sub">Update your account details</p>
+      <form class="pform" id="profileForm">
+        <label>Full name<input type="text" id="pName" value="Gemar Enopia"></label>
+        <label>Role<input type="text" value="Admin" disabled></label>
+        <label>Email<input type="email" id="pEmail" value="gemar.enopia@cec.edu.ph"></label>
+        <label>Contact number<input type="text" value="0917 000 0000"></label>
+        <label>Department<input type="text" value="Student Affairs Office"></label>
+        <button type="submit" class="btn-save">Save Changes</button>
+        <p class="ok" id="profileOk" hidden>Profile saved.</p>
+      </form>
+    </section>
+
+
+    <!-- Delete confirmation modal -->
+    <div class="overlay" id="deleteModal" hidden>
+      <div class="confirm" role="dialog" aria-modal="true" aria-labelledby="delTitle">
+        <div class="trash-circle"><svg viewBox="0 0 16 16" fill="none" stroke="#e11" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h11M6 4V2.5h4V4M4 4l.7 9.5h6.6L12 4M6.5 7v4M9.5 7v4"/></svg></div>
+        <p id="delTitle">Remove this notice from the student portal?</p>
+        <strong>This can't be undone.</strong>
+        <div class="confirm-actions">
+          <button class="btn-cancel" id="delCancel" type="button">Cancel</button>
+          <button class="btn-remove" id="delConfirm" type="button">Remove notice</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Edit / Post modal -->
+    <div class="overlay" id="editModal" hidden>
+      <form class="edit" id="editForm" role="dialog" aria-modal="true" aria-labelledby="editHeading" novalidate>
+        <div class="edit-head">
+          <h3 id="editHeading">Edit Announcement</h3>
+          <button type="button" class="close" id="editClose" aria-label="Close">✕</button>
+        </div>
+        <label class="lbl" for="fTitle">NOTICE TITLE *</label>
+        <input id="fTitle" type="text" placeholder="e.g. Schedule of Midterm Examinations..." required>
+        <div class="two">
+          <div>
+            <label class="lbl" for="fCat">CATEGORY</label>
+            <select id="fCat">
+              <option>Important</option><option>Event</option><option>Scholarship</option><option>General</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl" for="fDept">ISSUING DEPARTMENT</label>
+            <input id="fDept" type="text" placeholder="Registrar's Office">
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="fImportant"> Tag as <b>IMPORTANT</b> notice</label>
+        <label class="lbl" for="fSummary">SHORT SUMMARY (DISPLAY ON CARD) *</label>
+        <textarea id="fSummary" class="short" placeholder="Brief 1-2 sentence overview for the card..." required></textarea>
+        <label class="lbl" for="fContent">FULL NOTICE CONTENT (OPTIONAL)</label>
+        <textarea id="fContent" class="long" placeholder="Detailed instructions or Guidelines..."></textarea>
+        <p class="error" id="formError" hidden>Add a title and a short summary to continue.</p>
+        <div class="edit-actions">
+          <button type="button" class="btn-cancel-o" id="editCancel">Cancel</button>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+
+  <footer class="footer">
+    <span>© 2026 Cebu Eastern College. All rights reserved.</span>
+    <span>Student Portal v1.0</span>
+  </footer>
+</div>
+
+
+<div class="overlay" id="logoutModal" hidden>
+  <div class="confirm" role="dialog" aria-modal="true">
+    <div class="trash-circle">⎋</div>
+    <p>Log out of the student portal?</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="logoutCancel" type="button">Cancel</button>
+      <button class="btn-save" id="logoutConfirm" type="button" style="border-radius:8px;padding:6px 16px;font-size:9px">Log out</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="signedout" id="signedOut" hidden>
+  <div class="confirm">
+    <div class="logo" style="margin:0 auto 10px;background:var(--blue);color:#fff">CEC</div>
+    <strong style="color:#111;font-size:11px">You have been logged out</strong>
+    <p style="margin-top:6px">Thank you for using the Cebu Eastern College Student Portal.</p>
+    <div class="confirm-actions">
+      <button class="btn-save" id="loginAgain" type="button" style="border-radius:8px;padding:6px 16px;font-size:9px">Log in again</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
