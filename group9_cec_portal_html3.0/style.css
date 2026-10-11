@@ -175,6 +175,13 @@ td{height:104px}
 .portal-status.is-error{color:#23794e}
 .portal-status:empty{display:none}
 
+.admin-page .topbar{height:78px;background:#142852}
+.admin-page .navigation{top:78px;min-height:63px;background:#204487}
+.admin-page .nav-item{gap:6px;padding:0 6px;font-size:12px;white-space:nowrap}
+.admin-page .nav-icon{width:16px;height:16px}
+.admin-page .nav-item.active{border-bottom-color:transparent}
+.admin-page .main{min-height:calc(100vh - 141px)}
+
 @media(max-width:1000px){
   .topbar{padding:0 16px;gap:15px}.brand-title{font-size:20px}.brand-subtitle{font-size:15px}
   .user-name{font-size:18px}.logout{padding:0 16px}
@@ -195,4 +202,7 @@ td{height:104px}
   .class-schedule-main .page-title{font-size:24px;gap:8px}
   .class-schedule-main .semester{font-size:11px}
   .admin-title{font-size:21px} .table-card{overflow-x:auto}.table-card table{min-width:800px}
+  .admin-page .topbar{height:68px}
+  .admin-page .navigation{top:68px;min-height:56px}
+  .admin-page .main{min-height:calc(100vh - 124px)}
 }
