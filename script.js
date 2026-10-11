@@ -2,10 +2,8 @@ let students = [];
 let selectedEditIndex = null;
 let selectedDeleteIndex = null;
 
+
 // DOM ELEMENTS
-const appContainer = document.getElementById("appContainer");
-const menuBtn = document.getElementById("menuBtn");
-const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
 const table = document.getElementById("studentTable");
 const studentModal = document.getElementById("studentModal");
 const deleteModal = document.getElementById("deleteModal");
@@ -19,20 +17,15 @@ const modalTitle = document.getElementById("modalTitle");
 const submitBtn = document.getElementById("submitBtn");
 const formFooterNote = document.getElementById("formFooterNote");
 
+
 const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
 const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
-// TOGGLE SIDEBAR
-function toggleSidebar() {
-  appContainer.classList.toggle("sidebar-open");
-}
-
-menuBtn.addEventListener("click", toggleSidebar);
-sidebarToggleBtn.addEventListener("click", toggleSidebar);
 
 // DISPLAY STUDENTS IN TABLE
 function displayStudents(data = students) {
   table.innerHTML = "";
+
 
   if (data.length === 0) {
     table.innerHTML = `
@@ -43,8 +36,10 @@ function displayStudents(data = students) {
     return;
   }
 
+
   data.forEach((student, index) => {
     const row = document.createElement("tr");
+
 
     row.innerHTML = `
       <td>
@@ -63,9 +58,11 @@ function displayStudents(data = students) {
       </td>
     `;
 
+
     table.appendChild(row);
   });
 }
+
 
 // MODAL CONTROLS
 function openAddModal() {
@@ -78,14 +75,17 @@ function openAddModal() {
   studentModal.classList.add("show");
 }
 
+
 function openEditModal(index) {
   selectedEditIndex = index;
   const student = students[index];
+
 
   modalTitle.innerHTML = `<i class="fa-solid fa-pen"></i> EDIT STUDENT INFORMATION`;
   submitBtn.textContent = "UPDATE STUDENT INFORMATION";
   formFooterNote.classList.add("hidden");
   cancelForm.classList.remove("hidden");
+
 
   document.getElementById("studentId").value = student.id || "";
   document.getElementById("fullName").value = student.name || "";
@@ -98,25 +98,31 @@ function openEditModal(index) {
   document.getElementById("emergencyContact").value = student.emergencyContact || "";
   document.getElementById("status").value = student.status || "Active";
 
+
   studentModal.classList.add("show");
 }
+
 
 function closeStudentModal() {
   studentModal.classList.remove("show");
 }
+
 
 topAddBtn.addEventListener("click", openAddModal);
 bottomAddBtn.addEventListener("click", openAddModal);
 closeModal.addEventListener("click", closeStudentModal);
 cancelForm.addEventListener("click", closeStudentModal);
 
+
 studentModal.addEventListener("click", (event) => {
   if (event.target === studentModal) closeStudentModal();
 });
 
+
 // FORM SUBMISSION
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+
 
   const fullName = document.getElementById("fullName").value;
   const email = document.getElementById("email").value;
@@ -124,12 +130,14 @@ form.addEventListener("submit", (event) => {
   const program = document.getElementById("program").value;
   const status = document.getElementById("status").value;
 
+
   let department = "IT Department";
   if (program.includes("Hospitality") || program.includes("Tourism")) {
     department = "HTM Department";
   } else if (program.includes("Criminology")) {
     department = "CRIM Department";
   }
+
 
   const payload = {
     id: document.getElementById("studentId").value,
@@ -146,15 +154,18 @@ form.addEventListener("submit", (event) => {
     avatar: selectedEditIndex !== null ? students[selectedEditIndex].avatar : `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50)}`
   };
 
+
   if (selectedEditIndex !== null) {
     students[selectedEditIndex] = payload;
   } else {
     students.push(payload);
   }
 
+
   displayStudents();
   closeStudentModal();
 });
+
 
 // DELETE MODAL CONTROLS
 function openDeleteModal(index) {
@@ -162,10 +173,12 @@ function openDeleteModal(index) {
   deleteModal.classList.add("show");
 }
 
+
 function closeDeleteModal() {
   deleteModal.classList.remove("show");
   selectedDeleteIndex = null;
 }
+
 
 confirmDeleteBtn.addEventListener("click", () => {
   if (selectedDeleteIndex !== null) {
@@ -175,11 +188,14 @@ confirmDeleteBtn.addEventListener("click", () => {
   }
 });
 
+
 cancelDeleteBtn.addEventListener("click", closeDeleteModal);
+
 
 deleteModal.addEventListener("click", (event) => {
   if (event.target === deleteModal) closeDeleteModal();
 });
+
 
 // SEARCH FUNCTIONALITY
 search.addEventListener("input", () => {
@@ -193,10 +209,12 @@ search.addEventListener("input", () => {
   displayStudents(filtered);
 });
 
+
 // LOGOUT HANDLER
 document.getElementById("logoutBtn").addEventListener("click", () => {
   alert("Logged out successfully.");
 });
+
 
 // INITIAL RENDER
 displayStudents();
