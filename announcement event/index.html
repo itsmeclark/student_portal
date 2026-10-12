@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Announcements & Events / Admin – Cebu Eastern College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <img src="cec logo.png" alt="Cebu Eastern College Logo" class="brand-logo">
+      <div class="brand-text"><strong>CEBU EASTERN<br>COLLEGE</strong><span>STUDENT PORTAL</span></div>
+    </div>
+    <div class="page-title">
+      <h1 id="pageTitle">Announcements &amp; Events / Admin</h1>
+      <small id="pageCrumb">Admin Panel / Announcements &amp; Events</small>
+    </div>
+    <div class="user">
+      <div class="user-info"><strong>Gemar Enopia</strong><span>Admin</span></div>
+      <div class="acct">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0b3a9a" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </div>
+        <button class="logout" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= TOP NAVIGATION (sticky) ================= -->
+  <nav class="navigation" id="mainNav" aria-label="Main navigation">
+    <a href="#dashboard" data-view="dashboard" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
+    <a href="#students" data-view="students" class="nav-item"><span class="nav-icon">♙</span>Student Records</a>
+    <a href="#announcements" data-view="announcements" class="nav-item active" aria-current="page"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+    <a href="#schedule" data-view="schedule" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
+    <a href="#grades" data-view="grades" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+    <a href="#tuition" data-view="tuition" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
+    <a href="#profile" data-view="profile" class="nav-item"><span class="nav-icon">☼</span>Profile Management</a>
+  </nav>
+
+
+
+  <main class="content" id="main">
+    <section class="view" data-view="announcements">
+      <div class="head-row">
+        <div>
+          <h2>Manage notices</h2>
+          <p class="sub">Create, edit, pin, or remove announcements shown to students</p>
+        </div>
+        <button class="btn-post" id="postBtn" type="button"><svg viewBox="0 0 12 12" width="8" height="8" aria-hidden="true"><circle cx="6" cy="6" r="5.5" fill="#fff"/><path d="M6 3v6M3 6h6" stroke="#0a3d9c" stroke-width="1.3"/></svg>Post Notice</button>
+      </div>
+
+      <section class="stats">
+        <div class="stat"><strong id="statActive">4</strong><span>Active Notices</span></div>
+        <div class="stat"><strong id="statPinned">1</strong><span>Pinned</span></div>
+        <div class="stat"><strong id="statDraft">0</strong><span>Draft</span></div>
+        <div class="stat"><strong>1,204</strong><span>Views this week</span></div>
+      </section>
+
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="search" type="search" aria-label="Search notices by title or department" placeholder="Search notices by title or department...">
+        </label>
+        <div class="filters" id="filters">
+          <button class="pill active" type="button" data-cat="All" aria-pressed="true">All</button>
+          <button class="pill" type="button" data-cat="Important" aria-pressed="false">Important</button>
+          <button class="pill" type="button" data-cat="Event" aria-pressed="false">Event</button>
+          <button class="pill" type="button" data-cat="Scholarship" aria-pressed="false">Scholarship</button>
+          <button class="pill" type="button" data-cat="General" aria-pressed="false">General</button>
+        </div>
+      </div>
+
+      <section class="table-card">
+        <div class="row head">
+          <div>Notice</div><div class="c">Category</div><div class="c">Department</div><div class="c">Date posted</div><div class="c">Status</div><div class="c">Actions</div>
+        </div>
+        <div id="rows">
+          <!-- Dynamically populated via script.js -->
+        </div>
+        <div class="empty" id="empty" hidden><p>No notices found.</p><button type="button" class="btn-post" id="restoreBtn" hidden>Restore the 4 notices</button></div>
+      </section>
+    </section>
+
+    <section class="view" data-view="dashboard" hidden></section>
+
+    <section class="view" data-view="students" hidden></section>
+
+    <section class="view" data-view="schedule" hidden></section>
+
+    <section class="view" data-view="grades" hidden></section>
+
+    <section class="view" data-view="tuition" hidden></section>
+
+    <section class="view" data-view="profile" hidden></section>
+
+    <!-- Delete confirmation modal -->
+    <div class="overlay" id="deleteModal" hidden>
+      <div class="confirm" role="dialog" aria-modal="true" aria-labelledby="delTitle">
+        <div class="trash-circle"><svg viewBox="0 0 16 16" fill="none" stroke="#e11" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h11M6 4V2.5h4V4M4 4l.7 9.5h6.6L12 4M6.5 7v4M9.5 7v4"/></svg></div>
+        <p id="delTitle">Remove this notice from the student portal?</p>
+        <strong>This can't be undone.</strong>
+        <div class="confirm-actions">
+          <button class="btn-cancel" id="delCancel" type="button">Cancel</button>
+          <button class="btn-remove" id="delConfirm" type="button">Remove notice</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit / Post modal -->
+    <div class="overlay" id="editModal" hidden>
+      <form class="edit" id="editForm" role="dialog" aria-modal="true" aria-labelledby="editHeading" novalidate>
+        <div class="edit-head">
+          <h3 id="editHeading">Edit Announcement</h3>
+          <button type="button" class="close" id="editClose" aria-label="Close">✕</button>
+        </div>
+        <label class="lbl" for="fTitle">NOTICE TITLE *</label>
+        <input id="fTitle" type="text" placeholder="e.g. Schedule of Midterm Examinations..." required>
+        <div class="two">
+          <div>
+            <label class="lbl" for="fCat">CATEGORY</label>
+            <select id="fCat">
+              <option>Important</option><option>Event</option><option>Scholarship</option><option>General</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl" for="fDept">ISSUING DEPARTMENT</label>
+            <input id="fDept" type="text" placeholder="Registrar's Office">
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="fImportant"> Tag as <b>IMPORTANT</b> notice</label>
+        <label class="lbl" for="fSummary">SHORT SUMMARY (DISPLAY ON CARD) *</label>
+        <textarea id="fSummary" class="short" placeholder="Brief 1-2 sentence overview for the card..." required></textarea>
+        <label class="lbl" for="fContent">FULL NOTICE CONTENT (OPTIONAL)</label>
+        <textarea id="fContent" class="long" placeholder="Detailed instructions or Guidelines..."></textarea>
+        <p class="error" id="formError" role="alert" hidden>Add a title and a short summary to continue.</p>
+        <div class="edit-actions">
+          <button type="button" class="btn-cancel-o" id="editCancel">Cancel</button>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Cebu Eastern College. All rights reserved.</span>
+    <span>Student Portal v1.0</span>
+  </footer>
+</div>
+
+<div class="overlay" id="logoutModal" hidden>
+  <div class="confirm" role="dialog" aria-modal="true">
+    <div class="trash-circle">⎋</div>
+    <p>Log out of the student portal?</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="logoutCancel" type="button">Cancel</button>
+      <button class="btn-save btn-compact" id="logoutConfirm" type="button">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay signedout" id="signedOut" hidden>
+  <div class="confirm">
+    <img class="signed-out-logo" src="cec logo.png" alt="Cebu Eastern College logo">
+    <strong class="signed-out-title">You have been logged out</strong>
+    <p class="signed-out-message">Thank you for using the Cebu Eastern College Student Portal.</p>
+    <div class="confirm-actions">
+      <button class="btn-save btn-compact" id="loginAgain" type="button">Log in again</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
