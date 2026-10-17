@@ -4,50 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Class Schedule Management - Admin</title>
-  <link rel="icon" type="image/png" href="assets/cec-logo.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/cec-logo-transparent.png">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
-<body>
+<body class="admin-page">
   <header class="topbar">
     <div class="brand">
-      <img src="assets/cec-logo.png" class="logo" alt="CEBU EASTERN COLLEGE logo">
+      <img src="assets/cec-logo-transparent.png" class="logo" alt="CEBU EASTERN COLLEGE logo">
       <div>
         <div class="brand-title">CEBU EASTERN COLLEGE</div>
-        <div class="brand-subtitle">STUDENT PORTAL</div>
+        <div class="brand-subtitle">Administrator Portal</div>
       </div>
     </div>
     <div class="user-area">
       <a class="user-profile-link" href="profile.html" aria-label="Open My Profile">
-        <div class="user-icon">●</div>
         <div>
-          <div class="user-name">Gemar Admin</div>
-          <div class="user-role">Administrator</div>
+          <div class="user-name">Atty. Ricardo Salazar</div>
+          <div class="user-role">Profile Management</div>
         </div>
+        <div class="user-icon"><img src="assets/user-icon.jpg" alt=""></div>
       </a>
-      <button class="logout" id="logoutButton" type="button">Logout</button>
+      <button class="logout" type="button">Log Out</button>
     </div>
   </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <img src="assets/cec-logo.png" class="side-logo-watermark" alt="Cebu Eastern College watermark">
-      <img src="assets/Blue_Dragon_Logo.png" class="dragon-logo-watermark" alt="Blue dragon watermark">
-      <div class="side-brand">CEBU<br>EASTERN<br>COLLEGE</div>
-      <nav class="menu" aria-label="Main navigation">
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/dashboard-icon.png" alt="Dashboard icon">Dashboard</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/announcement-icon.png" alt="Announcements and events icon">Announcements &amp; Events</a>
-        <a class="active" href="admin.html"><img class="icon" src="assets/schedule-icon.png" alt="Class schedule icon">Class Schedule</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/grades-icon.png" alt="Grades and records icon">Grades &amp; Records</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/tuition-icon.png" alt="Tuition assessment icon">Tuition Assessment</a>
-        <a href="profile.html"><img class="icon" src="assets/profile-icon.png" alt="My profile icon">My Profile</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/setting-icon.png" alt="Settings icon">Settings</a>
-      </nav>
-    </aside>
+  <nav class="navigation" aria-label="Main navigation">
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/dashboard-icon.png" alt="">Dashboard</a>
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/announcement-icon.png" alt="">Announcements &amp; Events</a>
+    <a href="admin.html" class="nav-item active" aria-current="page"><img class="nav-icon" src="assets/schedule-icon.png" alt="">Class Schedule</a>
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/grades-icon.png" alt="">Grades &amp; Records</a>
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/tuition-icon.png" alt="">Tuition Assessment</a>
+    <a href="profile.html" class="nav-item"><img class="nav-icon" src="assets/profile-icon.png" alt="">Profile Management</a>
+  </nav>
 
-    <main class="main">
+  <main class="main">
       <section class="panel">
         <div class="admin-header">
-          <div class="circle">◷</div>
+          <div class="circle"><img src="assets/schedule-icon.png" alt=""></div>
           <div>
             <div class="admin-title">Class Schedule Management</div>
             <div class="admin-sub">Manage class schedule, subject, and instructors.</div>
@@ -72,8 +65,7 @@
         </div>
         <p class="portal-status" id="scheduleStatus" role="status" aria-live="polite"></p>
       </section>
-    </main>
-  </div>
+  </main>
 
   <div class="modal-overlay hidden" id="scheduleModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -122,16 +114,30 @@
     </div>
   </div>
 
-  <div class="modal-overlay hidden delete-schedule-modal" id="deleteScheduleModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteScheduleTitle">
+  <div class="modal-overlay logout-overlay hidden" id="logoutModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="logoutTitle" aria-describedby="logoutMessage">
       <div class="modal-header">
-        <h3 id="deleteScheduleTitle">Delete Schedule</h3>
-        <button class="close-modal" id="closeDeleteModalBtn" type="button" aria-label="Close delete confirmation">×</button>
+        <h3 id="logoutTitle">Confirm Logout</h3>
+        <button class="close-modal" type="button" aria-label="Close dialog" data-close-logout>×</button>
       </div>
-      <p id="deleteScheduleMessage">Are you sure you want to delete this schedule?</p>
+      <p id="logoutMessage">Are you sure you want to log out?</p>
       <div class="modal-actions">
-        <button class="secondary-btn" id="cancelDeleteBtn" type="button">Cancel</button>
-        <button class="primary-btn" id="confirmDeleteBtn" type="button">Delete Schedule</button>
+        <button class="secondary-btn" type="button" data-close-logout>Cancel</button>
+        <button class="primary-btn logout-confirm-btn" type="button" id="confirmLogoutBtn">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay delete-confirm-overlay hidden" id="deleteConfirmModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteConfirmTitle" aria-describedby="deleteConfirmMessage">
+      <div class="modal-header">
+        <h3 id="deleteConfirmTitle">Confirm Delete</h3>
+        <button class="close-modal" type="button" aria-label="Close dialog" data-close-delete>×</button>
+      </div>
+      <p id="deleteConfirmMessage">Are you sure you want to delete this schedule?</p>
+      <div class="modal-actions">
+        <button class="secondary-btn" type="button" data-close-delete>Cancel</button>
+        <button class="primary-btn delete-confirm-btn" type="button" id="confirmDeleteBtn">Delete</button>
       </div>
     </div>
   </div>
@@ -144,21 +150,27 @@
     const addScheduleBtn = document.getElementById('addScheduleBtn');
     const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
     const closeModalBtn = document.querySelector('.close-modal');
-    const deleteScheduleModal = document.getElementById('deleteScheduleModal');
-    const deleteScheduleMessage = document.getElementById('deleteScheduleMessage');
-    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const closeDeleteModalBtn = document.getElementById('closeDeleteModalBtn');
     const tableBody = document.getElementById('scheduleTableBody');
+    const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+    const deleteConfirmMessage = document.getElementById('deleteConfirmMessage');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
     let currentEditIndex = -1;
     let pendingDeleteIndex = -1;
+    let pendingDeleteButton = null;
     let schedules = [];
     const status = document.getElementById('scheduleStatus');
 
     function showStatus(message, isError) {
       status.textContent = message;
       status.classList.toggle('is-error', isError);
+    }
+
+    try {
+      const profile = window.PortalData.loadProfile();
+      if (profile.photo) document.querySelector('.user-icon img').src = profile.photo;
+    } catch (error) {
+      showStatus(error.message, true);
     }
 
     function renderSchedules() {
@@ -210,19 +222,41 @@
       addScheduleBtn.focus();
     }
 
-    function openDeleteModal(index, rowData) {
-      pendingDeleteIndex = index;
-      deleteScheduleMessage.textContent = `Delete the schedule for ${rowData.subject}?`;
-      deleteScheduleModal.classList.remove('hidden');
-      deleteScheduleModal.setAttribute('aria-hidden', 'false');
-      cancelDeleteBtn.focus();
+    function closeDeleteConfirmModal() {
+      deleteConfirmModal.classList.add('hidden');
+      deleteConfirmModal.setAttribute('aria-hidden', 'true');
+      pendingDeleteIndex = -1;
+      if (pendingDeleteButton) pendingDeleteButton.focus();
+      pendingDeleteButton = null;
     }
 
-    function closeDeleteModal() {
-      deleteScheduleModal.classList.add('hidden');
-      deleteScheduleModal.setAttribute('aria-hidden', 'true');
-      pendingDeleteIndex = -1;
+    function deletePendingSchedule() {
+      if (pendingDeleteIndex < 0 || !schedules[pendingDeleteIndex]) return;
+      const updated = schedules.filter((_, itemIndex) => itemIndex !== pendingDeleteIndex);
+      try {
+        window.PortalData.saveSchedules(updated);
+        schedules = updated;
+        renderSchedules();
+        showStatus('Schedule deleted.', false);
+        closeDeleteConfirmModal();
+      } catch (error) {
+        closeDeleteConfirmModal();
+        showStatus(error.message, true);
+      }
     }
+
+    deleteConfirmModal.querySelectorAll('[data-close-delete]').forEach((button) => {
+      button.addEventListener('click', closeDeleteConfirmModal);
+    });
+    confirmDeleteBtn.addEventListener('click', deletePendingSchedule);
+    deleteConfirmModal.addEventListener('click', (event) => {
+      if (event.target === deleteConfirmModal) closeDeleteConfirmModal();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !deleteConfirmModal.classList.contains('hidden')) {
+        closeDeleteConfirmModal();
+      }
+    });
 
     addScheduleBtn.addEventListener('click', () => {
       openModal();
@@ -230,18 +264,10 @@
 
     closeModalBtn.addEventListener('click', closeModal);
     cancelScheduleBtn.addEventListener('click', closeModal);
-    closeDeleteModalBtn.addEventListener('click', closeDeleteModal);
-    cancelDeleteBtn.addEventListener('click', closeDeleteModal);
 
     scheduleModal.addEventListener('click', (event) => {
       if (event.target === scheduleModal) {
         closeModal();
-      }
-    });
-
-    deleteScheduleModal.addEventListener('click', (event) => {
-      if (event.target === deleteScheduleModal) {
-        closeDeleteModal();
       }
     });
 
@@ -254,7 +280,12 @@
       if (!rowData) return;
 
       if (button.classList.contains('delete')) {
-        openDeleteModal(index, rowData);
+        pendingDeleteIndex = index;
+        pendingDeleteButton = button;
+        deleteConfirmMessage.textContent = `Are you sure you want to delete ${rowData.subject}?`;
+        deleteConfirmModal.classList.remove('hidden');
+        deleteConfirmModal.setAttribute('aria-hidden', 'false');
+        confirmDeleteBtn.focus();
         return;
       }
 
@@ -295,45 +326,15 @@
       }
     });
 
-    confirmDeleteBtn.addEventListener('click', () => {
-      if (pendingDeleteIndex < 0) return;
-      const updated = schedules.filter((_, itemIndex) => itemIndex !== pendingDeleteIndex);
-      try {
-        window.PortalData.saveSchedules(updated);
-        schedules = updated;
-        renderSchedules();
-        closeDeleteModal();
-        showStatus('Schedule deleted.', false);
-      } catch (error) {
-        showStatus(error.message, true);
-      }
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !deleteScheduleModal.classList.contains('hidden')) {
-        closeDeleteModal();
-      }
-    });
-
     try {
       schedules = window.PortalData.loadSchedules();
       renderSchedules();
-      const profile = window.PortalData.loadProfile();
-      window.PortalData.renderTopNavigationPhoto(profile.photo);
     } catch (error) {
       showStatus(error.message, true);
       addScheduleBtn.disabled = true;
     }
 
     window.addEventListener('storage', (event) => {
-      if (event.key === 'cec-portal-profile') {
-        try {
-          const profile = window.PortalData.loadProfile();
-          window.PortalData.renderTopNavigationPhoto(profile.photo);
-        } catch (error) {
-          showStatus(error.message, true);
-        }
-      }
       if (event.key !== 'cec-portal-schedules') return;
       try {
         schedules = window.PortalData.loadSchedules();

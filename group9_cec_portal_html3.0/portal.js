@@ -122,72 +122,44 @@
     write(PROFILE_KEY, profile);
   }
 
-  function renderTopNavigationPhoto(photo) {
-    const userIcons = document.querySelectorAll('.user-icon');
-    userIcons.forEach((userIcon) => {
-      userIcon.replaceChildren();
-      const image = document.createElement('img');
-      image.src = photo || 'assets/profile-icon.png';
-      image.alt = photo ? 'Student profile photo' : 'Default profile icon';
-      userIcon.appendChild(image);
+  const logoutModal = document.getElementById('logoutModal');
+  if (logoutModal) {
+    let activeLogoutButton = null;
+
+    function closeLogoutModal() {
+      logoutModal.classList.add('hidden');
+      logoutModal.setAttribute('aria-hidden', 'true');
+      if (activeLogoutButton) activeLogoutButton.focus();
+    }
+
+    document.querySelectorAll('.logout').forEach((button) => {
+      button.addEventListener('click', () => {
+        activeLogoutButton = button;
+        logoutModal.classList.remove('hidden');
+        logoutModal.setAttribute('aria-hidden', 'false');
+        logoutModal.querySelector('[data-close-logout]').focus();
+      });
     });
-  }
 
-  function initializeLogoutPopup() {
-    const logoutButton = document.getElementById('logoutButton');
-    if (!logoutButton) return;
-
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay hidden';
-    modal.id = 'logoutModal';
-    modal.setAttribute('aria-hidden', 'true');
-    modal.innerHTML = `
-      <div class="modal logout-modal" role="dialog" aria-modal="true" aria-labelledby="logoutTitle">
-        <div class="modal-header">
-          <h3 id="logoutTitle">Confirm Logout</h3>
-          <button class="close-modal" id="closeLogoutModal" type="button" aria-label="Close logout confirmation">×</button>
-        </div>
-        <p>Are you sure you want to log out?</p>
-        <div class="modal-actions">
-          <button class="secondary-btn" id="cancelLogout" type="button">Cancel</button>
-          <button class="primary-btn" id="confirmLogout" type="button">Log Out</button>
-        </div>
-      </div>`;
-    document.body.appendChild(modal);
-
-    const closeButtons = [modal.querySelector('.close-modal'), modal.querySelector('#cancelLogout')];
-    const openModal = () => {
-      modal.classList.remove('hidden');
-      modal.setAttribute('aria-hidden', 'false');
-      modal.querySelector('#cancelLogout').focus();
-    };
-    const closeModal = () => {
-      modal.classList.add('hidden');
-      modal.setAttribute('aria-hidden', 'true');
-      logoutButton.focus();
-    };
-
-    logoutButton.addEventListener('click', openModal);
-    closeButtons.forEach((button) => button.addEventListener('click', closeModal));
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) closeModal();
+    logoutModal.querySelectorAll('[data-close-logout]').forEach((button) => {
+      button.addEventListener('click', closeLogoutModal);
+    });
+    document.getElementById('confirmLogoutBtn').addEventListener('click', closeLogoutModal);
+    logoutModal.addEventListener('click', (event) => {
+      if (event.target === logoutModal) closeLogoutModal();
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+      if (event.key === 'Escape' && !logoutModal.classList.contains('hidden')) {
+        closeLogoutModal();
+      }
     });
-    modal.querySelector('#confirmLogout').addEventListener('click', () => {
-      window.location.href = 'index.html';
+  } else {
+    document.querySelectorAll('.logout').forEach((button) => {
+    button.addEventListener('click', () => {
+      window.confirm('Are you sure you want to log out?');
     });
+  });
   }
 
-  initializeLogoutPopup();
-
-  window.PortalData = {
-    loadSchedules,
-    saveSchedules,
-    validateSchedule,
-    loadProfile,
-    saveProfile,
-    renderTopNavigationPhoto
-  };
+  window.PortalData = { loadSchedules, saveSchedules, validateSchedule, loadProfile, saveProfile };
 })();

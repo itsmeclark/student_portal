@@ -4,50 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Class Schedule - Cebu Eastern College</title>
-  <link rel="icon" type="image/png" href="assets/cec-logo.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/cec-logo-transparent.png">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <img src="assets/cec-logo.png" class="logo" alt="CEBU EASTERN COLLEGE logo">
+      <img src="assets/cec-logo-transparent.png" class="logo" alt="CEBU EASTERN COLLEGE logo">
       <div>
         <div class="brand-title">CEBU EASTERN COLLEGE</div>
-        <div class="brand-subtitle">STUDENT PORTAL</div>
+        <div class="brand-subtitle">Student Portal</div>
       </div>
     </div>
     <div class="user-area">
       <a class="user-profile-link" href="profile.html" aria-label="Open My Profile">
-        <div class="user-icon">●</div>
         <div>
           <div class="user-name">Gemar Enopia</div>
           <div class="user-role">Student</div>
         </div>
+        <div class="user-icon"><img src="assets/user-icon.jpg" alt=""></div>
       </a>
-      <button class="logout" id="logoutButton" type="button">Logout</button>
+      <button class="logout" type="button">Log Out</button>
     </div>
   </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <img src="assets/cec-logo.png" class="side-logo-watermark" alt="Cebu Eastern College watermark">
-      <img src="assets/Blue_Dragon_Logo.png" class="dragon-logo-watermark" alt="Blue dragon watermark">
-      <div class="side-brand">CEBU<br>EASTERN<br>COLLEGE</div>
-      <nav class="menu" aria-label="Main navigation">
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/dashboard-icon.png" alt="Dashboard icon">Dashboard</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/announcement-icon.png" alt="Announcements and events icon">Announcements &amp; Events</a>
-        <a class="active" href="class-schedule.html"><img class="icon" src="assets/schedule-icon.png" alt="Class schedule icon">Class Schedule</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/grades-icon.png" alt="Grades and records icon">Grades &amp; Records</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/tuition-icon.png" alt="Tuition assessment icon">Tuition Assessment</a>
-        <a href="profile.html"><img class="icon" src="assets/profile-icon.png" alt="My profile icon">My Profile</a>
-        <a class="menu-placeholder" aria-disabled="true"><img class="icon" src="assets/setting-icon.png" alt="Settings icon">Settings</a>
-      </nav>
-    </aside>
+  <nav class="navigation" aria-label="Main navigation">
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/dashboard-icon.png" alt="">Dashboard</a>
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/announcement-icon.png" alt="">Announcements &amp; Events</a>
+    <a href="class-schedule.html" class="nav-item active" aria-current="page"><img class="nav-icon" src="assets/schedule-icon.png" alt="">Class Schedule</a>
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/tuition-icon.png" alt="">Tuition Assessment</a>
+    <a href="profile.html" class="nav-item"><img class="nav-icon" src="assets/profile-icon.png" alt="">My Profile</a>
+    <a class="nav-item" aria-disabled="true"><img class="nav-icon" src="assets/setting-icon.png" alt="">Settings</a>
+  </nav>
 
   <main class="main class-schedule-main">
     <section class="panel">
       <div class="page-title">
-        <span class="circle">◷</span>
+        <span class="circle"><img src="assets/schedule-icon.png" alt=""></span>
         <div>CLASS SCHEDULE</div>
         <div class="semester">2ND SEMESTER S.Y. 2026-2027</div>
       </div>
@@ -75,6 +68,18 @@
       <p class="portal-status" id="studentScheduleStatus" role="status" aria-live="polite"></p>
     </section>
   </main>
+  <div class="modal-overlay logout-overlay hidden" id="logoutModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="logoutTitle" aria-describedby="logoutMessage">
+      <div class="modal-header">
+        <h3 id="logoutTitle">Confirm Logout</h3>
+        <button class="close-modal" type="button" aria-label="Close dialog" data-close-logout>×</button>
+      </div>
+      <p id="logoutMessage">Are you sure you want to log out?</p>
+      <div class="modal-actions">
+        <button class="secondary-btn" type="button" data-close-logout>Cancel</button>
+        <button class="primary-btn logout-confirm-btn" type="button" id="confirmLogoutBtn">Log Out</button>
+      </div>
+    </div>
   </div>
   <script src="portal.js"></script>
   <script>
@@ -99,7 +104,7 @@
       try {
         const profile = window.PortalData.loadProfile();
         document.querySelector('.user-name').textContent = profile.name;
-        window.PortalData.renderTopNavigationPhoto(profile.photo);
+        if (profile.photo) document.querySelector('.user-icon img').src = profile.photo;
       } catch (error) {
         scheduleStatus.textContent = error.message;
         scheduleStatus.classList.add('is-error');

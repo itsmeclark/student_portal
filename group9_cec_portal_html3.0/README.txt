@@ -6,7 +6,7 @@ Files:
 - class-schedule.html Student Class Schedule page
 - admin.html         Administrator Class Schedule Management page
 - style.css          Shared styling
-- assets/cec-logo.png Logo extracted from the provided PDF
+- assets/cec-logo-transparent.png College logo with the black image background removed
 
 Open the pages directly in a browser:
 - http://localhost:8080/ (redirects to the profile page)
