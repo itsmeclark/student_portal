@@ -37,11 +37,11 @@
 
     <!-- ================= NAVIGATION (sticky) ================= -->
     <nav class="navigation">
-        <a href="#" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
-        <a href="#" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+        <a href="index.html" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
+        <a href="../announcements&events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
         <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
         <a href="#" class="nav-item active"><span class="nav-icon">▤</span>Grades &amp; Records</a>
-        <a href="#" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
+        <a href="../tuition_assessment.html" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
         <a href="#" class="nav-item"><span class="nav-icon">♙</span>My Profile</a>
         <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
     </nav>
@@ -58,11 +58,7 @@
                     <label for="term">TERM</label>
                     <div class="select-wrapper">
                         <select id="term">
-                            <!-- value must match a key in grades-data.js -->
-                            <option value="2026-1">First Semester A.Y. 2026-2027</option>
-                            <option value="2025-2">Second Semester A.Y. 2025-2026</option>
-                            <option value="2025-1">First Semester A.Y. 2025-2026</option>
-                            <option value="2024-2">Second Semester A.Y. 2024-2025</option>
+                            <!-- Term options populated dynamically from the database -->
                         </select>
                     </div>
                 </div>
@@ -93,8 +89,8 @@
 
             <div class="student-information">
                 <div class="left-info">
-                    <p><strong>ID Number:</strong> 2986789</p>
-                    <p><strong>Name:</strong> GEMAR E. ENOPIA</p>
+                    <p><strong>ID Number:</strong> <span id="infoIdNumber"></span></p>
+                    <p><strong>Name:</strong> <span id="infoName"></span></p>
                 </div>
                 <div class="right-info">
                     <p><strong>Section:</strong> <span id="infoSection"></span></p>
@@ -123,7 +119,6 @@
         </section>
     </main>
 
-    <script src="../../js/student_page/grades-data.js"></script>
     <script src="../../js/student_page/grades_records.js"></script>
 </body>
 </html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Grades & Records | Cebu Eastern College</title>
+    <link rel="stylesheet" href="../../css/admin/Grades_records_admin.css">
+</head>
+<body>
+
+    <!-- ================= HEADER (Sticky Top Banner) ================= -->
+    <header class="top-header">
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Administrator Portal</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong>Admin User</strong>
+                    <span>Administrator</span>
+                </div>
+                <div class="profile-icon">♙</div>
+            </div>
+            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+        </div>
+    </header>
+
+    <!-- ================= NAVIGATION BAR ================= -->
+    <nav class="navigation">
+        <a href="../admin/index.html" class="nav-item">
+            <span class="nav-icon">⊞</span>Dashboard
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">◁</span>Announcements &amp; Events
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">□</span>Class Schedule
+        </a>
+        <a href="#" class="nav-item active">
+            <span class="nav-icon">▤</span>Grades &amp; Records
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">▭</span>Tuition Assessment
+        </a>
+        <a href="../admin/profileManagement.html" class="nav-item">
+            <span class="nav-icon">♙</span>Profile Management
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">☼</span>Settings
+        </a>
+    </nav>
+
+    <!-- ================= MAIN CONTENT CONTAINER ================= -->
+    <main class="main-container">
+
+        <!-- FILTER CARD: Search Student & Select Term/Period -->
+        <section class="filter-card">
+            <h2>
+                Admin Grades &amp; Records Manager
+                <span class="admin-badge"></span>
+            </h2>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="studentSearch">SEARCH STUDENT ID</label>
+                    <input type="text" id="studentSearch" placeholder="Enter Student ID Number..." maxlength="7" inputmode="numeric" pattern="\d{7}">
+                </div>
+
+                <div class="filter-group">
+                    <label for="term">ACADEMIC TERM</label>
+                    <div class="select-wrapper">
+                        <select id="term">
+                            <!-- Term options populated dynamically based on student's enrollments -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label for="period">GRADING PERIOD</label>
+                    <div class="select-wrapper">
+                        <select id="period">
+                            <option value="All">All Periods</option>
+                            <option value="Prelim">Prelim</option>
+                            <option value="Midterm">Midterm</option>
+                            <option value="Semifinal">Semifinal</option>
+                            <option value="Final">Final</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" id="loadRecordsBtn" class="primary-button">
+                    Load Records
+                </button>
+            </div>
+        </section>
+
+        <!-- RECORDS CARD: Student Grade Entry Table -->
+        <section class="records-card">
+            <div class="card-header-flex">
+                <h2 class="program-title">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h2>
+                <button type="button" id="addSubjectBtn" class="secondary-button">+ Add Grade</button>
+            </div>
+
+            <!-- Student Information Display (populated after Load Records) -->
+            <div class="student-information" id="studentInfoDisplay" style="display:none;">
+                <div class="left-info">
+                    <p><strong>ID Number:</strong> <span id="infoIdNumber"></span></p>
+                    <p><strong>Name:</strong> <span id="infoName"></span></p>
+                    <p><strong>Course:</strong> <span id="infoCourse"></span></p>
+                </div>
+                <div class="right-info">
+                    <p><strong>Section:</strong> <span id="infoSection"></span></p>
+                    <p><strong>Year level:</strong> <span id="infoYearLevel"></span></p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>EDP CODE</th>
+                            <th>SUBJECT</th>
+                            <th>PRELIM</th>
+                            <th>MIDTERM</th>
+                            <th>SEMIFINAL</th>
+                            <th>FINAL</th>
+                            <th>FINAL GRADE</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminGradesBody">
+                        <!-- Rows populated dynamically after Load Records -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="records-footer">
+                <button type="button" id="discardBtn" class="secondary-button">Discard Changes</button>
+                <button type="button" id="saveGradesBtn" class="primary-button">Save Grade Records</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= ADD GRADE MODAL POPUP ================= -->
+    <div id="addGradeModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">Add Grade</div>
+            <div class="modal-body">
+                <div class="modal-group">
+                    <label for="modalStudentName">STUDENT NAME</label>
+                    <input type="text" id="modalStudentName" placeholder="Student Name" readonly>
+                </div>
+                <div class="modal-group">
+                    <label for="modalStudentId">STUDENT ID NUMBER</label>
+                    <input type="text" id="modalStudentId" placeholder="Student ID" readonly>
+                </div>
+                <div class="modal-group">
+                    <label for="modalCourse">COURSE</label>
+                    <input type="text" id="modalCourse" placeholder="Course" readonly>
+                </div>
+                <div class="modal-group">
+                    <label for="modalYearLevel">YEAR LEVEL</label>
+                    <select id="modalYearLevel" disabled>
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+                        <option value="3rd Year">3rd Year</option>
+                        <option value="4th Year">4th Year</option>
+                    </select>
+                </div>
+                <div class="modal-group">
+                    <label for="modalSection">SECTION</label>
+                    <input type="text" id="modalSection" placeholder="Section" readonly>
+                </div>
+                <div class="modal-group">
+                    <label for="modalSubject">SUBJECT</label>
+                    <select id="modalSubject">
+                        <option value="">Select subject</option>
+                        <option value="IT Professional Ethics & Practice">IT Professional Ethics & Practice</option>
+                        <option value="Advanced Database Management Systems">Advanced Database Management Systems</option>
+                        <option value="System Analysis and Design">System Analysis and Design</option>
+                        <option value="Networking 2 - Routing & Switching">Networking 2 - Routing & Switching</option>
+                    </select>
+                </div>
+                <div class="modal-group">
+                    <label for="modalGradingPeriod">GRADING PERIOD</label>
+                    <select id="modalGradingPeriod">
+                        <option value="Prelim">Prelim</option>
+                        <option value="Midterm">Midterm</option>
+                        <option value="Semifinal">Semifinal</option>
+                        <option value="Final">Final</option>
+                    </select>
+                </div>
+                <div class="modal-group">
+                    <label for="modalGrade">GRADE</label>
+                    <input type="text" id="modalGrade" placeholder="5.0 – 1.0" value="1.5">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modalCancelBtn" class="modal-btn-cancel">Cancel</button>
+                <button type="button" id="modalSaveBtn" class="modal-btn-save">Save Grade</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        let currentStudentId = null;
+        let currentStudentData = null;
+
+        const modal = document.getElementById('addGradeModal');
+        const addSubjectBtn = document.getElementById('addSubjectBtn');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalSaveBtn = document.getElementById('modalSaveBtn');
+        const studentSearchInput = document.getElementById('studentSearch');
+        const termSelect = document.getElementById('term');
+        const loadRecordsBtn = document.getElementById('loadRecordsBtn');
+
+        // ==================== TERM DROPDOWN (dynamic) ====================
+        async function loadTerms(idNumber) {
+            try {
+                const response = await fetch(`/admin/grades/terms?idNumber=${encodeURIComponent(idNumber)}`, {
+                    credentials: 'include'
+                });
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = "/pages/index.html";
+                    return;
+                }
+                if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+                const data = await response.json();
+
+                termSelect.innerHTML = '';
+                if (!data.terms || data.terms.length === 0) {
+                    termSelect.innerHTML = '<option value="">No terms available</option>';
+                    termSelect.disabled = true;
+                    return;
+                }
+                termSelect.disabled = false;
+                data.terms.forEach(function (t) {
+                    const option = document.createElement('option');
+                    option.value = t.termKey;
+                    option.textContent = t.label;
+                    termSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error loading terms:", error);
+                termSelect.innerHTML = '<option value="">Error loading terms</option>';
+            }
+        }
+
+        // When student ID changes, refresh available terms
+        studentSearchInput.addEventListener('input', function () {
+            const id = studentSearchInput.value.trim();
+            if (id.length >= 7) {
+                loadTerms(id);
+            } else {
+                termSelect.innerHTML = '';
+                termSelect.disabled = true;
+            }
+        });
+
+        // ==================== LOAD RECORDS ====================
+        loadRecordsBtn.addEventListener('click', async function () {
+            const idNumber = studentSearchInput.value.trim();
+            const term = termSelect.value;
+            const period = document.getElementById('period').value;
+
+            if (!idNumber) {
+                alert('Please enter a Student ID Number.');
+                return;
+            }
+            if (!term) {
+                alert('Please select a term.');
+                return;
+            }
+
+            currentStudentId = idNumber;
+
+            try {
+                const response = await fetch(`/admin/grades/student?idNumber=${encodeURIComponent(idNumber)}&term=${encodeURIComponent(term)}&period=${encodeURIComponent(period)}`, {
+                    credentials: 'include'
+                });
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = "/pages/index.html";
+                    return;
+                }
+                if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+                const data = await response.json();
+
+                // Display student info
+                const infoDisplay = document.getElementById('studentInfoDisplay');
+                if (data.idNumber) {
+                    infoDisplay.style.display = 'block';
+                    document.getElementById('infoIdNumber').textContent = data.idNumber;
+                    document.getElementById('infoName').textContent = (data.firstName || '') + ' ' + (data.lastName || '');
+                    document.getElementById('infoCourse').textContent = data.course || '—';
+                    document.getElementById('infoSection').textContent = data.section || '—';
+                    document.getElementById('infoYearLevel').textContent = data.yearLevel || '—';
+
+                    currentStudentData = {
+                        idNumber: data.idNumber,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        course: data.course,
+                        yearLevel: data.yearLevel,
+                        section: data.section
+                    };
+                } else {
+                    infoDisplay.style.display = 'none';
+                    currentStudentData = null;
+                    alert('No records found for this student and term.');
+                }
+
+                // Populate grades table
+                const tbody = document.getElementById('adminGradesBody');
+                tbody.innerHTML = '';
+
+                if (!data.subjects || data.subjects.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8">No grade records available.</td></tr>';
+                    return;
+                }
+
+                data.subjects.forEach(function (s) {
+                    const finalGrade = calculateFinalGrade(s.prelim, s.midterm, s.semifinal, s.final_period);
+                    const tr = document.createElement('tr');
+                    tr.dataset.gradeId = s.gradeId;
+                    tr.innerHTML = `
+                        <td><strong>${s.edp}</strong></td>
+                        <td class="subject">${s.name}</td>
+                        <td><input type="text" class="grade-input" value="${formatGrade(s.prelim)}" data-field="prelim"></td>
+                        <td><input type="text" class="grade-input" value="${formatGrade(s.midterm)}" data-field="midterm"></td>
+                        <td><input type="text" class="grade-input" value="${formatGrade(s.semifinal)}" data-field="semifinal"></td>
+                        <td><input type="text" class="grade-input" value="${formatGrade(s.final_period)}" data-field="final"></td>
+                        <td class="final-grade">${formatGrade(finalGrade)}</td>
+                        <td><button type="button" class="action-row-btn" onclick="this.closest('tr').remove();">Delete</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error("Error loading records:", error);
+                alert('Failed to load records. Please try again.');
+            }
+        });
+
+        // ==================== GRADE UTILITIES ====================
+        function formatGrade(v) {
+            if (v === null || v === undefined) return '—';
+            const n = Number(v);
+            if (Number.isNaN(n)) return '—';
+            return n.toFixed(1);
+        }
+
+        function calculateFinalGrade(prelim, midterm, semifinal, final) {
+            const periods = [prelim, midterm, semifinal, final].map(Number).filter(g => !Number.isNaN(g));
+            if (periods.length === 0) return null;
+            return periods.reduce((a, b) => a + b, 0) / periods.length;
+        }
+
+        // Recalculate final grade when any period input changes
+        document.getElementById('adminGradesBody').addEventListener('input', function (e) {
+            if (e.target.classList.contains('grade-input')) {
+                const row = e.target.closest('tr');
+                const cells = row.querySelectorAll('.grade-input');
+                const values = Array.from(cells).map(input => Number(input.value));
+                const validValues = values.filter(v => !Number.isNaN(v));
+                const finalGrade = validValues.length > 0
+                    ? validValues.reduce((a, b) => a + b, 0) / validValues.length
+                    : null;
+                const finalCell = row.querySelector('.final-grade');
+                finalCell.textContent = formatGrade(finalGrade);
+            }
+        });
+
+        // ==================== ADD GRADE MODAL ====================
+        // Open Modal - pre-fill with current student info (read-only)
+        addSubjectBtn.addEventListener('click', function() {
+            if (!currentStudentData) {
+                alert('Please load a student record first.');
+                return;
+            }
+
+            // Pre-fill and lock student info fields
+            document.getElementById('modalStudentName').value = (currentStudentData.firstName || '') + ' ' + (currentStudentData.lastName || '');
+            document.getElementById('modalStudentId').value = currentStudentData.idNumber;
+            document.getElementById('modalCourse').value = currentStudentData.course || '';
+            document.getElementById('modalYearLevel').value = currentStudentData.yearLevel || '';
+            document.getElementById('modalSection').value = currentStudentData.section || '';
+
+            modal.style.display = 'flex';
+        });
+
+        // Close Modal on Cancel
+        modalCancelBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Close Modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Save Grade from modal
+        modalSaveBtn.addEventListener('click', function() {
+            const subjectName = document.getElementById('modalSubject').value || 'New Subject';
+            const gradeVal = document.getElementById('modalGrade').value || '1.0';
+
+            const tbody = document.getElementById('adminGradesBody');
+            const newRow = document.createElement('tr');
+            newRow.dataset.gradeId = 'NEW';
+            newRow.innerHTML = `
+                <td><strong>NEW</strong></td>
+                <td class="subject">${subjectName}</td>
+                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="prelim"></td>
+                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="midterm"></td>
+                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="semifinal"></td>
+                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="final"></td>
+                <td class="final-grade">${formatGrade(Number(gradeVal))}</td>
+                <td><button type="button" class="action-row-btn" onclick="this.closest('tr').remove();">Delete</button></td>
+            `;
+            tbody.appendChild(newRow);
+            modal.style.display = 'none';
+            alert('Grade successfully added to the record table.');
+        });
+
+        // ==================== SAVE GRADES ====================
+        document.getElementById('saveGradesBtn').addEventListener('click', async function() {
+            const rows = document.querySelectorAll('#adminGradesBody tr');
+            let saved = 0;
+            let errors = 0;
+
+            for (const row of rows) {
+                const gradeId = row.dataset.gradeId;
+                const inputs = row.querySelectorAll('.grade-input');
+                const prelim = inputs[0]?.value || null;
+                const midterm = inputs[1]?.value || null;
+                const semifinal = inputs[2]?.value || null;
+                const final = inputs[3]?.value || null;
+
+                if (gradeId === 'NEW') continue; // Skip new rows for now
+
+                try {
+                    const response = await fetch('/admin/grades/save', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ gradeId, prelim, midterm, semifinal, final })
+                    });
+                    if (response.ok) saved++;
+                    else errors++;
+                } catch (e) {
+                    errors++;
+                }
+            }
+
+            alert(`Grade records saved. ${saved} updated, ${errors} failed.`);
+        });
+
+        // ==================== LOGOUT ====================
+        document.getElementById('logoutButton').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/auth/admin/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    window.location.href = '/pages/index.html';
+                } else {
+                    alert('Logout failed. Please try again.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Logout failed. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

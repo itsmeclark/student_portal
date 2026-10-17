@@ -8,6 +8,7 @@ import homeRoutes from "./routes/student_routes/home.routes.js";
 import adminRoutes from "./routes/admin/auth.admin.routes.js";
 import adminDashboard from './routes/admin/dashboard.admin.routes.js'
 import profileManagement from './routes/admin/profileManagement.routes.js'
+import adminGrades from './routes/admin/grades.admin.routes.js'
 dotenv.config();
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/home", homeRoutes);
 app.use("/auth/admin", adminRoutes);
 app.use('/admin', adminDashboard)
 app.use('/profileManagement', profileManagement)
+app.use('/admin/grades', adminGrades)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
