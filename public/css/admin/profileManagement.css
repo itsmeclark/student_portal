@@ -48,12 +48,6 @@ header {
     gap: 15px;
 }
 
-.burger-menu {
-    font-size: 24px;
-    cursor: pointer;
-    display: block; 
-}
-
 .logo-container {
     display: flex;
     align-items: center;
@@ -80,189 +74,113 @@ header {
 }
 
 .header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+    display: none;
 }
 
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-info i {
-    font-size: 30px;
-}
-
-.user-details {
-    display: flex;
-    flex-direction: column;
-    font-size: 13px;
-}
-
-.user-details span:first-child {
-    font-weight: 600;
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    border-left: 1px solid rgba(255,255,255,0.3);
-    padding-left: 20px;
-}
-
-/* --- SIDEBAR (redesigned as full-height overlay drawer) --- */
-.sidebar {
-    position: fixed;
+/* ========== HEADER  (sticky - stays on top while scrolling) ========== */
+.top-header {
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 270px;
-    height: 100dvh;
-    background: linear-gradient(180deg, #1a3b8b 0%, #12245c 100%);
-    color: white;
-    transition: transform 0.35s ease;
-    z-index: 1200; /* sits above the header */
-    transform: translateX(-100%);
+    z-index: 100;
+    height: 72px;
+    background: #182f70;
     display: flex;
-    flex-direction: column;
-    box-shadow: 6px 0 24px rgba(0,0,0,0.25);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    color: white;
 }
 
-.sidebar.active {
-    transform: translateX(0);
-}
+.school-brand { display: flex; align-items: center; gap: 14px; }
 
-/* Dark overlay behind the drawer, matches the "overlay" behavior */
-.sidebar-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 16, 40, 0.55);
-    z-index: 1150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+.cec-logo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+.cec-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-.sidebar-backdrop.active {
-    opacity: 1;
-    visibility: visible;
-}
+.school-title h1 { font-family: Georgia, serif; font-size: 20px; letter-spacing: 0.3px; margin-bottom: 3px; }
+.school-title span { font-size: 14px; color: #dce3f5; }
 
-/* Brand block at the top of the sidebar itself */
-.sidebar-brand {
+/* HEADER ACTIONS: profile + logout */
+.header-actions {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 26px 22px 22px;
-}
-
-.sidebar-brand img {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background-color: white;
-    padding: 3px;
+    margin-left: auto;
     flex-shrink: 0;
 }
 
-.sidebar-brand .brand-text h1 {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.3;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.student-profile { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+
+.student-name { display: flex; flex-direction: column; text-align: right; color: white; }
+.student-name strong { font-size: 14px; }
+.student-name span { font-size: 12px; color: #dce3f5; }
+
+.profile-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: white; color: #182f70;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
 }
 
-.sidebar ul {
-    list-style: none;
-}
-
-.sidebar ul a {
-    text-decoration: none;
+.logout-button {
+    height: 38px;
+    padding: 0 15px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 7px;
+    background: transparent;
     color: white;
-    display: block;
-}
-
-.sidebar li {
-    padding: 15px 22px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    font-size: 13px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
-    font-size: 15px;
-    border-bottom: 1px dashed rgba(255,255,255,0.15);
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.logout-button:hover { background: white; color: #182f70; }
+
+/* ================================
+   NAVIGATION  (sticky - sits right under the header)
+=============================== */
+.navigation {
+    position: sticky;
+    top: 72px;               /* = header height */
+    z-index: 99;
+    min-height: 59px;
+    width: 100%;
+    background: #263f88;
+    display: flex;
+    align-items: stretch;
+    padding: 0 18px;
+    box-shadow: 0 2px 6px rgba(23, 43, 82, 0.15);
 }
 
-.sidebar li i {
-    width: 34px;
-    height: 34px;
+.nav-item {
+    flex: 1 1 0;
+    min-width: 0;
+    color: white;
+    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.08);
-    flex-shrink: 0;
-    transition: background 0.2s, color 0.2s;
-}
-
-.sidebar li:hover {
-    background-color: rgba(255,255,255,0.08);
-}
-
-/* Active / current-page nav item — matches the highlighted pill in the design */
-.sidebar a.active-link li,
-.sidebar li.active-link {
-    background: rgba(255,255,255,0.16);
-    border-radius: 10px;
-    margin: 2px 10px;
+    gap: 8px;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 13px;
     font-weight: 600;
-    border-bottom: none;
+    border-bottom: 4px solid transparent;
+    transition: 0.2s;
 }
-
-.sidebar a.active-link li i,
-.sidebar li.active-link i {
-    background: white;
-    color: var(--primary-blue);
-}
-
-.sidebar .sidebar-logout {
-    margin-top: auto;
-    padding: 18px;
-}
-
-.sidebar li.logout-item {
-    font-weight: 600;
-    justify-content: center;
-    border: 1px solid rgba(255,255,255,0.45);
-    border-radius: 8px;
-    background: rgba(255,255,255,0.06);
-    border-bottom: 1px solid rgba(255,255,255,0.45);
-}
-
-.sidebar li.logout-item:hover {
-    background-color: rgba(255,255,255,0.15);
-}
+.nav-item:hover { background: rgba(255,255,255,0.08); }
+.nav-item.active { background: white; color: #1b3477; border-bottom: 4px solid #ffc400; }
+.nav-icon { font-size: 19px; line-height: 1; }
 
 /* --- MAIN CONTENT --- */
 main {
-    margin-top: 80px;
     padding: 30px;
     flex: 1;
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* Prevents main from growing past screen height */
-    height: calc(100vh - 80px); 
-    overflow: hidden; 
+    height: calc(100vh - 131px);
+    overflow: hidden;
 }
 
 .page-title {
@@ -743,10 +661,5 @@ th {
     .modal-form {
         height: calc(100vh - 40px);
         border-radius: 0;
-    }
-
-    .sidebar {
-        width: 85%;
-        max-width: 300px;
     }
 }
