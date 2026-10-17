@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 credentials: 'include'
             });
             if (response.ok) {
-                window.location.href = '/pages/login.html';
+                window.location.href = '/pages/index.html';
             } else {
                 alert('Logout failed. Please try again.');
             }
@@ -178,7 +178,7 @@ let currentDeleteId = null;
 // Redirect to login when the server says we're not authenticated
 function handleAuthError(status) {
     if (status === 401 || status === 403) {
-        window.location.href = '/pages/login.html';
+        window.location.href = '/pages/index.html';
         return true;
     }
     return false;

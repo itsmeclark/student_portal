@@ -21,7 +21,7 @@ document.querySelector('#adminLoginForm').addEventListener('submit', async funct
         const data = await response.json();
 
         if (response.ok) {
-            window.location.href = '/pages/admin/adminDashboard.html';
+            window.location.href = '/pages/admin/index.html';
         } else {
             alert(data.error || 'Login failed. Please try again.');
         }
@@ -37,7 +37,7 @@ document.querySelector('#adminLoginForm').addEventListener('submit', async funct
         })
         const data = await response.json()
         if(data.isLoggedIn){
-            window.location.href = '/pages/admin/adminDashboard.html'
+            window.location.href = '/pages/admin/index.html'
             return;
         }
     }catch(err){

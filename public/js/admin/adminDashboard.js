@@ -72,7 +72,7 @@
 
         if(!response.ok){
             if (response.status === 401 || response.status === 403) {
-            window.location.href = "/pages/login.html";
+            window.location.href = "/pages/index.html";
             return;
             }
             throw new Error(`Request failed: ${response.status}`);
@@ -95,7 +95,7 @@ document.querySelector('.sidebar-logout').addEventListener('click', async (e) =>
     })
         if(response.ok){
             console.log()
-            window.location.href = '/pages/login.html'
+            window.location.href = '/pages/index.html'
         }else{
             alert('LOGOUT FAILED. Please try again')
         }
