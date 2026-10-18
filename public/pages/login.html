@@ -55,8 +55,8 @@
                 <!-- Forgot Password -->
                 <a href="#" class="forgot-password">Forgot password?</a>
 
-                <!-- Login Button -->
-                <button type="submit" class="btn-login">Login</button>
+                <!-- Login Button (Line 59 Fixed) -->
+                <button type="submit" id="loginBtn" class="btn-login">Login</button>
 
                 <!-- Divider -->
                 <div class="divider">
@@ -101,16 +101,54 @@
 
             <!-- Continue button + note -->
             <div class="popup-actions">
-                <button class="btn-popup-continue" id="continueBtn" disabled>Continue to Login</button>
+                <button class="btn-popup-continue" id="continueBtn">Continue to Login</button>
                 <div class="popup-note">Select a role to continue</div>
             </div>
         </div>
     </div>
 
     <!-- existing scripts -->
-    <script src="../js/student_page/login.js"></script>
     <script src="../js/password-toggle.js"></script>
+    <script>
+        // Role selection popup handler
+        let selectedRole = null;
+        const roleCards = document.querySelectorAll('.role-card');
+        const continueBtn = document.getElementById('continueBtn');
+        const rolePopup = document.getElementById('rolePopup');
 
-   
+        roleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                roleCards.forEach(c => {
+                    c.style.borderColor = 'transparent';
+                    c.style.background = '#f0f4f8';
+                });
+                card.style.borderColor = '#1b365d';
+                card.style.background = '#e2e8f0';
+                selectedRole = card.getAttribute('data-role');
+            });
+        });
+
+        continueBtn.addEventListener('click', () => {
+            if (!selectedRole) {
+                alert('Please select a role to continue.');
+                return;
+            }
+            rolePopup.style.display = 'none';
+        });
+
+        // Fixed login submit event to route to home.html and save ID for the database profile fetch
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const idNumber = document.getElementById('Idnumber').value.trim();
+
+            if (!idNumber) {
+                alert('Please enter your ID number');
+                return;
+            }
+
+            localStorage.setItem('student_id', idNumber);
+            window.location.href = 'students_page/home.html';
+        });
+    </script>
 </body>
 </html>
