@@ -55,8 +55,8 @@
                 <!-- Forgot Password -->
                 <a href="#" class="forgot-password">Forgot password?</a>
 
-                <!-- Login Button (Line 59 Fixed) -->
-                <button type="submit" id="loginBtn" class="btn-login">Login</button>
+                <!-- Login Button -->
+                <button type="submit" class="btn-login">Login</button>
 
                 <!-- Divider -->
                 <div class="divider">
@@ -101,14 +101,14 @@
 
             <!-- Continue button + note -->
             <div class="popup-actions">
-                <button class="btn-popup-continue" id="continueBtn">Continue to Login</button>
+                <button class="btn-popup-continue" id="continueBtn" disabled>Continue to Login</button>
                 <div class="popup-note">Select a role to continue</div>
             </div>
         </div>
     </div>
 
     <!-- existing scripts -->
-    <script src="../js/password-toggle.js"></script>
+        <script src="../js/password-toggle.js"></script>
     <script>
         // Role selection popup handler
         let selectedRole = null;

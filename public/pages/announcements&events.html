@@ -33,7 +33,7 @@
     .portal-title { font-size: 10px; opacity: 0.75; margin-top: 2px; letter-spacing: 0.8px; }
     
     .nav-menu { list-style: none; padding: 20px 0; flex: 1; z-index: 2; }
-    .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; }
+    .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; text-decoration: none; }
     .nav-item:hover, .nav-item.active { background-color: var(--primary-blue); color: #ffffff; font-weight: 600; }
     .nav-item i { width: 18px; text-align: center; font-size: 15px; }
 
@@ -70,6 +70,37 @@
     
     .logout-btn { display: flex; align-items: center; gap: 8px; color: white; background: transparent; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 15px; font-weight: 400; transition: opacity 0.2s; text-decoration: none; }
     .logout-btn:hover { opacity: 0.8; }
+
+    /* Horizontal Navbar under Header */
+    .horizontal-nav {
+      background-color: var(--primary-blue-dark);
+      display: flex;
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+    }
+    .horizontal-nav .nav-item {
+      padding: 14px 24px;
+      color: #bcd0f7;
+      font-size: 13.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .horizontal-nav .nav-item:hover {
+      background-color: var(--primary-blue);
+      color: white;
+    }
+    .horizontal-nav .nav-item.active {
+      background-color: white;
+      color: var(--text-dark);
+      font-weight: 700;
+      border-bottom: 3px solid var(--accent-orange);
+    }
 
     /* Page Header */
     .page-header { background: white; padding: 22px 30px; display: flex; align-items: center; gap: 18px; border-bottom: 1px solid #e2e8f0; }
@@ -318,6 +349,17 @@
           <i class="fa-solid fa-right-from-bracket"></i> Logout
         </a>
       </div>
+    </div>
+
+    <!-- Horizontal Navbar under existing header -->
+    <div class="horizontal-nav">
+      <a href="#" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+      <a href="#" class="nav-item active"><i class="fa-solid fa-bullhorn"></i> Announcements & Events</a>
+      <a href="#" class="nav-item"><i class="fa-regular fa-calendar-days"></i> Class Schedule</a>
+      <a href="#" class="nav-item"><i class="fa-regular fa-file-lines"></i> Grades & Records</a>
+      <a href="#" class="nav-item"><i class="fa-solid fa-wallet"></i> Tuition & Assessment</a>
+      <a href="#" class="nav-item"><i class="fa-regular fa-user"></i> My Profile</a>
+      <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
     </div>
 
     <div class="page-header">
