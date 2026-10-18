@@ -20,7 +20,13 @@ try {
     console.log('MySQL connected');
     connection.release();
 } catch (err) {
-    console.error('MySQL connection failed:', err.message);
+    console.error('MySQL connection failed!');
+    console.error('  code   :', err.code || (err.errors && err.errors[0] && err.errors[0].code));
+    console.error('  message:', err.message || (err.errors && err.errors[0] && err.errors[0].message));
+    console.error('  host   :', process.env.DB_HOST);
+    console.error('  port   :', process.env.DB_PORT);
+    console.error('  user   :', process.env.DB_USER);
+    console.error('  db name:', process.env.DB_NAME);
 }
 
 export default db;

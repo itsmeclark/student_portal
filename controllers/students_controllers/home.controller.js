@@ -1,9 +1,7 @@
 import {getUser, getEnrolledSubjects, getAnnouncements} from "../../models/students_models/home.model.js";
-import jwt from "jsonwebtoken";
 
 export const getUserController = (req, res) => {
-   const decode = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-   const student_id = decode.id;
+    const student_id = req.user.id;
     getUser(student_id, (err, results) => {
         if (err) {
             console.error('Error fetching user info:', err);
@@ -19,8 +17,7 @@ export const getUserController = (req, res) => {
     });
 }
 
-// Enrolled subjects for the logged-in student (Id_number comes from the verified JWT,
-// so a student can never request someone else's subjects)
+// Enrolled subjects for the logged-in student
 export const getEnrolledSubjectsController = (req, res) => {
     const idNumber = req.user.id;
     getEnrolledSubjects(idNumber, (err, results) => {

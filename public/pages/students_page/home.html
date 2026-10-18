@@ -63,7 +63,7 @@
         .logo-placeholder {
             width: 40px;
             height: 40px;
-            background-image: url("../../img/cecLOGO.png");
+            background-image: url("/img/cecLOGO.png");
             background-size: contain;
             background-repeat: no-repeat;
             border-radius: 50%;
@@ -204,7 +204,7 @@
         .sidebar-logo {
             width: 45px;
             height: 45px;
-            background-image: url("../../img/cecLOGO.png");
+            background-image: url("/img/cecLOGO.png");
             background-size: contain;
             background-repeat: no-repeat;
             border-radius: 50%;
@@ -660,7 +660,7 @@
 
     <!-- Sub-Navigation Bar -->
     <nav class="sub-navbar">
-        <a href="#" class="sub-navbar-item">
+        <a href="#" class="sub-navbar-item active">
             <i class="fas fa-th-large"></i> Dashboard
         </a>
         <a href="../announcements&events.html" class="sub-navbar-item">
@@ -675,7 +675,7 @@
         <a href="#" class="sub-navbar-item">
             <i class="fas fa-money-bill-wave"></i> Tuition Assessment
         </a>
-        <a href="#" class="sub-navbar-item active">
+        <a href="#" class="sub-navbar-item">
             <i class="fas fa-chess-pawn"></i> My Profile
         </a>
         <a href="#" class="sub-navbar-item">
@@ -692,7 +692,7 @@
                 <p>To a simpler way and more connected school experience.<br><br>
                 Access your academic information, class schedules, announcements, enrollment, grades, and other school services in one convenient portal.</p>
             </div>
-            
+
             <div class="hero-right">
                 <div class="sidebar-icons">
                     <i class="fas fa-th-large active"></i>
@@ -706,7 +706,7 @@
                         <h3 id="greetings">WELCOME BACK, STUDENT!</h3>
                         <div class="avatar"><i class="fas fa-user"></i></div>
                     </div>
-                    
+
                     <div class="stats-container">
                         <div class="stat-box">
                             <p>My Classes</p>
@@ -791,42 +791,41 @@
     </footer>
 
     <!-- Script Section -->
-    <script>
+        <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const studentId = localStorage.getItem('student_id');
 
-            // Fallback safe redirect if missing session, using relative path to prevent breaking
+            // CHANGED: login.html is one folder up from students_page
+            const LOGIN_PAGE = '../login.html';
+
             if (!studentId) {
-                window.location.href = './login.html';
+                window.location.href = LOGIN_PAGE;
                 return;
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/profile/${studentId}`);
-                
+                // CHANGED: no "http://localhost:3000", it uses the page's own address
+                const response = await fetch(`/profile/${studentId}`);
+
                 if (response.ok) {
                     const student = await response.json();
 
-                    // Fallback helper to support both Capitalized and lowercase keys from database/API
                     const firstName = student.First_name || student.first_name || '';
                     const lastName = student.Last_name || student.last_name || '';
                     const course = student.Course || student.course || '';
                     const idNumber = student.Id_number || student.id_number || studentId;
                     const yearLevel = student.Year_level || student.year_level || student.YearLevel || '';
 
-                    // Update header greeting
                     const greetingsEl = document.getElementById('greetings');
                     if (greetingsEl) {
                         greetingsEl.textContent = `WELCOME BACK, ${firstName ? firstName.toUpperCase() : 'STUDENT'}!`;
                     }
 
-                    // Update upper right header profile name
                     const headerStudentNameEl = document.getElementById('header_student_name');
                     if (headerStudentNameEl) {
                         headerStudentNameEl.textContent = `${firstName} ${lastName}`.trim() || 'Student Account';
                     }
 
-                    // Update profile panel values matching card fields
                     const nameEl = document.getElementById('student_name');
                     const courseEl = document.getElementById('student_course');
                     const idEl = document.getElementById('student_id');
@@ -836,31 +835,26 @@
                     if (courseEl) courseEl.innerHTML = `<span>Course:</span> ${course}`;
                     if (idEl) idEl.innerHTML = `<span>ID:</span> ${idNumber}`;
                     if (yearLevelEl) yearLevelEl.innerHTML = `<span>Year Level:</span> ${yearLevel}`;
-
                 } else {
-                    console.warn('Failed to load student details from backend server. Status:', response.status);
+                    console.warn('Failed to load student details. Status:', response.status);
+                    const h = document.getElementById('header_student_name');
+                    if (h) h.textContent = 'Student Account';
                 }
             } catch (error) {
-                // Gracefully catch network errors so it doesn't cause a white screen crash
-                console.warn('Backend server is not reachable or offline. Running in offline/view mode:', error);
+                console.warn('Backend server is not reachable:', error);
+                const h = document.getElementById('header_student_name');
+                if (h) h.textContent = 'Student Account';
             }
 
             // Logout handlers
+            const logout = () => {
+                localStorage.clear();
+                window.location.href = LOGIN_PAGE;
+            };
             const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', () => {
-                    localStorage.clear();
-                    window.location.href = './login.html';
-                });
-            }
-
+            if (logoutBtn) logoutBtn.addEventListener('click', logout);
             const headerLogoutBtn = document.getElementById('headerLogoutBtn');
-            if (headerLogoutBtn) {
-                headerLogoutBtn.addEventListener('click', () => {
-                    localStorage.clear();
-                    window.location.href = './login.html';
-                });
-            }
+            if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', logout);
         });
     </script>
 </body>

@@ -35,7 +35,8 @@ export const findIdNumberController = (req, res) => {
                 sameSite: 'lax',
                 maxAge: 60 * 60 * 1000
             })
-            return res.status(200).json({ message: 'login successful'});
+            console.log('LOGIN OK for', user.Id_number, 'role:', user.Role);
+            return res.status(200).json({ message: 'login successful', token });
         }
         catch(error) {
             console.error('Error during login:', error);

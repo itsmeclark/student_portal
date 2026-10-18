@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/:id', async (req, res) => {
     try {
         const studentId = req.params.id;
-        const query = 'SELECT * FROM students WHERE Id_number = ?';
+        const query = 'SELECT * FROM STUDENTS WHERE Id_number = ?';
 
         const [results] = await db.query(query, [studentId]);
 
