@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const tbody        = document.getElementById('gradesBody');
     const sectionEl    = document.getElementById('infoSection');
     const yearEl       = document.getElementById('infoYear');
+    const idNumberEl   = document.getElementById('infoIdNumber');
+    const nameEl       = document.getElementById('infoName');
     const logoutBtn    = document.getElementById('logoutButton');
 
-    // Period dropdown value -> property name in grades-data.js
+    // Period dropdown value -> property name in API response
     const PERIODS = {
         'Prelim':    'prelim',
         'Midterm':   'midterm',
@@ -17,39 +19,121 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     function fmt(v) {
-        return (v === null || v === undefined) ? '—' : Number(v).toFixed(2);
+        // Always display one decimal place, guard against NaN
+        if (v === null || v === undefined) return '—';
+        const n = Number(v);
+        if (Number.isNaN(n)) return '—';
+        return n.toFixed(1);
     }
 
     function finalGrade(s) {
-        if (s.final !== undefined) return s.final;
-        const g = [s.prelim, s.midterm, s.semifinal, s.final_period];
-        if (g.some(x => x === null || x === undefined)) return null;
-        return g.reduce((a, b) => a + b, 0) / g.length;
+        // Calculate FINAL GRADE as average of all available periods
+        const periods = [s.prelim, s.midterm, s.semifinal, s.final_period];
+        const available = periods.map(g => Number(g)).filter(g => !Number.isNaN(g));
+        if (available.length === 0) return null;
+        return available.reduce((a, b) => a + b, 0) / available.length;
     }
 
-    function render() {
-        const data = GRADES_DATA[termSelect.value];
-        const period = periodSelect.value;           // "All" or a period name
-        const showAll = period === 'All';
+    async function loadTerms() {
+        try {
+            const response = await fetch('/home/terms', {
+                credentials: 'include'
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = "/pages/login.html";
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error(`Request failed: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Clear existing options
+            termSelect.innerHTML = '';
+
+            if (!data.terms || data.terms.length === 0) {
+                termSelect.innerHTML = '<option value="">No terms available</option>';
+                termSelect.disabled = true;
+                return;
+            }
+
+            data.terms.forEach(function (t) {
+                const option = document.createElement('option');
+                option.value = t.termKey;
+                option.textContent = t.label;
+                termSelect.appendChild(option);
+            });
+
+            // Load grades for the first available term
+            loadGrades();
+        } catch (error) {
+            console.error("Error loading terms:", error);
+            termSelect.innerHTML = '<option value="">Error loading terms</option>';
+        }
+    }
+
+    async function loadGrades() {
+        const term = termSelect.value;
+        const period = periodSelect.value;
+
+        if (!term) {
+            tbody.innerHTML = '<tr><td colspan="7">No term selected.</td></tr>';
+            return;
+        }
+
+        try {
+            const response = await fetch(`/home/grades?term=${encodeURIComponent(term)}&period=${encodeURIComponent(period)}`, {
+                credentials: 'include'
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = "/pages/login.html";
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error(`Request failed: ${response.status}`);
+            }
+
+            const data = await response.json();
+            render(data);
+        } catch (error) {
+            console.error("Error loading grades:", error);
+            tbody.innerHTML = '<tr><td colspan="7">Failed to load grades. Please try again.</td></tr>';
+            sectionEl.textContent = '—';
+            yearEl.textContent = '—';
+            idNumberEl.textContent = '—';
+            nameEl.textContent = '—';
+        }
+    }
+
+    function render(data) {
+        const showAll = periodSelect.value === 'All';
 
         // Header cells: show/hide period columns
         document.querySelectorAll('[data-col]').forEach(function (th) {
             const col = th.dataset.col;
-            const visible = showAll || col === PERIODS[period] || col === 'always';
+            const visible = showAll || col === PERIODS[periodSelect.value] || col === 'always';
             th.style.display = (col === 'final_grade' && !showAll) ? 'none' : (visible ? '' : 'none');
         });
 
         tbody.innerHTML = '';
 
-        if (!data) {
+        // Display student info
+        idNumberEl.textContent = data.idNumber || '—';
+        const first = data.firstName ? data.firstName : '';
+        const last = data.lastName ? data.lastName : '';
+        nameEl.textContent = (first + ' ' + last).trim() || '—';
+        sectionEl.textContent = data.section || '—';
+        yearEl.textContent = data.yearLevel || '—';
+
+        if (!data || !data.subjects || data.subjects.length === 0) {
             tbody.innerHTML = '<tr><td colspan="7">No records available for this term.</td></tr>';
-            sectionEl.textContent = '—';
-            yearEl.textContent = '—';
             return;
         }
-
-        sectionEl.textContent = data.section;
-        yearEl.textContent = data.yearLevel;
 
         data.subjects.forEach(function (s) {
             const tr = document.createElement('tr');
@@ -66,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const td = document.createElement('td');
                 td.textContent = c.val;
                 if (c.cls) td.className = c.cls;
-                const visible = showAll || c.col === 'always' || c.col === PERIODS[period];
+                const visible = showAll || c.col === 'always' || c.col === PERIODS[periodSelect.value];
                 if (!visible || (c.col === 'final_grade' && !showAll)) td.style.display = 'none';
                 tr.appendChild(td);
             });
@@ -77,23 +161,35 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Changing the term loads that semester's grades
-    termSelect.addEventListener('change', render);
+    termSelect.addEventListener('change', loadGrades);
 
     // Changing the period filters the table automatically
-    periodSelect.addEventListener('change', render);
+    periodSelect.addEventListener('change', loadGrades);
 
     // View All Grades: reset the filter and show every column
     viewAllBtn.addEventListener('click', function () {
         periodSelect.value = 'All';
-        render();
+        loadGrades();
     });
 
     // Log out
-    logoutBtn.addEventListener('click', function () {
-        if (confirm('Are you sure you want to log out?')) {
-            alert('You have been logged out. Connect this button to your login page/session when backend login is ready.');
+    logoutBtn.addEventListener('click', async function () {
+        try {
+            const response = await fetch("/auth/logout", {
+                method: "POST",
+                credentials: "include"
+            });
+            if (response.ok) {
+                window.location.href = "/pages/index.html";
+            } else {
+                alert("Logout failed. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+            alert("Logout failed. Please try again.");
         }
     });
 
-    render();
+    // Initial load: fetch terms first, then grades
+    loadTerms();
 });

@@ -34,161 +34,102 @@
             overflow-x: hidden;
         }
 
-        /* ========== SIDEBAR (overlay drawer, matches profileManagement.css) ========== */
-        .sidebar {
-            position: fixed;
+        /* ========== HEADER  (sticky - stays on top while scrolling) ========== */
+        .top-header {
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 270px;
-            height: 100dvh;
-            background: linear-gradient(180deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: #fff;
+            z-index: 100;
+            height: 72px;
+            background: #182f70;
             display: flex;
-            flex-direction: column;
-            z-index: 1200;
-            transform: translateX(-100%);
-            transition: transform 0.35s ease;
-            box-shadow: 6px 0 24px rgba(0, 0, 0, 0.25);
-            overflow-y: auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            color: white;
         }
 
-        /* Hidden by default at every screen size; opens only via the burger */
-        .sidebar.open {
-            transform: translateX(0);
-        }
+        .school-brand { display: flex; align-items: center; gap: 14px; }
 
-        .sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
+        .cec-logo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .cec-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
+        .school-title h1 { font-family: Georgia, serif; font-size: 20px; letter-spacing: 0.3px; margin-bottom: 3px; }
+        .school-title span { font-size: 14px; color: #dce3f5; }
 
-        /* Sidebar brand block */
-        .sidebar-header {
+        /* HEADER ACTIONS: profile + logout */
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 26px 22px 22px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            margin-bottom: 8px;
-        }
-
-        .sidebar-logo {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 3px;
+            margin-left: auto;
             flex-shrink: 0;
         }
 
-        .sidebar-logo img {
+        .student-profile { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+
+        .student-name { display: flex; flex-direction: column; text-align: right; color: white; }
+        .student-name strong { font-size: 14px; }
+        .student-name span { font-size: 12px; color: #dce3f5; }
+
+        .profile-icon {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: white; color: #182f70;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+        }
+
+        .logout-button {
+            height: 38px;
+            padding: 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 7px;
+            background: transparent;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .logout-button:hover { background: white; color: #182f70; }
+
+        /* ================================
+           NAVIGATION  (sticky - sits right under the header)
+        ================================ */
+        .navigation {
+            position: sticky;
+            top: 72px;               /* = header height */
+            z-index: 99;
+            min-height: 59px;
             width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .sidebar-header h2 {
-            font-size: 16px;
-            font-weight: 700;
-            text-align: left;
-            letter-spacing: 0.5px;
-            line-height: 1.3;
-            text-transform: uppercase;
-            color: #fff;
-        }
-
-        /* Sidebar Navigation */
-        .sidebar-nav {
-            flex: 1;
+            background: #263f88;
             display: flex;
-            flex-direction: column;
+            align-items: stretch;
+            padding: 0 18px;
+            box-shadow: 0 2px 6px rgba(23, 43, 82, 0.15);
         }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 15px 22px;
-            color: rgba(255, 255, 255, 0.75);
+            flex: 1 1 0;
+            min-width: 0;
+            color: white;
             text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: background 0.2s, color 0.2s;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            width: 100%;
-            text-align: left;
-            letter-spacing: 0.2px;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
-        }
-
-        .nav-item i {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-        }
-
-        .nav-item.active {
-            background: rgba(255, 255, 255, 0.16);
-            border-radius: 10px;
-            margin: 2px 10px;
+            gap: 8px;
+            padding: 0 10px;
+            text-align: center;
+            font-size: 13px;
             font-weight: 600;
-            border-bottom: none;
-            color: #fff;
+            border-bottom: 4px solid transparent;
+            transition: 0.2s;
         }
+        .nav-item:hover { background: rgba(255,255,255,0.08); }
+        .nav-item.active { background: white; color: #1b3477; border-bottom: 4px solid #ffc400; }
+        .nav-icon { font-size: 19px; line-height: 1; }
 
-        .nav-item.active i {
-            background: #fff;
-            color: var(--primary-blue);
-        }
-
-        /* Sidebar Logout */
-        .sidebar-logout {
-            margin-top: auto;
-            padding: 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-logout .nav-item {
-            border: 1px solid rgba(255, 255, 255, 0.45);
-            border-radius: 8px;
-            justify-content: center;
-            padding: 12px 18px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            font-size: 0.8rem;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.06);
-            border-bottom: none;
-        }
-
-        .sidebar-logout .nav-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* ========== MAIN CONTENT (never pushed — sidebar is always an overlay) ========== */
+        /* ========== MAIN CONTENT ========== */
         .main-content {
             margin-left: 0;
             min-height: 100vh;
@@ -216,26 +157,6 @@
             gap: 16px;
             flex: 1;
             min-width: 0;
-        }
-
-        /* Burger is always visible — it's the only way to open the overlay sidebar */
-        .burger-btn {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .burger-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
         }
 
         .header-brand {
@@ -737,25 +658,6 @@
             text-decoration: none;
         }
 
-        /* ========== SIDEBAR OVERLAY BACKDROP (works at every width) ========== */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 16, 40, 0.55);
-            z-index: 1150;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
         /* ========== RESPONSIVE ========== */
         @media (max-width: 1200px) {
             .dashboard-grid {
@@ -947,11 +849,6 @@
                 font-size: 0.65rem;
                 padding: 12px 16px;
             }
-
-            .sidebar {
-                width: 85%;
-                max-width: 300px;
-            }
         }
 
         @media (max-width: 380px) {
@@ -966,11 +863,6 @@
             .header-brand img {
                 width: 28px;
                 height: 28px;
-            }
-
-            .burger-btn {
-                font-size: 1.2rem;
-                padding: 2px 6px;
             }
 
             .stats-row {
@@ -994,80 +886,43 @@
 </head>
 <body>
 
-    <!-- ========== SIDEBAR OVERLAY BACKDROP ========== -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- ========== SIDEBAR ========== -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College">
+    <!-- Header (sticky) -->
+    <header class="top-header">
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
             </div>
-            <h2>CEBU EASTERN<br>COLLEGE</h2>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Admin Portal</span>
+            </div>
         </div>
 
-        <nav class="sidebar-nav">
-            <a href="../admin/adminDashboard.html" class="nav-item active">
-                <i class="fa-solid fa-table-columns"></i>
-                Dashboard
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-bullhorn"></i>
-                Announcements &amp; Events
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-calendar-days"></i>
-                Class Schedule
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-file-lines"></i>
-                Grades &amp; Records
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-money-bill-wave"></i>
-                Tuition Assessment
-            </a>
-            <a href="../admin/profileManagement.html" class="nav-item">
-                <i class="fa-solid fa-user-gear"></i>
-                Profile Management
-            </a>
-        </nav>
-
-        <div class="sidebar-logout">
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                LOGOUT
-            </a>
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong>Admin User</strong>
+                    <span>Administrator</span>
+                </div>
+                <div class="profile-icon">♙</div>
+            </div>
+            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
         </div>
-    </aside>
+    </header>
+
+    <!-- Navigation (sticky) -->
+    <nav class="navigation">
+        <a href="#" class="nav-item active"><span class="nav-icon">⊞</span>Dashboard</a>
+        <a href="#" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+        <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
+        <a href="../admin/Grades_records_admin.html" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+        <a href="#" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
+        <a href="../admin/profileManagement.html" class="nav-item"><span class="nav-icon">♙</span>Profile Management</a>
+        <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
+    </nav>
 
     <!-- ========== MAIN CONTENT ========== -->
     <div class="main-content" id="mainContent">
-
-        <!-- Top Header -->
-        <header class="top-header">
-            <div class="header-left">
-                <button class="burger-btn" id="burgerBtn" aria-label="Toggle sidebar">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div class="header-brand">
-                    <img src="../../img/cecLOGO.png" alt="CEC Logo">
-                    <div class="header-brand-text">
-                        <h1>CEBU EASTERN COLLEGE</h1>
-                        <p>Admin Portal</p>
-                    </div>
-                </div>
-            </div>
-           
-        </header>
-
-        <!-- Search Bar -->
-        <div class="search-section">
-            <div class="search-wrapper">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search students, faculty, or records...">
-            </div>
-        </div>
 
         <!-- Welcome Banner -->
         <div class="welcome-banner">

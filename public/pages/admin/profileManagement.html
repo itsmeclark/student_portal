@@ -13,55 +13,39 @@
     <link href="../../css/password-toggle.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-left">
-            <i class="fas fa-bars burger-menu" id="burgerMenu"></i>
-            <div class="logo-container">
-                <!-- Placeholder for College Logo -->
-                <img src="../../img/cecLOGO.png" alt="CEC Logo">
-                <div class="brand-text">
-                    <h1>CEBU EASTERN COLLEGE</h1>
-                    <h2>Student Portal</h2>
-                </div>
+    <!-- Header (sticky) -->
+    <header class="top-header">
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Admin Portal</span>
             </div>
         </div>
-        <div class="header-right">
-            <div class="user-info">
-                <i class="fas fa-user-circle"></i>
-                <div class="user-details">
-                    <span>Gemar Enopia</span>
-                    <span>Admin</span>
+
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong>Admin User</strong>
+                    <span>Administrator</span>
                 </div>
+                <div class="profile-icon">♙</div>
             </div>
-            <button class="logout-btn" id="headerLogoutBtn">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
+            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
         </div>
     </header>
 
-    <!-- Dark overlay behind the sidebar, click to close -->
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-    <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
-            <img src="../../img/cecLOGO.png" alt="CEC Logo">
-            <div class="brand-text">
-                <h1>CEBU EASTERN COLLEGE</h1>
-            </div>
-        </div>
-        <ul>
-            <a href="../admin/adminDashboard.html"><li><i class="fas fa-th-large"></i> Dashboard</li></a>
-            <li><i class="fas fa-bullhorn"></i> Announcements & Events</li>
-            <li><i class="fas fa-calendar-alt"></i> Class Schedule</li>
-            <li><i class="fas fa-file-alt"></i> Grades & Records</li>
-            <li><i class="fas fa-money-bill-wave"></i> Tuition Assessment</li>
-            <a href="../admin/profileManagement.html"><li><i class="fas fa-user-cog"></i> Profile Management</li></a>
-        </ul>
-        <ul class="sidebar-logout">
-            <li class="logout-item" id="sidebarLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</li>
-        </ul>
+    <!-- Navigation (sticky) -->
+    <nav class="navigation">
+        <a href="../admin/index.html" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
+        <a href="#" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+        <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
+        <a href="#" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+        <a href="#" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
+        <a href="#" class="nav-item active"><span class="nav-icon">♙</span>Profile Management</a>
+        <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
     </nav>
 
     <!-- Main Content -->

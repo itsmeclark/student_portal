@@ -29,6 +29,7 @@ app.use("/home", homeRoutes);
 app.use("/auth/admin", adminRoutes);
 app.use('/admin', adminDashboard)
 app.use('/profileManagement', profileManagement)
+app.use('/admin/grades', adminGrades)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

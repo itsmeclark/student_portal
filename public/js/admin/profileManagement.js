@@ -1,41 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Sidebar Toggle
-    const burgerMenu = document.getElementById('burgerMenu');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-
-    function openSidebar() {
-        sidebar.classList.add('active');
-        if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
-    }
-
-    function closeSidebar() {
-        sidebar.classList.remove('active');
-        if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
-    }
-
-    if (burgerMenu && sidebar) {
-        burgerMenu.addEventListener('click', () => {
-            sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
-        });
-    }
-
-    // Overlay behavior: clicking the dark backdrop closes the drawer
-    if (sidebarBackdrop) {
-        sidebarBackdrop.addEventListener('click', closeSidebar);
-    }
-
-    // Highlight the current page's nav item to match the active-pill design
-    if (sidebar) {
-        const currentPath = window.location.pathname.split('/').pop();
-        sidebar.querySelectorAll('ul a[href]').forEach(link => {
-            const linkPath = link.getAttribute('href').split('/').pop();
-            if (linkPath === currentPath) {
-                link.classList.add('active-link');
-            }
-        });
-    }
-
     // Modal Functions
     window.openModal = function(modalId) {
         const modal = document.getElementById(modalId);
@@ -147,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---------- LOGOUT (header button + sidebar item) ----------
+    // ---------- LOGOUT (header button) ----------
     async function adminLogout() {
         try {
             const response = await fetch('/auth/admin/logout', {
@@ -155,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 credentials: 'include'
             });
             if (response.ok) {
-                window.location.href = '/pages/login.html';
+                window.location.href = '/pages/index.html';
             } else {
                 alert('Logout failed. Please try again.');
             }
@@ -165,10 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const headerLogoutBtn = document.getElementById('headerLogoutBtn');
-    const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+    const headerLogoutBtn = document.getElementById('logoutButton');
     if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', adminLogout);
-    if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', adminLogout);
 });
 
 // Modal state: which student is being edited/deleted right now
@@ -178,7 +139,7 @@ let currentDeleteId = null;
 // Redirect to login when the server says we're not authenticated
 function handleAuthError(status) {
     if (status === 401 || status === 403) {
-        window.location.href = '/pages/login.html';
+        window.location.href = '/pages/index.html';
         return true;
     }
     return false;

@@ -1,7 +1,3 @@
-const menuToggle = document.getElementById("menu-toggle");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
-
 let greetingsElement = document.getElementById("greetings");
 let studentNameElement = document.getElementById("student_name");
 let studentCourseElement = document.getElementById("student_course");
@@ -9,33 +5,14 @@ let studentIdElement = document.getElementById("student_id");
 let studentYearLevelElement = document.getElementById("student_year_level");
 
 
-// Function to open sidebar
-menuToggle.addEventListener("click", () => {
-  sidebar.classList.add("open");
-  overlay.classList.add("active");
-});
-
-// Function to close sidebar when clicking overlay
-overlay.addEventListener("click", () => {
-  sidebar.classList.remove("open");
-  overlay.classList.remove("active");
-});
-
-// Optional: Close sidebar when pressing the Escape key
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && sidebar.classList.contains("open")) {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("active");
-  }
-});
-document.getElementById("logoutBtn").addEventListener("click", async () => {
+document.getElementById("logoutButton").addEventListener("click", async () => {
   try {
     const response = await fetch("/auth/logout", {
       method: "POST",
       credentials: "include",
     });
     if (response.ok) {
-      window.location.href = "../login.html"; // Redirect to login page after logout
+      window.location.href = "../index.html"; // Redirect to login page after logout
     } else {
       alert("Logout failed. Please try again.");
     }
@@ -52,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!response.ok) {
       // 401/403 → not logged in, or 500 → server error
       if (response.status === 401 || response.status === 403) {
-        window.location.href = "/pages/login.html";
+        window.location.href = "/pages/index.html";
         return;
       }
       throw new Error(`Request failed: ${response.status}`);
@@ -108,7 +85,7 @@ async function loadEnrolledSubjects() {
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
-        window.location.href = "/pages/login.html";
+        window.location.href = "/pages/index.html";
         return;
       }
       throw new Error(`Request failed: ${response.status}`);
@@ -176,7 +153,7 @@ async function loadAnnouncements() {
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
-        window.location.href = "/pages/login.html";
+        window.location.href = "/pages/index.html";
         return;
       }
       throw new Error(`Request failed: ${response.status}`);
