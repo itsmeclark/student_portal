@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cebu Eastern College – Student Portal | My Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9.5" r="3.6" fill="currentColor"/><path d="M5 19c1.5-3.4 4-4.8 7-4.8s5.5 1.4 7 4.8" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="frame" id="frame">
+  <header>
+    <img class="hlogo" src="../img/logo.png" alt="Cebu Eastern College logo">
+    <div class="brand"><b>CEBU EASTERN COLLEGE</b><span>STUDENT PORTAL</span></div>
+    <div class="user">
+      <svg viewBox="0 0 24 24"><use href="#user"/></svg>
+      <div class="n">Gemar Enopia<span class="r">Student</span></div>
+    </div>
+    <div class="divider"></div>
+    <button class="logout">Logout</button>
+  </header>
+
+<nav class="navigation">
+    <a href="dashboard.html" class="nav-item">
+        <span class="nav-icon">⊞</span>
+        Dashboard   </a>
+
+    <a href="announcements.html" class="nav-item">
+        <span class="nav-icon">◁</span>
+        Announcements &amp; Events    </a>
+
+    <a href="schedule.html" class="nav-item">
+        <span class="nav-icon">□</span>
+        Class Schedule
+    </a>
+
+    <a href="grades.html" class="nav-item">
+        <span class="nav-icon">▤</span>
+        Grades &amp; Records
+    </a>
+
+    <a href="tuition.html" class="nav-item">
+        <span class="nav-icon">▭</span>
+        Tuition Assessment
+    </a>
+
+    <a href="profile.html" class="nav-item active"
+       aria-current="page">
+        <span class="nav-icon">♙</span>
+        My Profile
+    </a>
+
+    <a href="settings.html" class="nav-item">
+        <span class="nav-icon">☼</span>
+        Settings
+    </a>
+</nav>
+
+  <div class="wm-sidebar" aria-hidden="true"></div>
+  <div class="panel">
+    <div class="wm" aria-hidden="true"></div>
+    <div class="title"><svg viewBox="0 0 24 24"><use href="#user"/></svg><h1>My Profile</h1></div>
+    <p class="sub">Select and enroll in your desired courses for the upcoming term.</p>
+
+    <div class="box pcard">
+      <div class="photo">
+        <div class="avatar"><svg viewBox="0 0 24 24" fill="#1d8cf0"><circle cx="12" cy="8" r="5"/><path d="M2 24c1-7 5-9 10-9s9 2 10 9z"/></svg></div>
+        <span class="cam"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M9 4l-2 3H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2h-3l-2-3zM12 17a4 4 0 110-8 4 4 0 010 8z"/></svg></span>
+        <button class="btn-photo">Change Photo</button>
+      </div>
+      <div class="info">
+        <small>Name</small><div>Gemar Enopia</div>
+        <small>Email</small><div><u>gemarenopia@gmail.com</u></div>
+        <small>Role</small><div>Student</div>
+      </div>
+    </div>
+
+    <div class="box sec" style="top:356px;height:224px">
+      <h2>STUDENT INFORMATION</h2>
+      <div class="grid">
+        <div><label>Student ID</label><div class="f">2026-00142</div></div>
+        <div><label>Program</label><div class="f">Bachelor of Science in Information Technology</div></div>
+        <div><label>Full Name</label><div class="f">Gemar Enopia</div></div>
+        <div><label>College Email</label><div class="f">gemarenopia@gmail.com</div></div>
+      </div>
+    </div>
+
+    <div class="box sec" style="top:603px;height:224px">
+      <h2>ENROLLMENT DETAILS</h2>
+      <div class="grid">
+        <div><label>Academic Year</label><div class="f">2025-2026</div></div>
+        <div><label>Semester</label><div class="f">Summer</div></div>
+        <div><label>Year Level</label><div class="f">3rd Year</div></div>
+        <div><label>Enrollment Type</label><div class="f">Regular</div></div>
+      </div>
+    </div>
+
+    <div class="box sec" style="top:850px;height:224px">
+      <h2>CONTACT INFORMATION</h2>
+      <div class="grid">
+        <div><label>Contact Number</label><div class="f"></div></div>
+        <div><label>Current Address</label><div class="f"></div></div>
+        <div><label>Emergency Contact Number</label><div class="f"></div></div>
+        <div><label>Emergency Contact Name</label><div class="f"></div></div>
+      </div>
+    </div>
+
+    <button class="cp" id="openPw">Change Password</button>
+  </div>
+
+  <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
+    <div class="modal">
+      <h3 id="pwTitle">Change Password</h3>
+      <button class="x" id="closePw" aria-label="Close"><svg width="14" height="14" viewBox="0 0 10 10" stroke="#000" stroke-width="2" stroke-linecap="round"><path d="M1 1l8 8M9 1L1 9"/></svg></button>
+      <label for="cur">Current Password</label>
+      <input id="cur" type="password" placeholder="Enter current password" autocomplete="current-password">
+      <label for="nw">New Password</label>
+      <input id="nw" type="password" placeholder="Enter new password" autocomplete="new-password">
+      <label for="cf">Confirm New Password</label>
+      <input id="cf" type="password" placeholder="Re-enter new password" autocomplete="new-password">
+      <p class="msg" id="msg" role="status"></p>
+      <button class="save" id="save">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/profile.js"></script>
+</body>
+</html>
