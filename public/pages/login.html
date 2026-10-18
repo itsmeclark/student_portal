@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cebu Eastern College</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/password-toggle.css">
+    <style>
+     
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-placeholder">
+            <img src="../img/cecLOGO.png" alt="logo">
+        </div>
+        <div class="logo-text">
+            <h1>CEBU EASTERN COLLEGE</h1>
+            <p>Student Portal</p>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="login-wrapper">
+        <div class="login-card">
+            <h2>LOGIN</h2>
+            <p class="subtitle">Sign in to access your account</p>
+
+            <form action="" method="POST" id="loginForm">
+                
+                <!-- Email Field (Styled as "Active" to match image) -->
+                <div class="form-group">
+                    <label for="email">ID Number</label>
+                    <div class="input-wrapper active">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="text" id="Idnumber" inputmode="numeric" maxlength="7" pattern="\d{7}" name="Idnumber" placeholder="Enter your ID number" required>
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" data-password-toggle="password" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <!-- Forgot Password -->
+                <a href="#" class="forgot-password">Forgot password?</a>
+
+                <!-- Login Button (Line 59 Fixed) -->
+                <button type="submit" id="loginBtn" class="btn-login">Login</button>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Create Account Button -->
+                <a href="./register.html"><button type="button" class="btn-create">Create an Account</button></a>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- ========== POPUP OVERLAY (added) ========== -->
+    <div class="popup-overlay" id="rolePopup">
+        <div class="popup-card">
+            <!-- Logo + "Hello, Easternians!" -->
+            <div class="popup-logo">
+                <img src="../img/cecLOGO.png" alt="CEC Logo">
+                <span>Hello, Easternians!</span>
+            </div>
+
+            <h3>Welcome back to the Portal!</h3>
+            <p class="popup-sub">Please select your role to log in and personalize dashboard.</p>
+
+            <!-- Role cards: Student & Admin -->
+            <div class="role-grid" id="roleGrid">
+                <!-- Student card -->
+                <div class="role-card" data-role="student">
+                    <div class="role-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="role-name">Student</div>
+                    <div class="role-desc">Access courses, schedules, and grades.</div>
+                </div>
+
+                <!-- Admin card -->
+                <div class="role-card" data-role="admin">
+                    <div class="role-icon"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="role-name">Admin</div>
+                    <div class="role-desc">Manage portal, dashboards, and reports.</div>
+                </div>
+            </div>
+
+            <!-- Continue button + note -->
+            <div class="popup-actions">
+                <button class="btn-popup-continue" id="continueBtn">Continue to Login</button>
+                <div class="popup-note">Select a role to continue</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- existing scripts -->
+    <script src="../js/password-toggle.js"></script>
+    <script>
+        // Role selection popup handler
+        let selectedRole = null;
+        const roleCards = document.querySelectorAll('.role-card');
+        const continueBtn = document.getElementById('continueBtn');
+        const rolePopup = document.getElementById('rolePopup');
+
+        roleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                roleCards.forEach(c => {
+                    c.style.borderColor = 'transparent';
+                    c.style.background = '#f0f4f8';
+                });
+                card.style.borderColor = '#1b365d';
+                card.style.background = '#e2e8f0';
+                selectedRole = card.getAttribute('data-role');
+            });
+        });
+
+        continueBtn.addEventListener('click', () => {
+            if (!selectedRole) {
+                alert('Please select a role to continue.');
+                return;
+            }
+            rolePopup.style.display = 'none';
+        });
+
+        // Fixed login submit event to route to home.html and save ID for the database profile fetch
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const idNumber = document.getElementById('Idnumber').value.trim();
+
+            if (!idNumber) {
+                alert('Please enter your ID number');
+                return;
+            }
+
+            localStorage.setItem('student_id', idNumber);
+            window.location.href = 'students_page/home.html';
+        });
+    </script>
+</body>
+</html>
