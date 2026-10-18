@@ -35,11 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const idNumber = document.getElementById('Idnumber').value;
-            const password = document.getElementById('password').value;
+            const idNumberInput = document.getElementById('Idnumber');
+            const passwordInput = document.getElementById('password');
+
+            if (!idNumberInput || !passwordInput) {
+                console.error("Login form input fields not found.");
+                return;
+            }
+
+            const idNumber = idNumberInput.value.trim();
+            const password = passwordInput.value;
 
             try {
-                const response = await fetch('http://localhost:3000/auth/login', {
+                // Using relative or fallback API URL configuration to support teamwork environments
+                const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? 'http://localhost:3000/auth/login' 
+                    : '/auth/login';
+
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -59,11 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     localStorage.setItem('role', selectedRole);
                     
-                    // STEP 1: Store the student ID so the dashboard can fetch their specific details
+                    // Store the student ID so the dashboard can fetch their specific details safely
                     localStorage.setItem('student_id', idNumber);
 
-                    alert('Login successful!');
-
+                    // Use relative pathing configuration for navigation redirection
                     if (selectedRole === 'admin') {
                         window.location.href = '../admin/admin_dashboard.html';
                     } else {
@@ -73,8 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(data.message || 'Invalid credentials');
                 }
             } catch (error) {
-                console.error('Error during login:', error);
-                alert('An error occurred during login.');
+                console.error('Error during login connection:', error);
+                alert('Unable to connect to the backend server. Please make sure the server is running.');
             }
         });
     }

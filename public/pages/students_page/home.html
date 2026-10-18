@@ -795,8 +795,9 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const studentId = localStorage.getItem('student_id');
 
+            // Fallback safe redirect if missing session, using relative path to prevent breaking
             if (!studentId) {
-                window.location.href = '../login.html';
+                window.location.href = './login.html';
                 return;
             }
 
@@ -837,10 +838,11 @@
                     if (yearLevelEl) yearLevelEl.innerHTML = `<span>Year Level:</span> ${yearLevel}`;
 
                 } else {
-                    console.error('Failed to load student details. Server responded with status:', response.status);
+                    console.warn('Failed to load student details from backend server. Status:', response.status);
                 }
             } catch (error) {
-                console.error('Error fetching student profile:', error);
+                // Gracefully catch network errors so it doesn't cause a white screen crash
+                console.warn('Backend server is not reachable or offline. Running in offline/view mode:', error);
             }
 
             // Logout handlers
@@ -848,7 +850,7 @@
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', () => {
                     localStorage.clear();
-                    window.location.href = '../login.html';
+                    window.location.href = './login.html';
                 });
             }
 
@@ -856,7 +858,7 @@
             if (headerLogoutBtn) {
                 headerLogoutBtn.addEventListener('click', () => {
                     localStorage.clear();
-                    window.location.href = '../login.html';
+                    window.location.href = './login.html';
                 });
             }
         });
