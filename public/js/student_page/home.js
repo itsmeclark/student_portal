@@ -1,56 +1,37 @@
-let greetingsElement = document.getElementById("greetings");
-let studentNameElement = document.getElementById("student_name");
-let studentCourseElement = document.getElementById("student_course");
-let studentIdElement = document.getElementById("student_id");
-let studentYearLevelElement = document.getElementById("student_year_level");
-
-
-document.getElementById("logoutButton").addEventListener("click", async () => {
-  try {
-    const response = await fetch("/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    if (response.ok) {
-      window.location.href = "../index.html"; // Redirect to login page after logout
-    } else {
-      alert("Logout failed. Please try again.");
-    }
-  } catch (error) {
-    console.error("Error during logout:", error);
-  }
-});
-document.addEventListener("DOMContentLoaded", async function () {
-  try {
-    const response = await fetch("/home/dashboard", {
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      // 401/403 → not logged in, or 500 → server error
-      if (response.status === 401 || response.status === 403) {
-        window.location.href = "/pages/index.html";
-        return;
-      }
-      throw new Error(`Request failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("User:", data);
-    // render data.user on the page
-    greetingsElement.textContent = `WELCOME BACK, ${data.user.First_name.toUpperCase()}!`;
-    studentNameElement.innerHTML = `<span>Name:</span> ${data.user.First_name} ${data.user.Last_name}`;
-    studentCourseElement.innerHTML = `<span>Course:</span> ${data.user.Course}`;
-    studentIdElement.innerHTML = `<span>ID:</span> ${data.user.Id_number}`;
-    studentYearLevelElement.innerHTML = `<span>Year Level:</span> ${data.user.Current_year_level}`;
-  } catch (error) {
-    console.error("Error loading dashboard:", error);
-  }
-});
-
 // =================================================================
-// ENROLLED SUBJECTS + TODAY'S SCHEDULE + ANNOUNCEMENTS (from DB)
+// STUDENT DASHBOARD (home.html)
+// Uses the secure /home/... routes. The server decides who is logged in
+// from the login cookie / token, not from a number saved in the browser.
 // =================================================================
+
+const LOGIN_PAGE = "/pages/login.html";
+
+// Sends the saved token too (if there is one). The login cookie is sent automatically.
+function authHeaders(extra = {}) {
+  const token = localStorage.getItem("token");
+  return token ? { ...extra, Authorization: "Bearer " + token } : extra;
+}
+
+function api(url, options = {}) {
+  return fetch(url, { ...options, credentials: "include", headers: authHeaders(options.headers) });
+}
+
+let redirecting = false;
+function goToLogin(message) {
+  if (redirecting) return;
+  redirecting = true;
+  localStorage.removeItem("token");
+  localStorage.removeItem("student_id");
+  if (message) alert(message);
+  window.location.href = LOGIN_PAGE;
+}
+
+// Makes text from the database safe to put inside HTML
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
 
 // "08:00" -> "8:00 AM"
 function formatTime(time) {
@@ -79,17 +60,60 @@ function isToday(scheduleDays) {
   return String(scheduleDays).toUpperCase().includes(letter);
 }
 
+// Puts the student's photo inside an avatar circle
+function showPhoto(container, photoUrl) {
+  if (!container || !photoUrl) return;
+  container.innerHTML = "";
+  const img = document.createElement("img");
+  img.src = photoUrl;
+  img.alt = "Profile photo";
+  img.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;";
+  container.appendChild(img);
+}
+
+// ---------------- Student info ----------------
+async function loadStudent() {
+  try {
+    const response = await api("/home/dashboard");
+    if (response.status === 401 || response.status === 403) {
+      return goToLogin("Please log in to continue.");
+    }
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+    const { user } = await response.json();
+    const firstName = user.First_name || "";
+    const fullName = `${firstName} ${user.Last_name || ""}`.trim();
+
+    const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+    const greetings = document.getElementById("greetings");
+    if (greetings) greetings.textContent = `WELCOME BACK, ${(firstName || "STUDENT").toUpperCase()}!`;
+
+    const headerName = document.getElementById("header_student_name");
+    if (headerName) headerName.textContent = fullName || "Student Account";
+
+    set("student_name", `<span>Name:</span> ${escapeHtml(fullName)}`);
+    set("student_course", `<span>Course:</span> ${escapeHtml(user.Course)}`);
+    set("student_id", `<span>ID:</span> ${escapeHtml(user.Id_number)}`);
+    set("student_year_level", `<span>Year Level:</span> ${escapeHtml(user.Current_year_level)}`);
+
+    if (user.Profile_photo) {
+      showPhoto(document.querySelector(".header-avatar"), user.Profile_photo);
+      showPhoto(document.querySelector(".welcome-header .avatar"), user.Profile_photo);
+    }
+  } catch (error) {
+    console.error("Error loading dashboard:", error);
+    const headerName = document.getElementById("header_student_name");
+    if (headerName) headerName.textContent = "Student Account";
+  }
+}
+
+// ---------------- Enrolled subjects + today's schedule ----------------
 async function loadEnrolledSubjects() {
   try {
-    const response = await fetch("/home/subjects", { credentials: "include" });
-
-    if (!response.ok) {
-      if (response.status === 401 || response.status === 403) {
-        window.location.href = "/pages/index.html";
-        return;
-      }
-      throw new Error(`Request failed: ${response.status}`);
-    }
+    const response = await api("/home/subjects");
+    if (response.status === 401 || response.status === 403) return goToLogin();
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 
     const data = await response.json();
     const subjects = data.subjects || [];
@@ -103,24 +127,24 @@ async function loadEnrolledSubjects() {
             No enrolled subjects yet.
           </div>`;
       } else {
-        grid.innerHTML = subjects.map(subject => `
+        grid.innerHTML = subjects.map((s) => `
           <div class="subject-card">
-            <h4><i class="fas fa-book"></i> ${subject.Subject_name}</h4>
-            <p>${subject.Subject_code} (${subject.Edp_code}) - ${subject.Instructor_name}</p>
-            <span>${subject.Schedule_days} - ${formatTime(subject.Start_time)} - ${formatTime(subject.End_time)}<br>(${subject.Room})</span>
+            <h4><i class="fas fa-book"></i> ${escapeHtml(s.Subject_name)}</h4>
+            <p>${escapeHtml(s.Subject_code)} (${escapeHtml(s.Edp_code)}) - ${escapeHtml(s.Instructor_name)}</p>
+            <span>${escapeHtml(s.Schedule_days)} - ${formatTime(s.Start_time)} - ${formatTime(s.End_time)}<br>(${escapeHtml(s.Room)})</span>
           </div>
         `).join("");
       }
     }
 
-    // 2. Hero "My Classes" count
+    // 2. "My Classes" count
     const classCount = document.getElementById("class_count");
     if (classCount) classCount.textContent = subjects.length;
 
     // 3. Upcoming Schedule = only today's classes
     const schedule = document.getElementById("upcoming_schedule");
     if (schedule) {
-      const todayClasses = subjects.filter(subject => isToday(subject.Schedule_days));
+      const todayClasses = subjects.filter((s) => isToday(s.Schedule_days));
       if (todayClasses.length === 0) {
         schedule.innerHTML = `
           <div class="schedule-item green">
@@ -131,13 +155,13 @@ async function loadEnrolledSubjects() {
           </div>`;
       } else {
         const colors = ["green", "red", "orange"];
-        schedule.innerHTML = todayClasses.map((subject, index) => `
-          <div class="schedule-item ${colors[index % colors.length]}">
+        schedule.innerHTML = todayClasses.map((s, i) => `
+          <div class="schedule-item ${colors[i % colors.length]}">
             <div class="schedule-details">
-              <h4>${subject.Subject_name}</h4>
-              <p>${formatTime(subject.Start_time)} - ${formatTime(subject.End_time)}</p>
+              <h4>${escapeHtml(s.Subject_name)}</h4>
+              <p>${formatTime(s.Start_time)} - ${formatTime(s.End_time)}</p>
             </div>
-            <div class="schedule-room">${subject.Room}</div>
+            <div class="schedule-room">${escapeHtml(s.Room)}</div>
           </div>
         `).join("");
       }
@@ -147,17 +171,12 @@ async function loadEnrolledSubjects() {
   }
 }
 
+// ---------------- Announcements ----------------
 async function loadAnnouncements() {
   try {
-    const response = await fetch("/home/announcements", { credentials: "include" });
-
-    if (!response.ok) {
-      if (response.status === 401 || response.status === 403) {
-        window.location.href = "/pages/index.html";
-        return;
-      }
-      throw new Error(`Request failed: ${response.status}`);
-    }
+    const response = await api("/home/announcements");
+    if (response.status === 401 || response.status === 403) return goToLogin();
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 
     const data = await response.json();
     const announcements = data.announcements || [];
@@ -173,10 +192,10 @@ async function loadAnnouncements() {
       return;
     }
 
-    list.innerHTML = announcements.map(announcement => `
+    list.innerHTML = announcements.map((a) => `
       <div class="announcement-item">
-        <h4>${announcement.Announcement_title}</h4>
-        <p>${formatDate(announcement.Announcement_date)}</p>
+        <h4>${escapeHtml(a.Announcement_title)}</h4>
+        <p>${formatDate(a.Announcement_date)}</p>
       </div>
     `).join("");
   } catch (error) {
@@ -184,5 +203,26 @@ async function loadAnnouncements() {
   }
 }
 
-loadEnrolledSubjects();
-loadAnnouncements();
+// ---------------- Logout ----------------
+async function logout() {
+  try {
+    await fetch("/auth/logout", { method: "POST", credentials: "include" });
+  } catch (error) {
+    console.error("Error during logout:", error);
+  }
+  localStorage.removeItem("token");
+  localStorage.removeItem("student_id");
+  localStorage.removeItem("role");
+  window.location.href = LOGIN_PAGE;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  ["logoutBtn", "headerLogoutBtn"].forEach((id) => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", logout);
+  });
+
+  loadStudent();
+  loadEnrolledSubjects();
+  loadAnnouncements();
+});

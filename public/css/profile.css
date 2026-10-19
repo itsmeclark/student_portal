@@ -510,3 +510,13 @@ a:focus-visible {
 .cp:focus-visible {
     outline-color: #1d8cf0;
 }
+/* Contact edit (step 2) */
+.contact-actions { position: absolute; top: 18px; right: 24px; display: flex; align-items: center; gap: 8px; }
+.contact-btn { font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 6px; border: 1px solid #1d8cf0; background: #fff; color: #1d8cf0; cursor: pointer; }
+.contact-btn.primary { background: #1d8cf0; color: #fff; }
+.contact-btn:disabled { opacity: .6; cursor: default; }
+.contact-msg { font-size: 13px; }
+.contact-msg.ok { color: #1a8f3c; }
+.contact-msg.err { color: #d23b3b; }
+.f-input { width: 100%; box-sizing: border-box; font: inherit; outline: none; }
+.f-input:focus { border-color: #1d8cf0; }

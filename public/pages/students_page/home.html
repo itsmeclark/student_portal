@@ -600,6 +600,12 @@
         }
 
         /* Footer */
+        /* CHANGED: page no longer scrolls, footer is pinned to the bottom */
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         footer {
             background-color: var(--primary-blue);
             color: var(--white);
@@ -607,6 +613,10 @@
             padding: 15px;
             font-size: 0.7rem;
             margin-top: 20px;
+            position: fixed;   /* CHANGED */
+            left: 0;           /* CHANGED */
+            right: 0;          /* CHANGED */
+            bottom: 0;         /* CHANGED */
         }
     </style>
 </head>
@@ -675,7 +685,7 @@
         <a href="#" class="sub-navbar-item">
             <i class="fas fa-money-bill-wave"></i> Tuition Assessment
         </a>
-        <a href="#" class="sub-navbar-item">
+        <a href="/profile.html" class="sub-navbar-item">
             <i class="fas fa-chess-pawn"></i> My Profile
         </a>
         <a href="#" class="sub-navbar-item">
@@ -791,71 +801,6 @@
     </footer>
 
     <!-- Script Section -->
-        <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const studentId = localStorage.getItem('student_id');
-
-            // CHANGED: login.html is one folder up from students_page
-            const LOGIN_PAGE = '../login.html';
-
-            if (!studentId) {
-                window.location.href = LOGIN_PAGE;
-                return;
-            }
-
-            try {
-                // CHANGED: no "http://localhost:3000", it uses the page's own address
-                const response = await fetch(`/profile/${studentId}`);
-
-                if (response.ok) {
-                    const student = await response.json();
-
-                    const firstName = student.First_name || student.first_name || '';
-                    const lastName = student.Last_name || student.last_name || '';
-                    const course = student.Course || student.course || '';
-                    const idNumber = student.Id_number || student.id_number || studentId;
-                    const yearLevel = student.Year_level || student.year_level || student.YearLevel || '';
-
-                    const greetingsEl = document.getElementById('greetings');
-                    if (greetingsEl) {
-                        greetingsEl.textContent = `WELCOME BACK, ${firstName ? firstName.toUpperCase() : 'STUDENT'}!`;
-                    }
-
-                    const headerStudentNameEl = document.getElementById('header_student_name');
-                    if (headerStudentNameEl) {
-                        headerStudentNameEl.textContent = `${firstName} ${lastName}`.trim() || 'Student Account';
-                    }
-
-                    const nameEl = document.getElementById('student_name');
-                    const courseEl = document.getElementById('student_course');
-                    const idEl = document.getElementById('student_id');
-                    const yearLevelEl = document.getElementById('student_year_level');
-
-                    if (nameEl) nameEl.innerHTML = `<span>Name:</span> ${firstName} ${lastName}`;
-                    if (courseEl) courseEl.innerHTML = `<span>Course:</span> ${course}`;
-                    if (idEl) idEl.innerHTML = `<span>ID:</span> ${idNumber}`;
-                    if (yearLevelEl) yearLevelEl.innerHTML = `<span>Year Level:</span> ${yearLevel}`;
-                } else {
-                    console.warn('Failed to load student details. Status:', response.status);
-                    const h = document.getElementById('header_student_name');
-                    if (h) h.textContent = 'Student Account';
-                }
-            } catch (error) {
-                console.warn('Backend server is not reachable:', error);
-                const h = document.getElementById('header_student_name');
-                if (h) h.textContent = 'Student Account';
-            }
-
-            // Logout handlers
-            const logout = () => {
-                localStorage.clear();
-                window.location.href = LOGIN_PAGE;
-            };
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) logoutBtn.addEventListener('click', logout);
-            const headerLogoutBtn = document.getElementById('headerLogoutBtn');
-            if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', logout);
-        });
-    </script>
+    <script src="/js/student_page/home.js"></script>
 </body>
 </html>
