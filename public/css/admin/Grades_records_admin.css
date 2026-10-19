@@ -466,45 +466,38 @@ tbody tr:hover { background: #edf2fb; transition: 0.15s; }
 .subject { text-align: left; font-weight: 600; }
 .final-grade { color: #1c3b87; font-weight: bold; }
 
-.grade-input {
-    width: 60px;
-    height: 32px;
-    text-align: center;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    font-size: 14px;
+.period-cell {
     font-weight: bold;
     color: #1c3b87;
-    background: #fff;
 }
 
-.grade-input:focus {
-    outline: none;
-    border-color: #1c3b87;
-    box-shadow: 0 0 0 2px rgba(28,59,135,0.2);
+.period-cell.is-empty {
+    color: #94a3b8;
+    font-weight: normal;
 }
+
+/* Highlight the column matching the selected GRADING PERIOD filter */
+.period-cell.period-active {
+    background: #eef2fb;
+    box-shadow: inset 0 0 0 2px #1c3b87;
+}
+
+.actions { text-align: center; }
 
 .action-row-btn {
-    background: #ef4444;
+    background: #1c3b87;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
+    transition: background 0.2s;
 }
 
 .action-row-btn:hover {
-    background: #dc2626;
-}
-
-/* FOOTER ACTIONS */
-.records-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 20px;
+    background: #112353;
 }
 
 /* ================================
@@ -576,6 +569,17 @@ tbody tr:hover { background: #edf2fb; transition: 0.15s; }
 
 .modal-group input:focus, .modal-group select:focus {
     border-color: #112353;
+}
+
+.modal-grade-input {
+    text-align: center;
+    font-weight: bold;
+    color: #1c3b87;
+}
+
+.modal-grade-input[readonly] {
+    background: #f1f5f9;
+    color: #64748b;
 }
 
 .modal-footer {

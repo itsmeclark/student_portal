@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Grades & Records | Cebu Eastern College</title>
     <link rel="stylesheet" href="../../css/admin/Grades_records_admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -105,7 +106,6 @@
         <section class="records-card">
             <div class="card-header-flex">
                 <h2 class="program-title">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h2>
-                <button type="button" id="addSubjectBtn" class="secondary-button">+ Add Grade</button>
             </div>
 
             <!-- Student Information Display (populated after Load Records) -->
@@ -140,72 +140,47 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="records-footer">
-                <button type="button" id="discardBtn" class="secondary-button">Discard Changes</button>
-                <button type="button" id="saveGradesBtn" class="primary-button">Save Grade Records</button>
-            </div>
         </section>
 
     </main>
 
-    <!-- ================= ADD GRADE MODAL POPUP ================= -->
-    <div id="addGradeModal" class="modal-overlay">
+    <!-- ================= EDIT GRADE MODAL POPUP ================= -->
+    <div id="editGradeModal" class="modal-overlay">
         <div class="modal-container">
-            <div class="modal-header">Add Grade</div>
+            <div class="modal-header">Edit Grade</div>
             <div class="modal-body">
                 <div class="modal-group">
-                    <label for="modalStudentName">STUDENT NAME</label>
-                    <input type="text" id="modalStudentName" placeholder="Student Name" readonly>
+                    <label for="editEdp">EDP CODE</label>
+                    <input type="text" id="editEdp" readonly>
                 </div>
                 <div class="modal-group">
-                    <label for="modalStudentId">STUDENT ID NUMBER</label>
-                    <input type="text" id="modalStudentId" placeholder="Student ID" readonly>
+                    <label for="editSubjectName">SUBJECT</label>
+                    <input type="text" id="editSubjectName" readonly>
                 </div>
                 <div class="modal-group">
-                    <label for="modalCourse">COURSE</label>
-                    <input type="text" id="modalCourse" placeholder="Course" readonly>
+                    <label for="editPrelim">PRELIM</label>
+                    <input type="text" id="editPrelim" class="modal-grade-input" placeholder="1.0 - 5.0">
                 </div>
                 <div class="modal-group">
-                    <label for="modalYearLevel">YEAR LEVEL</label>
-                    <select id="modalYearLevel" disabled>
-                        <option value="1st Year">1st Year</option>
-                        <option value="2nd Year">2nd Year</option>
-                        <option value="3rd Year">3rd Year</option>
-                        <option value="4th Year">4th Year</option>
-                    </select>
+                    <label for="editMidterm">MIDTERM</label>
+                    <input type="text" id="editMidterm" class="modal-grade-input" placeholder="1.0 - 5.0">
                 </div>
                 <div class="modal-group">
-                    <label for="modalSection">SECTION</label>
-                    <input type="text" id="modalSection" placeholder="Section" readonly>
+                    <label for="editSemifinal">SEMIFINAL</label>
+                    <input type="text" id="editSemifinal" class="modal-grade-input" placeholder="1.0 - 5.0">
                 </div>
                 <div class="modal-group">
-                    <label for="modalSubject">SUBJECT</label>
-                    <select id="modalSubject">
-                        <option value="">Select subject</option>
-                        <option value="IT Professional Ethics & Practice">IT Professional Ethics & Practice</option>
-                        <option value="Advanced Database Management Systems">Advanced Database Management Systems</option>
-                        <option value="System Analysis and Design">System Analysis and Design</option>
-                        <option value="Networking 2 - Routing & Switching">Networking 2 - Routing & Switching</option>
-                    </select>
+                    <label for="editFinal">FINAL</label>
+                    <input type="text" id="editFinal" class="modal-grade-input" placeholder="1.0 - 5.0">
                 </div>
-                <div class="modal-group">
-                    <label for="modalGradingPeriod">GRADING PERIOD</label>
-                    <select id="modalGradingPeriod">
-                        <option value="Prelim">Prelim</option>
-                        <option value="Midterm">Midterm</option>
-                        <option value="Semifinal">Semifinal</option>
-                        <option value="Final">Final</option>
-                    </select>
-                </div>
-                <div class="modal-group">
-                    <label for="modalGrade">GRADE</label>
-                    <input type="text" id="modalGrade" placeholder="5.0 – 1.0" value="1.5">
+                <div class="modal-group full-width">
+                    <label for="editFinalGrade">FINAL GRADE (AUTO-COMPUTED)</label>
+                    <input type="text" id="editFinalGrade" class="modal-grade-input" readonly>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="modalCancelBtn" class="modal-btn-cancel">Cancel</button>
-                <button type="button" id="modalSaveBtn" class="modal-btn-save">Save Grade</button>
+                <button type="button" id="editCancelBtn" class="modal-btn-cancel">Cancel</button>
+                <button type="button" id="editSaveBtn" class="modal-btn-save">Save Grade</button>
             </div>
         </div>
     </div>
@@ -214,13 +189,14 @@
         // ==================== GLOBAL STATE ====================
         let currentStudentId = null;
         let currentStudentData = null;
+        let editingEnrollmentsSubjectId = null;
 
-        const modal = document.getElementById('addGradeModal');
-        const addSubjectBtn = document.getElementById('addSubjectBtn');
-        const modalCancelBtn = document.getElementById('modalCancelBtn');
-        const modalSaveBtn = document.getElementById('modalSaveBtn');
+        const editModal = document.getElementById('editGradeModal');
+        const editCancelBtn = document.getElementById('editCancelBtn');
+        const editSaveBtn = document.getElementById('editSaveBtn');
         const studentSearchInput = document.getElementById('studentSearch');
         const termSelect = document.getElementById('term');
+        const periodSelect = document.getElementById('period');
         const loadRecordsBtn = document.getElementById('loadRecordsBtn');
 
         // ==================== TERM DROPDOWN (dynamic) ====================
@@ -270,7 +246,6 @@
         loadRecordsBtn.addEventListener('click', async function () {
             const idNumber = studentSearchInput.value.trim();
             const term = termSelect.value;
-            const period = document.getElementById('period').value;
 
             if (!idNumber) {
                 alert('Please enter a Student ID Number.');
@@ -284,7 +259,7 @@
             currentStudentId = idNumber;
 
             try {
-                const response = await fetch(`/admin/grades/student?idNumber=${encodeURIComponent(idNumber)}&term=${encodeURIComponent(term)}&period=${encodeURIComponent(period)}`, {
+                const response = await fetch(`/admin/grades/student?idNumber=${encodeURIComponent(idNumber)}&term=${encodeURIComponent(term)}`, {
                     credentials: 'include'
                 });
                 if (response.status === 401 || response.status === 403) {
@@ -297,7 +272,9 @@
                 // Display student info
                 const infoDisplay = document.getElementById('studentInfoDisplay');
                 if (data.idNumber) {
-                    infoDisplay.style.display = 'block';
+                    // 'flex' (not 'block') so the CSS two-column layout is kept:
+                    // Section lines up with ID Number, Year level lines up with Name.
+                    infoDisplay.style.display = 'flex';
                     document.getElementById('infoIdNumber').textContent = data.idNumber;
                     document.getElementById('infoName').textContent = (data.firstName || '') + ' ' + (data.lastName || '');
                     document.getElementById('infoCourse').textContent = data.course || '—';
@@ -330,19 +307,25 @@
                 data.subjects.forEach(function (s) {
                     const finalGrade = calculateFinalGrade(s.prelim, s.midterm, s.semifinal, s.final_period);
                     const tr = document.createElement('tr');
-                    tr.dataset.gradeId = s.gradeId;
+                    tr.dataset.esid = s.enrollmentsSubjectId;
                     tr.innerHTML = `
                         <td><strong>${s.edp}</strong></td>
                         <td class="subject">${s.name}</td>
-                        <td><input type="text" class="grade-input" value="${formatGrade(s.prelim)}" data-field="prelim"></td>
-                        <td><input type="text" class="grade-input" value="${formatGrade(s.midterm)}" data-field="midterm"></td>
-                        <td><input type="text" class="grade-input" value="${formatGrade(s.semifinal)}" data-field="semifinal"></td>
-                        <td><input type="text" class="grade-input" value="${formatGrade(s.final_period)}" data-field="final"></td>
+                        <td class="period-cell${isBlank(s.prelim) ? ' is-empty' : ''}" data-period="prelim">${formatGrade(s.prelim)}</td>
+                        <td class="period-cell${isBlank(s.midterm) ? ' is-empty' : ''}" data-period="midterm">${formatGrade(s.midterm)}</td>
+                        <td class="period-cell${isBlank(s.semifinal) ? ' is-empty' : ''}" data-period="semifinal">${formatGrade(s.semifinal)}</td>
+                        <td class="period-cell${isBlank(s.final_period) ? ' is-empty' : ''}" data-period="final">${formatGrade(s.final_period)}</td>
                         <td class="final-grade">${formatGrade(finalGrade)}</td>
-                        <td><button type="button" class="action-row-btn" onclick="this.closest('tr').remove();">Delete</button></td>
+                        <td class="actions">
+                            <button type="button" class="action-row-btn" onclick="openEditGradeModal(${s.enrollmentsSubjectId})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
                     `;
                     tbody.appendChild(tr);
                 });
+
+                applyPeriodHighlight();
             } catch (error) {
                 console.error("Error loading records:", error);
                 alert('Failed to load records. Please try again.');
@@ -350,118 +333,159 @@
         });
 
         // ==================== GRADE UTILITIES ====================
+        function isBlank(v) {
+            return v === null || v === undefined || v === '';
+        }
+
+        // Blank means "no grade yet" and must NOT be treated as 0
+        function toGradeNumber(v) {
+            if (isBlank(v)) return NaN;
+            const n = Number(v);
+            return Number.isNaN(n) ? NaN : n;
+        }
+
         function formatGrade(v) {
-            if (v === null || v === undefined) return '—';
+            if (isBlank(v)) return '—';
             const n = Number(v);
             if (Number.isNaN(n)) return '—';
             return n.toFixed(1);
         }
 
         function calculateFinalGrade(prelim, midterm, semifinal, final) {
-            const periods = [prelim, midterm, semifinal, final].map(Number).filter(g => !Number.isNaN(g));
+            const periods = [prelim, midterm, semifinal, final]
+                .map(toGradeNumber)
+                .filter(g => !Number.isNaN(g));
             if (periods.length === 0) return null;
             return periods.reduce((a, b) => a + b, 0) / periods.length;
         }
 
-        // Recalculate final grade when any period input changes
-        document.getElementById('adminGradesBody').addEventListener('input', function (e) {
-            if (e.target.classList.contains('grade-input')) {
-                const row = e.target.closest('tr');
-                const cells = row.querySelectorAll('.grade-input');
-                const values = Array.from(cells).map(input => Number(input.value));
-                const validValues = values.filter(v => !Number.isNaN(v));
-                const finalGrade = validValues.length > 0
-                    ? validValues.reduce((a, b) => a + b, 0) / validValues.length
-                    : null;
-                const finalCell = row.querySelector('.final-grade');
-                finalCell.textContent = formatGrade(finalGrade);
+        // ==================== GRADING PERIOD HIGHLIGHT ====================
+        // Highlights the selected period column. Rows are never hidden, so a subject
+        // without a grade for that period stays visible and editable.
+        function applyPeriodHighlight() {
+            const selected = periodSelect.value.toLowerCase();
+            document.querySelectorAll('#adminGradesBody .period-cell').forEach(function (cell) {
+                cell.classList.toggle('period-active', selected !== 'all' && cell.dataset.period === selected);
+            });
+        }
+
+        periodSelect.addEventListener('change', applyPeriodHighlight);
+
+        // ==================== EDIT GRADE MODAL ====================
+        // Reads the current values straight from the row so the modal always opens
+        // with the last saved state.
+        function openEditGradeModal(enrollmentsSubjectId) {
+            const row = document.querySelector(`#adminGradesBody tr[data-esid="${enrollmentsSubjectId}"]`);
+            if (!row) return;
+
+            editingEnrollmentsSubjectId = enrollmentsSubjectId;
+
+            document.getElementById('editEdp').value = row.querySelector('td strong').textContent;
+            document.getElementById('editSubjectName').value = row.querySelector('.subject').textContent;
+
+            ['prelim', 'midterm', 'semifinal', 'final'].forEach(function (period) {
+                const cell = row.querySelector(`.period-cell[data-period="${period}"]`);
+                const isEmpty = cell.classList.contains('is-empty');
+                document.getElementById('edit' + period.charAt(0).toUpperCase() + period.slice(1)).value = isEmpty ? '' : cell.textContent;
+            });
+
+            updateEditFinalGrade();
+            editModal.style.display = 'flex';
+        }
+
+        // Live-compute the final grade shown in the modal
+        function updateEditFinalGrade() {
+            const values = ['editPrelim', 'editMidterm', 'editSemifinal', 'editFinal']
+                .map(id => toGradeNumber(document.getElementById(id).value))
+                .filter(v => !Number.isNaN(v));
+
+            const finalGrade = values.length > 0
+                ? values.reduce((a, b) => a + b, 0) / values.length
+                : null;
+
+            document.getElementById('editFinalGrade').value = formatGrade(finalGrade);
+        }
+
+        ['editPrelim', 'editMidterm', 'editSemifinal', 'editFinal'].forEach(function (id) {
+            document.getElementById(id).addEventListener('input', updateEditFinalGrade);
+        });
+
+        // Close modal on Cancel
+        editCancelBtn.addEventListener('click', function () {
+            editModal.style.display = 'none';
+            editingEnrollmentsSubjectId = null;
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function (event) {
+            if (event.target === editModal) {
+                editModal.style.display = 'none';
+                editingEnrollmentsSubjectId = null;
             }
         });
 
-        // ==================== ADD GRADE MODAL ====================
-        // Open Modal - pre-fill with current student info (read-only)
-        addSubjectBtn.addEventListener('click', function() {
-            if (!currentStudentData) {
-                alert('Please load a student record first.');
-                return;
-            }
+        // ==================== SAVE GRADE ====================
+        editSaveBtn.addEventListener('click', async function () {
+            if (editingEnrollmentsSubjectId === null) return;
 
-            // Pre-fill and lock student info fields
-            document.getElementById('modalStudentName').value = (currentStudentData.firstName || '') + ' ' + (currentStudentData.lastName || '');
-            document.getElementById('modalStudentId').value = currentStudentData.idNumber;
-            document.getElementById('modalCourse').value = currentStudentData.course || '';
-            document.getElementById('modalYearLevel').value = currentStudentData.yearLevel || '';
-            document.getElementById('modalSection').value = currentStudentData.section || '';
+            const payload = {
+                enrollmentsSubjectId: editingEnrollmentsSubjectId,
+                prelim: document.getElementById('editPrelim').value.trim(),
+                midterm: document.getElementById('editMidterm').value.trim(),
+                semifinal: document.getElementById('editSemifinal').value.trim(),
+                final: document.getElementById('editFinal').value.trim()
+            };
 
-            modal.style.display = 'flex';
-        });
+            editSaveBtn.disabled = true;
 
-        // Close Modal on Cancel
-        modalCancelBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
+            try {
+                const response = await fetch('/admin/grades/save', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-        // Close Modal when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Save Grade from modal
-        modalSaveBtn.addEventListener('click', function() {
-            const subjectName = document.getElementById('modalSubject').value || 'New Subject';
-            const gradeVal = document.getElementById('modalGrade').value || '1.0';
-
-            const tbody = document.getElementById('adminGradesBody');
-            const newRow = document.createElement('tr');
-            newRow.dataset.gradeId = 'NEW';
-            newRow.innerHTML = `
-                <td><strong>NEW</strong></td>
-                <td class="subject">${subjectName}</td>
-                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="prelim"></td>
-                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="midterm"></td>
-                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="semifinal"></td>
-                <td><input type="text" class="grade-input" value="${gradeVal}" data-field="final"></td>
-                <td class="final-grade">${formatGrade(Number(gradeVal))}</td>
-                <td><button type="button" class="action-row-btn" onclick="this.closest('tr').remove();">Delete</button></td>
-            `;
-            tbody.appendChild(newRow);
-            modal.style.display = 'none';
-            alert('Grade successfully added to the record table.');
-        });
-
-        // ==================== SAVE GRADES ====================
-        document.getElementById('saveGradesBtn').addEventListener('click', async function() {
-            const rows = document.querySelectorAll('#adminGradesBody tr');
-            let saved = 0;
-            let errors = 0;
-
-            for (const row of rows) {
-                const gradeId = row.dataset.gradeId;
-                const inputs = row.querySelectorAll('.grade-input');
-                const prelim = inputs[0]?.value || null;
-                const midterm = inputs[1]?.value || null;
-                const semifinal = inputs[2]?.value || null;
-                const final = inputs[3]?.value || null;
-
-                if (gradeId === 'NEW') continue; // Skip new rows for now
-
-                try {
-                    const response = await fetch('/admin/grades/save', {
-                        method: 'POST',
-                        credentials: 'include',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ gradeId, prelim, midterm, semifinal, final })
-                    });
-                    if (response.ok) saved++;
-                    else errors++;
-                } catch (e) {
-                    errors++;
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = "/pages/index.html";
+                    return;
                 }
-            }
 
-            alert(`Grade records saved. ${saved} updated, ${errors} failed.`);
+                const result = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    alert(result.error || 'Failed to save the grade.');
+                    return;
+                }
+
+                // Reflect the saved values back into the table row
+                const row = document.querySelector(`#adminGradesBody tr[data-esid="${editingEnrollmentsSubjectId}"]`);
+                if (row) {
+                    ['prelim', 'midterm', 'semifinal', 'final'].forEach(function (period) {
+                        const cell = row.querySelector(`.period-cell[data-period="${period}"]`);
+                        const raw = payload[period];
+                        cell.textContent = raw === '' ? '—' : formatGrade(raw);
+                        cell.classList.toggle('is-empty', raw === '');
+                    });
+
+                    const finalGrade = calculateFinalGrade(
+                        payload.prelim,
+                        payload.midterm,
+                        payload.semifinal,
+                        payload.final
+                    );
+                    row.querySelector('.final-grade').textContent = formatGrade(finalGrade);
+                }
+
+                editModal.style.display = 'none';
+                editingEnrollmentsSubjectId = null;
+                alert(result.created ? 'Grade recorded for this subject.' : 'Grade updated successfully.');
+            } catch (error) {
+                console.error("Error saving grade:", error);
+                alert('Failed to save the grade. Please try again.');
+            } finally {
+                editSaveBtn.disabled = false;
+            }
         });
 
         // ==================== LOGOUT ====================
