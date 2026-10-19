@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -25,82 +25,35 @@
     html, body { height: 100%; margin: 0; padding: 0; background-color: var(--primary-blue-dark); }
     body { display: flex; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; }
 
-    /* Sidebar Styling with Dragon Watermark */
-    .sidebar { width: 260px; background-color: var(--primary-blue-dark); color: white; display: flex; flex-direction: column; flex-shrink: 0; position: relative; overflow: hidden; }
-    .sidebar-header { padding: 20px 18px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .logo-img { width: 42px; height: 42px; border-radius: 50%; background-color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--primary-blue); font-size: 11px; text-align: center; border: 2px solid #ffffff; }
-    .college-name { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
-    .portal-title { font-size: 10px; opacity: 0.75; margin-top: 2px; letter-spacing: 0.8px; }
-    
-    .nav-menu { list-style: none; padding: 20px 0; flex: 1; z-index: 2; }
-    .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; text-decoration: none; }
-    .nav-item:hover, .nav-item.active { background-color: var(--primary-blue); color: #ffffff; font-weight: 600; }
-    .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+    /* Top Header (brand bar + horizontal navigation) */
+    .top-header { background: linear-gradient(180deg, #2c4a8e 0%, #1d3777 100%); color: white; }
 
-    /* Dragon background motif at sidebar bottom */
-    .sidebar-dragon-bg {
-      position: absolute;
-      bottom: 0;
-      left: -20px;
-      width: 280px;
-      height: 280px;
-      opacity: 0.12;
-      pointer-events: none;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="%2ffffff"><path d="M464 256c0-114.9-93.1-208-208-208S48 141.1 48 256s93.1 208 208 208 208-93.1 208-208zm-208 160c-88.4 0-160-71.6-160-160S167.6 96 256 96s160 71.6 160 160-71.6 160-160 160z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: bottom left;
-    }
+    .brand-bar { padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo-img { width: 42px; height: 42px; border-radius: 50%; background-color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--primary-blue); font-size: 11px; text-align: center; border: 2px solid #ffffff; flex-shrink: 0; }
+    .college-name { font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; line-height: 1.2; color: #e6ecfa; }
+    .portal-title { font-size: 11px; opacity: 0.85; margin-top: 2px; letter-spacing: 0.3px; }
+
+    .user-profile { display: flex; align-items: center; gap: 14px; }
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .user-details { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+    .user-name { font-weight: 600; font-size: 13.5px; color: #ffffff; line-height: 1.2; }
+    .user-role { font-size: 11px; color: #b9c9ec; font-weight: 400; margin-top: 1px; }
+    .user-avatar { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.18); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+
+    .logout-btn { display: inline-flex; align-items: center; gap: 8px; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.7); padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: background 0.2s; text-decoration: none; }
+    .logout-btn:hover { background: rgba(255,255,255,0.12); }
+
+    .top-nav { list-style: none; display: flex; align-items: stretch; background: rgba(0, 20, 80, 0.18); border-top: 1px solid rgba(255,255,255,0.08); padding: 0 28px; overflow-x: auto; }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .nav-item { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 18px; color: #d6e0f7; cursor: pointer; font-size: 13px; font-weight: 600; white-space: nowrap; transition: background 0.2s ease, color 0.2s ease; }
+    .nav-item i { font-size: 13px; text-align: center; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #ffffff; }
+    .nav-item.active { background: #ffffff; color: var(--primary-blue); font-weight: 700; box-shadow: inset 0 -3px 0 #f5b400; }
+    .nav-item.active:hover { background: #ffffff; color: var(--primary-blue); }
 
     /* Main Content Area */
-    .main-wrapper { flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-light); border-top-left-radius: 0px; overflow-y: auto; }
-    
-    /* Top Navigation Bar */
-    .top-bar { background-color: var(--primary-blue-dark); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; color: white; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .menu-toggle { font-size: 18px; cursor: pointer; opacity: 0.9; transition: opacity 0.2s; }
-    .menu-toggle:hover { opacity: 1; }
-
-    .user-profile { display: flex; align-items: center; gap: 20px; }
-    .user-info { display: flex; align-items: center; gap: 12px; }
-    .user-avatar { font-size: 34px; color: #ffffff; display: flex; align-items: center; justify-content: center; }
-    .user-details { display: flex; flex-direction: column; }
-    .user-name { font-weight: 400; font-size: 15px; color: #ffffff; line-height: 1.2; }
-    .user-role { font-size: 12px; color: #a4beea; font-weight: 300; margin-top: 1px; }
-    
-    .header-divider { width: 1px; height: 32px; background-color: rgba(255, 255, 255, 0.25); margin: 0 4px; }
-    
-    .logout-btn { display: flex; align-items: center; gap: 8px; color: white; background: transparent; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 15px; font-weight: 400; transition: opacity 0.2s; text-decoration: none; }
-    .logout-btn:hover { opacity: 0.8; }
-
-    /* Horizontal Navbar under Header */
-    .horizontal-nav {
-      background-color: var(--primary-blue-dark);
-      display: flex;
-      overflow-x: auto;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      white-space: nowrap;
-    }
-    .horizontal-nav .nav-item {
-      padding: 14px 24px;
-      color: #bcd0f7;
-      font-size: 13.5px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .horizontal-nav .nav-item:hover {
-      background-color: var(--primary-blue);
-      color: white;
-    }
-    .horizontal-nav .nav-item.active {
-      background-color: white;
-      color: var(--text-dark);
-      font-weight: 700;
-      border-bottom: 3px solid var(--accent-orange);
-    }
+    .main-wrapper { flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-light); border-top-left-radius: 0px; overflow-y: auto; min-width: 0; }
 
     /* Page Header */
     .page-header { background: white; padding: 22px 30px; display: flex; align-items: center; gap: 18px; border-bottom: 1px solid #e2e8f0; }
@@ -302,65 +255,47 @@
     /* Responsiveness */
     @media (max-width: 992px) {
       .content-grid { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo-img">CEC</div>
-      <div>
-        <div class="college-name">Cebu Eastern College</div>
-        <div class="portal-title">STUDENT PORTAL</div>
-      </div>
-    </div>
-    <ul class="nav-menu">
-      <li class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</li>
-      <li class="nav-item active"><i class="fa-solid fa-bullhorn"></i> Announcements & Events</li>
-      <li class="nav-item"><i class="fa-regular fa-calendar-days"></i> Class Schedule</li>
-      <li class="nav-item"><i class="fa-regular fa-file-lines"></i> Grades & Records</li>
-      <li class="nav-item"><i class="fa-solid fa-wallet"></i> Tuition & Assesment</li>
-      <li class="nav-item"><i class="fa-regular fa-user"></i> My Profile</li>
-      <li class="nav-item"><i class="fa-solid fa-gear"></i> Settings</li>
-    </ul>
-    <div class="sidebar-dragon-bg"></div>
-  </div>
-
   <div class="main-wrapper">
-    <div class="top-bar">
-      <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
-      
-      <div class="user-profile">
-        <div class="user-info">
-          <div class="user-avatar">
-            <i class="fa-regular fa-circle-user"></i>
-          </div>
-          <div class="user-details">
-            <div class="user-name">Gemar Enopia</div>
-            <div class="user-role">Student</div>
+    <header class="top-header">
+      <div class="brand-bar">
+        <div class="brand">
+          <div class="logo-img">CEC</div>
+          <div>
+            <div class="college-name">Cebu Eastern College</div>
+            <div class="portal-title">Student Portal</div>
           </div>
         </div>
-        
-        <div class="header-divider"></div>
 
-        <a href="./index.html" class="logout-btn" id="logoutBtn">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
+        <div class="user-profile">
+          <div class="user-info">
+            <div class="user-details">
+              <div class="user-name">Gemar Enopia</div>
+              <div class="user-role">Student</div>
+            </div>
+            <div class="user-avatar">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          </div>
+
+          <a href="./index.html" class="logout-btn" id="logoutBtn">Log Out</a>
+        </div>
       </div>
-    </div>
 
-    <!-- Horizontal Navbar under existing header -->
-    <div class="horizontal-nav">
-      <a href="#" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
-      <a href="#" class="nav-item active"><i class="fa-solid fa-bullhorn"></i> Announcements & Events</a>
-      <a href="#" class="nav-item"><i class="fa-regular fa-calendar-days"></i> Class Schedule</a>
-      <a href="#" class="nav-item"><i class="fa-regular fa-file-lines"></i> Grades & Records</a>
-      <a href="#" class="nav-item"><i class="fa-solid fa-wallet"></i> Tuition & Assessment</a>
-      <a href="#" class="nav-item"><i class="fa-regular fa-user"></i> My Profile</a>
-      <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
-    </div>
+      <ul class="top-nav">
+        <li class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</li>
+        <li class="nav-item active"><i class="fa-solid fa-bullhorn"></i> Announcements & Events</li>
+        <li class="nav-item"><i class="fa-regular fa-calendar-days"></i> Class Schedule</li>
+        <li class="nav-item"><i class="fa-regular fa-file-lines"></i> Grades & Records</li>
+        <li class="nav-item"><i class="fa-solid fa-wallet"></i> Tuition & Assesment</li>
+        <li class="nav-item"><i class="fa-regular fa-user"></i> My Profile</li>
+        <li class="nav-item"><i class="fa-solid fa-gear"></i> Settings</li>
+      </ul>
+    </header>
 
     <div class="page-header">
       <div class="header-icon"><i class="fa-solid fa-bullhorn"></i></div>
@@ -407,7 +342,7 @@
             </div>
             <div class="card-footer">
               <div class="author"><i class="fa-regular fa-user"></i> Atalaya Publication</div>
-              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Class Suspension - Tropical Cyclone Warning', 'September 1, 2026', 'Atalaya Publication', 'All in-person classes are suspended for Sept 2 due to the current weather advisory. Asynchronous modules and course updates will be posted on each respective course page on the Student Portal. Please stay safe indoors and monitor official communication channels for further updates regarding class resumptions.')">Read more</a>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Class Suspension - Tropical Cyclone Warning', 'September 2, 2026', 'Atalaya Publication', 'All in-person classes are suspended on September 2 due to the current weather advisory. Students are advised to stay safe at home.\n\nImportant Notes:\n- Asynchronous modules will be posted on each course page.\n- Check the portal regularly for updates.\n- Follow official advisories from PAGASA and the school administration.\n\nStay safe, Blue Dragons. 💙')">Read more</a>
             </div>
           </div>
 
@@ -424,7 +359,7 @@
             </div>
             <div class="card-footer">
               <div class="author"><i class="fa-regular fa-user"></i> Student Affairs Office</div>
-              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Dragon Week Opening Ceremony', 'January 18, 2026', 'Student Affairs Office', 'Join the CEC community for the grand opening program of Dragon Week! The festivities will feature the traditional lion dance performance, a showcase by the college band, food stalls, and interactive booths prepared by student organizations. Program starts at 8:00 AM at the Main Quadrangle.')">Read more</a>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Dragon Week Opening Ceremony', 'January 18, 2026', 'Students Affairs Office', 'Join the Cebu Eastern College community as we officially open Dragon Week! Experience the traditional lion dance, performances from student organizations, and the unveiling of the week\'s activities.\n\nHighlights of the Program:\n- Parade of the CEC Dragons athletes and student leaders\n- Cultural presentations showcasing Cebu Eastern pride\n- Launch of competitions and friendly matches\n- Inspirational message from the Students Affairs Office.\n\nVenue: Main Campus Grounds\nTime: 9:00 AM\n\nLet\'s come together to celebrate school spirit, unity, and excellence. Show your support, wear your Blue Dragon colors, and be part of this memorable tradition!')">Read more</a>
             </div>
           </div>
 
@@ -441,7 +376,7 @@
             </div>
             <div class="card-footer">
               <div class="author"><i class="fa-regular fa-user"></i> Scholarship Office</div>
-              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'CHED Scholarship Applications for 2nd Semester Now Accepting', 'October 20, 2026', 'Scholarship Office', 'Eligible students may apply for CHED scholarships for the upcoming semester. Please prepare certified copies of your grades, Certificate of Indigency or Income Tax Return (ITR), and a accomplished application form. Submit all requirements to the Scholarship Office on or before November 2, 2026.')">Read more</a>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'CHED Scholarship Applications for 2nd Semester Now Accepting', 'October 20, 2026', 'Scholarship Office', 'The Scholarship and Financial Assistance Office announces that the application period for the Commission on Higher Education (CHED) Tertiary Education Subsidy (TES) and Merit Scholarship Program for the 2nd Semester AY 2025-2026 is now officially open.\n\nEligibility Criteria:\n- Must be a bona fide Filipino student enrolled at Cebu Eastern College\n- General Weighted Average (GWA) of at least 85% with no failing or incomplete grades\n- Combined annual family income not exceeding PHP 300,000.00\n\nDocumentary Requirements:\n1. Duly accomplished CHED Application Form (Form 2026-A)\n2. Certified True Copy of Grades for 1st Semester AY 2025-2026\n3. Latest Income Tax Return (ITR) or Certificate of Indigency\n4. Photocopy of valid Student ID\n\nSubmit all physical documents in a long brown envelope to Room 204, Student Services Center.')">Read more</a>
             </div>
           </div>
 
@@ -458,7 +393,7 @@
             </div>
             <div class="card-footer">
               <div class="author"><i class="fa-regular fa-user"></i> Library Services</div>
-              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Library Hours Extended During Examination Period', 'October 15, 2026', 'Library Services', 'To accommodate students preparing for final examinations, the College Library will extend its operating hours. The library will remain open from 7:00 AM to 9:00 PM, Monday to Saturday. Quiet study rooms and computer stations can be reserved in advance at the main desk.')">Read more</a>
+              <a href="#" class="read-more" onclick="openAnnouncementModal(event, 'Library Hours Extended During Examination Period', 'October 15, 2026', 'Library Services', 'In support of students preparing for the forthcoming Final Examination week, the Cebu Eastern College Main Library and Learning Resource Center will observe extended operating hours.\n\nSchedule of Services (Oct 10 - Oct 20, 2026):\n- Monday to Friday: 7:00 AM \u2013 9:00 PM\n- Saturday: 8:00 AM \u2013 7:00 PM\n\nAdditional Amenities:\n- High-speed research Wi-Fi bandwidth boosted in Discussion Pods.\n- Laptop charging stations available in the Quiet Study Wing.\n- Free warm water dispenser accessible at the entrance hall.')">Read more</a>
             </div>
           </div>
         </div>
