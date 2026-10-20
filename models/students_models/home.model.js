@@ -27,6 +27,29 @@ export const getEnrolledSubjects = (idNumber, callback) => {
     db.query(sql, [idNumber], callback);
 }
 
+// Full profile of the logged-in student: personal info + latest enrollment details
+export const getStudentProfile = (idNumber, callback) => {
+    const sql = `
+        SELECT st.Student_id, st.First_name, st.Last_name, st.Course, st.Current_year_level,
+               st.Id_number, st.Email, st.Current_section_num, st.Contact_num, st.Current_address,
+               st.Emergency_contact_name, st.Emergency_contact_num, st.Gender, st.Status,
+               e.Academic_year, e.Semester, e.Year_level, e.Enrollment_type
+        FROM STUDENTS st
+        LEFT JOIN ENROLLMENTS e ON e.Enrollment_id = (
+            SELECT MAX(e2.Enrollment_id)
+            FROM ENROLLMENTS e2
+            WHERE e2.Student_id = st.Student_id
+        )
+        WHERE st.Id_number = ?`;
+    db.query(sql, [idNumber], callback);
+}
+
+// Update the student's password (stored as plain text, same as the login check)
+export const updateStudentPassword = (idNumber, newPassword, callback) => {
+    const sql = "UPDATE STUDENTS SET Student_password = ? WHERE Id_number = ?";
+    db.query(sql, [newPassword, idNumber], callback);
+}
+
 // Latest published announcements for the student dashboard
 export const getAnnouncements = (callback) => {
     const sql = `

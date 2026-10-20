@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Cebu Eastern College – My Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/students/student-shell.css">
+  <link rel="stylesheet" href="../../css/students/profile.css">
+</head>
+<body>
+
+  <!-- ===== HEADER (same as the student dashboard) ===== -->
+  <header class="top-header">
+    <div class="school-brand">
+      <div class="cec-logo">
+        <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+      </div>
+      <div class="school-title">
+        <h1>CEBU EASTERN COLLEGE</h1>
+        <span>Student Portal</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="student-profile">
+        <div class="student-name">
+          <strong data-student-name>Student</strong>
+          <span data-student-role>Student</span>
+        </div>
+        <div class="profile-icon">♙</div>
+      </div>
+      <button type="button" class="logout-button" data-logout>Log Out</button>
+    </div>
+  </header>
+
+  <!-- ===== NAVIGATION (same as the student dashboard) ===== -->
+  <nav class="navigation">
+    <a href="index.html" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
+    <a href="../announcements&amp;events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+    <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">□</span>Class Schedule</span>
+    <a href="grades_records.html" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+    <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">▭</span>Tuition Assessment</span>
+    <a href="profile.html" class="nav-item active"><span class="nav-icon">♙</span>My Profile</a>
+    <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">☼</span>Settings</span>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+
+    <!-- Page Title -->
+    <div class="page-title">
+      <h1>My Profile</h1>
+    </div>
+    <p class="page-sub">View and update your personal information, enrollment details, and contact info.</p>
+
+    <!-- Profile Card (top) -->
+    <div class="profile-card">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar">
+          <svg viewBox="0 0 24 24" fill="#1b3a7a">
+            <circle cx="12" cy="8" r="5"/>
+            <path d="M2 24c1-7 5-9 10-9s9 2 10 9z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <div class="field">
+          <span class="field-label">Name</span>
+          <span class="field-value" id="profileName">—</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Email</span>
+          <span class="field-value email" id="profileEmail">—</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Role</span>
+          <span class="field-value" id="profileRole">Student</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sections Grid: Student Info + Enrollment Details -->
+    <div class="sections-grid">
+
+      <!-- Student Information -->
+      <div class="info-section">
+        <h2>Student Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Student ID</label>
+            <div class="value" id="studentId">—</div>
+          </div>
+          <div class="info-item">
+            <label>Program</label>
+            <div class="value" id="studentProgram">—</div>
+          </div>
+          <div class="info-item">
+            <label>Full Name</label>
+            <div class="value" id="studentFullName">—</div>
+          </div>
+          <div class="info-item">
+            <label>College Email</label>
+            <div class="value" id="studentEmail">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enrollment Details -->
+      <div class="info-section">
+        <h2>Enrollment Details</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Academic Year</label>
+            <div class="value" id="academicYear">—</div>
+          </div>
+          <div class="info-item">
+            <label>Semester</label>
+            <div class="value" id="semester">—</div>
+          </div>
+          <div class="info-item">
+            <label>Year Level</label>
+            <div class="value" id="yearLevel">—</div>
+          </div>
+          <div class="info-item">
+            <label>Enrollment Type</label>
+            <div class="value" id="enrollmentType">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Contact Information -->
+    <div class="info-section" style="margin-bottom: 20px;">
+      <h2>Contact Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Contact Number</label>
+          <div class="value" id="contactNumber">—</div>
+        </div>
+        <div class="info-item">
+          <label>Current Address</label>
+          <div class="value" id="currentAddress">—</div>
+        </div>
+        <div class="info-item">
+          <label>Emergency Contact Number</label>
+          <div class="value" id="emergencyNumber">—</div>
+        </div>
+        <div class="info-item">
+          <label>Emergency Contact Name</label>
+          <div class="value" id="emergencyName">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Password Button -->
+    <div class="cp-wrap">
+      <button class="cp-btn" id="openPw" type="button">Change Password</button>
+    </div>
+
+  </main>
+
+  <!-- ===== CHANGE PASSWORD MODAL ===== -->
+  <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
+    <div class="modal">
+      <h3 id="pwTitle">Change Password</h3>
+      <button class="x" id="closePw" type="button" aria-label="Close">
+        <svg viewBox="0 0 10 10" stroke-width="2" stroke-linecap="round">
+          <path d="M1 1l8 8M9 1L1 9"/>
+        </svg>
+      </button>
+      <label for="cur">Current Password</label>
+      <input id="cur" type="password" placeholder="Enter current password" autocomplete="current-password">
+      <label for="nw">New Password</label>
+      <input id="nw" type="password" placeholder="Enter new password" autocomplete="new-password">
+      <label for="cf">Confirm New Password</label>
+      <input id="cf" type="password" placeholder="Re-enter new password" autocomplete="new-password">
+      <p class="msg" id="msg" role="status"></p>
+      <button class="save" id="save" type="button">Save Changes</button>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="../../js/student_page/student-shell.js"></script>
+  <script src="../../js/student_page/profile.js"></script>
+
+</body>
+</html>

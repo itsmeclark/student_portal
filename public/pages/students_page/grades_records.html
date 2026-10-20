@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academic Records | Cebu Eastern College</title>
+    <link rel="stylesheet" href="../../css/students/student-shell.css">
     <link rel="stylesheet" href="../../css/students/grades_records.css">
 </head>
 
@@ -25,12 +26,12 @@
         <div class="header-actions">
             <div class="student-profile">
                 <div class="student-name">
-                    <strong>Gemar Enopia</strong>
-                    <span>Student</span>
+                    <strong data-student-name>Student</strong>
+                    <span data-student-role>Student</span>
                 </div>
                 <div class="profile-icon">♙</div>
             </div>
-            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+            <button type="button" class="logout-button" data-logout>Log Out</button>
         </div>
 
     </header>
@@ -38,12 +39,12 @@
     <!-- ================= NAVIGATION (sticky) ================= -->
     <nav class="navigation">
         <a href="index.html" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
-        <a href="../announcements&events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
-        <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
-        <a href="#" class="nav-item active"><span class="nav-icon">▤</span>Grades &amp; Records</a>
-        <a href="../tuition_assessment.html" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
-        <a href="#" class="nav-item"><span class="nav-icon">♙</span>My Profile</a>
-        <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
+        <a href="../announcements&amp;events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+        <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">□</span>Class Schedule</span>
+        <a href="grades_records.html" class="nav-item active"><span class="nav-icon">▤</span>Grades &amp; Records</a>
+        <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">▭</span>Tuition Assessment</span>
+        <a href="profile.html" class="nav-item"><span class="nav-icon">♙</span>My Profile</a>
+        <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">☼</span>Settings</span>
     </nav>
 
     <!-- ================= MAIN CONTENT ================= -->
@@ -119,6 +120,7 @@
         </section>
     </main>
 
+    <script src="../../js/student_page/student-shell.js"></script>
     <script src="../../js/student_page/grades_records.js"></script>
 </body>
 </html>

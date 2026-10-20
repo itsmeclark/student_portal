@@ -4,22 +4,8 @@ let studentCourseElement = document.getElementById("student_course");
 let studentIdElement = document.getElementById("student_id");
 let studentYearLevelElement = document.getElementById("student_year_level");
 
+// NOTE: the header name and the Log Out button are handled by student-shell.js
 
-document.getElementById("logoutButton").addEventListener("click", async () => {
-  try {
-    const response = await fetch("/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    if (response.ok) {
-      window.location.href = "../index.html"; // Redirect to login page after logout
-    } else {
-      alert("Logout failed. Please try again.");
-    }
-  } catch (error) {
-    console.error("Error during logout:", error);
-  }
-});
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     const response = await fetch("/home/dashboard", {

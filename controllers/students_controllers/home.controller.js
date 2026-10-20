@@ -1,4 +1,4 @@
-import {getUser, getEnrolledSubjects, getAnnouncements} from "../../models/students_models/home.model.js";
+import {getUser, getEnrolledSubjects, getAnnouncements, getStudentProfile, updateStudentPassword} from "../../models/students_models/home.model.js";
 import jwt from "jsonwebtoken";
 
 export const getUserController = (req, res) => {
@@ -40,5 +40,66 @@ export const getAnnouncementsController = (req, res) => {
             return res.status(500).json({ error: 'Internal Server Error' });
         }
         res.status(200).json({ announcements: results });
+    });
+}
+
+// Personal info + latest enrollment details of the logged-in student
+export const getStudentProfileController = (req, res) => {
+    const idNumber = req.user.id;
+    getStudentProfile(idNumber, (err, results) => {
+        if (err) {
+            console.error('Error fetching student profile:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+        const { Student_password: _, ...student } = results[0];
+        const enrollment = {
+            Academic_year: student.Academic_year ?? null,
+            Semester: student.Semester ?? null,
+            Year_level: student.Year_level ?? null,
+            Enrollment_type: student.Enrollment_type ?? null
+        };
+
+        res.status(200).json({ user: student, enrollment });
+    });
+}
+
+// Change the logged-in student's password
+export const changePasswordController = (req, res) => {
+    const idNumber = req.user.id;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ error: 'Please fill in all the fields.' });
+    }
+
+    if (String(newPassword).length < 8) {
+        return res.status(400).json({ error: 'New password must be at least 8 characters.' });
+    }
+
+    getUser(idNumber, (err, results) => {
+        if (err) {
+            console.error('Error fetching user for password change:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+        const user = results[0];
+        if (user.Student_password !== currentPassword) {
+            return res.status(401).json({ error: 'Current password is incorrect.' });
+        }
+
+        updateStudentPassword(idNumber, newPassword, (err) => {
+            if (err) {
+                console.error('Error updating password:', err);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
+            res.status(200).json({ message: 'Password changed successfully.' });
+        });
     });
 }

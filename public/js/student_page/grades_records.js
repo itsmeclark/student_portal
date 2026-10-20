@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const yearEl       = document.getElementById('infoYear');
     const idNumberEl   = document.getElementById('infoIdNumber');
     const nameEl       = document.getElementById('infoName');
-    const logoutBtn    = document.getElementById('logoutButton');
+
+    // NOTE: the header name and the Log Out button are handled by student-shell.js
 
     // Period dropdown value -> property name in API response
     const PERIODS = {
@@ -170,24 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
     viewAllBtn.addEventListener('click', function () {
         periodSelect.value = 'All';
         loadGrades();
-    });
-
-    // Log out
-    logoutBtn.addEventListener('click', async function () {
-        try {
-            const response = await fetch("/auth/logout", {
-                method: "POST",
-                credentials: "include"
-            });
-            if (response.ok) {
-                window.location.href = "/pages/index.html";
-            } else {
-                alert("Logout failed. Please try again.");
-            }
-        } catch (error) {
-            console.error("Error during logout:", error);
-            alert("Logout failed. Please try again.");
-        }
     });
 
     // Initial load: fetch terms first, then grades

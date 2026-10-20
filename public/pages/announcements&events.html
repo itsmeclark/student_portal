@@ -33,9 +33,13 @@
     .portal-title { font-size: 10px; opacity: 0.75; margin-top: 2px; letter-spacing: 0.8px; }
     
     .nav-menu { list-style: none; padding: 20px 0; flex: 1; z-index: 2; }
-    .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; }
+    .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; text-decoration: none; }
     .nav-item:hover, .nav-item.active { background-color: var(--primary-blue); color: #ffffff; font-weight: 600; }
     .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+
+    /* A nav entry whose page does not exist yet: rendered without an href */
+    .nav-item.disabled { opacity: 0.45; cursor: not-allowed; }
+    .nav-item.disabled:hover { background-color: transparent; color: #bcd0f7; font-weight: 500; }
 
     /* Dragon background motif at sidebar bottom */
     .sidebar-dragon-bg {
@@ -68,7 +72,7 @@
     
     .header-divider { width: 1px; height: 32px; background-color: rgba(255, 255, 255, 0.25); margin: 0 4px; }
     
-    .logout-btn { display: flex; align-items: center; gap: 8px; color: white; background: transparent; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 15px; font-weight: 400; transition: opacity 0.2s; text-decoration: none; }
+    .logout-btn { display: flex; align-items: center; gap: 8px; color: white; background: transparent; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 15px; font-weight: 400; transition: opacity 0.2s; text-decoration: none; font-family: inherit; }
     .logout-btn:hover { opacity: 0.8; }
 
     /* Page Header */
@@ -286,13 +290,13 @@
       </div>
     </div>
     <ul class="nav-menu">
-      <li class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</li>
-      <li class="nav-item active"><i class="fa-solid fa-bullhorn"></i> Announcements & Events</li>
-      <li class="nav-item"><i class="fa-regular fa-calendar-days"></i> Class Schedule</li>
-      <li class="nav-item"><i class="fa-regular fa-file-lines"></i> Grades & Records</li>
-      <li class="nav-item"><i class="fa-solid fa-wallet"></i> Tuition & Assesment</li>
-      <li class="nav-item"><i class="fa-regular fa-user"></i> My Profile</li>
-      <li class="nav-item"><i class="fa-solid fa-gear"></i> Settings</li>
+      <li><a class="nav-item" href="students_page/index.html"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
+      <li><a class="nav-item active" href="announcements&amp;events.html"><i class="fa-solid fa-bullhorn"></i> Announcements &amp; Events</a></li>
+      <li><span class="nav-item disabled" aria-disabled="true"><i class="fa-regular fa-calendar-days"></i> Class Schedule</span></li>
+      <li><a class="nav-item" href="students_page/grades_records.html"><i class="fa-regular fa-file-lines"></i> Grades &amp; Records</a></li>
+      <li><span class="nav-item disabled" aria-disabled="true"><i class="fa-solid fa-wallet"></i> Tuition &amp; Assesment</span></li>
+      <li><a class="nav-item" href="students_page/profile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
+      <li><span class="nav-item disabled" aria-disabled="true"><i class="fa-solid fa-gear"></i> Settings</span></li>
     </ul>
     <div class="sidebar-dragon-bg"></div>
   </div>
@@ -307,16 +311,16 @@
             <i class="fa-regular fa-circle-user"></i>
           </div>
           <div class="user-details">
-            <div class="user-name">Gemar Enopia</div>
-            <div class="user-role">Student</div>
+            <div class="user-name" data-student-name>Student</div>
+            <div class="user-role" data-student-role>Student</div>
           </div>
         </div>
         
         <div class="header-divider"></div>
 
-        <a href="./index.html" class="logout-btn" id="logoutBtn">
+        <button type="button" class="logout-btn" id="logoutBtn" data-logout>
           <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
+        </button>
       </div>
     </div>
 
@@ -533,6 +537,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Shared student header (name + logout) -->
+  <script src="../js/student_page/student-shell.js"></script>
 
   <script>
     const searchInput = document.getElementById('searchInput');

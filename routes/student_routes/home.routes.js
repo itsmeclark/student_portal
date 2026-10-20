@@ -1,5 +1,5 @@
 import express from "express";
-import {getUserController, getEnrolledSubjectsController, getAnnouncementsController} from "../../controllers/students_controllers/home.controller.js";
+import {getUserController, getEnrolledSubjectsController, getAnnouncementsController, getStudentProfileController, changePasswordController} from "../../controllers/students_controllers/home.controller.js";
 import { getGradesController, getTermsController } from "../../controllers/students_controllers/grades.controller.js";
 import { verifyToken, checkStudentRole } from "../../middlewares/student/auth.middleware.js";
 
@@ -10,5 +10,7 @@ router.get("/subjects", verifyToken, checkStudentRole, getEnrolledSubjectsContro
 router.get("/announcements", verifyToken, checkStudentRole, getAnnouncementsController);
 router.get("/grades", verifyToken, checkStudentRole, getGradesController);
 router.get("/terms", verifyToken, checkStudentRole, getTermsController);
+router.get("/profile", verifyToken, checkStudentRole, getStudentProfileController);
+router.post("/password", verifyToken, checkStudentRole, changePasswordController);
 
 export default router;

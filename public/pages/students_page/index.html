@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- adasd -->
+    <!-- Shared student header & navigation -->
+    <link rel="stylesheet" href="../../css/students/student-shell.css">
     <style>
         :root {
             --primary-blue: #1b3a7a;
@@ -28,110 +29,6 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.5;
-            overflow-x: hidden; /* Prevent horizontal scroll when sidebar opens */
-        }
-
-        /* ================================
-           HEADER  (sticky - stays on top while scrolling)
-        ================================ */
-        .top-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 72px;
-            background: #182f70;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            color: white;
-        }
-
-        .school-brand { display: flex; align-items: center; gap: 14px; }
-
-        .cec-logo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
-        .cec-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
-
-        .school-title h1 { font-family: Georgia, serif; font-size: 20px; letter-spacing: 0.3px; margin-bottom: 3px; }
-        .school-title span { font-size: 14px; color: #dce3f5; }
-
-        /* HEADER ACTIONS: profile + logout */
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-left: auto;
-            flex-shrink: 0;
-        }
-
-        .student-profile { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
-
-        .student-name { display: flex; flex-direction: column; text-align: right; color: white; }
-        .student-name strong { font-size: 14px; }
-        .student-name span { font-size: 12px; color: #dce3f5; }
-
-        .profile-icon {
-            width: 44px; height: 44px; border-radius: 50%;
-            background: white; color: #182f70;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; flex-shrink: 0;
-        }
-
-        .logout-button {
-            height: 38px;
-            padding: 0 15px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 7px;
-            background: transparent;
-            color: white;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
-        }
-        .logout-button:hover { background: white; color: #182f70; }
-
-        /* ================================
-           NAVIGATION  (sticky - sits right under the header)
-        ================================ */
-        .navigation {
-            position: sticky;
-            top: 72px;               /* = header height */
-            z-index: 99;
-            min-height: 59px;
-            width: 100%;
-            background: #263f88;
-            display: flex;
-            align-items: stretch;
-            padding: 0 18px;
-            box-shadow: 0 2px 6px rgba(23, 43, 82, 0.15);
-        }
-
-        .nav-item {
-            flex: 1 1 0;
-            min-width: 0;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 0 10px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 600;
-            border-bottom: 4px solid transparent;
-            transition: 0.2s;
-        }
-        .nav-item:hover { background: rgba(255,255,255,0.08); }
-        .nav-item.active { background: white; color: #1b3477; border-bottom: 4px solid #ffc400; }
-        .nav-icon { font-size: 19px; line-height: 1; }
 
         /* Main Container */
         .container {
@@ -496,6 +393,19 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        /* A link that opens a real page (quick links) */
+        .quick-link-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Elements whose target page does not exist yet */
+        .disabled-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .quick-link-item div {
             display: flex;
             align-items: center;
@@ -569,16 +479,6 @@
             font-size: 0.65rem;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            text-align: center;
-            padding: 15px;
-            font-size: 0.7rem;
-            margin-top: 20px;
-        }
-
         /* Responsive Design */
         @media (max-width: 992px) {
             .hero {
@@ -631,24 +531,24 @@
         <div class="header-actions">
             <div class="student-profile">
                 <div class="student-name">
-                    <strong>Gemar Enopia</strong>
-                    <span>Student</span>
+                    <strong data-student-name>Student</strong>
+                    <span data-student-role>Student</span>
                 </div>
                 <div class="profile-icon">♙</div>
             </div>
-            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+            <button type="button" class="logout-button" data-logout>Log Out</button>
         </div>
     </header>
 
     <!-- Navigation (sticky) -->
     <nav class="navigation">
-        <a href="#" class="nav-item active"><span class="nav-icon">⊞</span>Dashboard</a>
-        <a href="../announcements&events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
-        <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
+        <a href="index.html" class="nav-item active"><span class="nav-icon">⊞</span>Dashboard</a>
+        <a href="../announcements&amp;events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
+        <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">□</span>Class Schedule</span>
         <a href="grades_records.html" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
-        <a href="../tuition_assessment.html" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
-        <a href="#" class="nav-item"><span class="nav-icon">♙</span>My Profile</a>
-        <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
+        <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">▭</span>Tuition Assessment</span>
+        <a href="profile.html" class="nav-item"><span class="nav-icon">♙</span>My Profile</a>
+        <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">☼</span>Settings</span>
     </nav>
 
     <div class="container">
@@ -671,7 +571,7 @@
                 </div>
                 <div class="hero-content">
                     <div class="welcome-header">
-                        <h3 id="greetings">WELCOME BACK, GEMAR!</h3>
+                        <h3 id="greetings">WELCOME BACK!</h3>
                         <div class="avatar"><i class="fas fa-user"></i></div>
                     </div>
                     
@@ -691,7 +591,7 @@
                     <div class="upcoming-schedule">
                         <div class="schedule-header">
                             <strong>Upcoming Schedule</strong>
-                            <a href="#">View All</a>
+                            <span class="disabled-link">View All</span>
                         </div>
                         <div id="upcoming_schedule"></div>
                     </div>
@@ -706,16 +606,16 @@
                 <div class="student-info">
                     <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Student Avatar">
                     <div class="student-details">
-                        <div id="student_name"><span>Name:</span> Gemar Enopia</div>
-                        <div id="student_course"><span>Course:</span> BSIT</div>
-                        <div id="student_id"><span>ID:</span> 246543</div>
-                        <div id="student_year_level"><span>Year Level:</span> 3rd Year</div>
+                        <div id="student_name"><span>Name:</span> —</div>
+                        <div id="student_course"><span>Course:</span> —</div>
+                        <div id="student_id"><span>ID:</span> —</div>
+                        <div id="student_year_level"><span>Year Level:</span> —</div>
                     </div>
                 </div>
 
                 <div class="section-header">
                     <span>Enrolled Subjects</span>
-                    <a href="#">View all</a>
+                    <span class="disabled-link">View all</span>
                 </div>
 
                 <div class="subjects-grid" id="subjects_grid">
@@ -766,14 +666,14 @@
                     <div class="widget-header">
                         <span><i class="fas fa-link"></i> Quick Links</span>
                     </div>
-                    <div class="quick-link-item">
+                    <div class="quick-link-item disabled-link" aria-disabled="true">
                         <div><i class="fas fa-calendar-alt"></i> Class Schedule</div>
                         <i class="fas fa-arrow-right"></i>
                     </div>
-                    <div class="quick-link-item">
-                        <div><i class="fas fa-file-invoice"></i> Grades & Record</div>
+                    <a href="grades_records.html" class="quick-link-item quick-link-link">
+                        <div><i class="fas fa-file-invoice"></i> Grades &amp; Record</div>
                         <i class="fas fa-arrow-right"></i>
-                    </div>
+                    </a>
                     <div class="more-btn">More</div>
                 </div>
             </div>
@@ -785,7 +685,10 @@
         &copy; 2026 Cebu Eastern College | All Right Reserved.
     </footer>
 
-    <!-- JavaScript to Toggle Sidebar -->
+    <!-- Shared student header (name + logout) -->
+    <script src="../../js/student_page/student-shell.js"></script>
+
+    <!-- Dashboard data -->
     <script src="../../js/student_page/home.js">
         
     </script>
