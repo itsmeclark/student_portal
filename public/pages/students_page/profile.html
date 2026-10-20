@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Cebu Eastern College – My Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../../css/students/student-shell.css">
   <link rel="stylesheet" href="../../css/students/profile.css">
+  <link rel="stylesheet" href="../../css/password-toggle.css">
 </head>
 <body>
 
@@ -36,13 +38,13 @@
 
   <!-- ===== NAVIGATION (same as the student dashboard) ===== -->
   <nav class="navigation">
-    <a href="index.html" class="nav-item"><span class="nav-icon">⊞</span>Dashboard</a>
-    <a href="../announcements&amp;events.html" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
-    <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">□</span>Class Schedule</span>
-    <a href="grades_records.html" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
-    <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">▭</span>Tuition Assessment</span>
-    <a href="profile.html" class="nav-item active"><span class="nav-icon">♙</span>My Profile</a>
-    <span class="nav-item disabled" aria-disabled="true"><span class="nav-icon">☼</span>Settings</span>
+    <a href="index.html" class="nav-item"><img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard</a>
+    <span class="nav-item disabled" aria-disabled="true"><img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events</span>
+    <a href="class-schedule.html" class="nav-item"><img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule</a>
+    <a href="grades_records.html" class="nav-item"><img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records</a>
+    <span class="nav-item disabled" aria-disabled="true"><img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment</span>
+    <a href="profile.html" class="nav-item active"><img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">My Profile</a>
+    <span class="nav-item disabled" aria-disabled="true"><img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings</span>
   </nav>
 
   <!-- ===== MAIN CONTENT ===== -->
@@ -102,7 +104,7 @@
           </div>
           <div class="info-item">
             <label>College Email</label>
-            <div class="value" id="studentEmail">—</div>
+            <div class="value" id="studentEmail" data-edit-field="email">—</div>
           </div>
         </div>
       </div>
@@ -133,24 +135,38 @@
     </div>
 
     <!-- Contact Information -->
-    <div class="info-section" style="margin-bottom: 20px;">
-      <h2>Contact Information</h2>
+    <div class="info-section contact-section" style="margin-bottom: 20px;">
+      <div class="section-head">
+        <h2>Contact Information</h2>
+        <button type="button" class="edit-btn" id="editContactBtn">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+      </div>
       <div class="info-grid">
         <div class="info-item">
           <label>Contact Number</label>
-          <div class="value" id="contactNumber">—</div>
+          <div class="value" id="contactNumber" data-edit-field="contactNumber">—</div>
         </div>
         <div class="info-item">
           <label>Current Address</label>
-          <div class="value" id="currentAddress">—</div>
+          <div class="value" id="currentAddress" data-edit-field="currentAddress">—</div>
         </div>
         <div class="info-item">
           <label>Emergency Contact Number</label>
-          <div class="value" id="emergencyNumber">—</div>
+          <div class="value" id="emergencyNumber" data-edit-field="emergencyNumber">—</div>
         </div>
         <div class="info-item">
           <label>Emergency Contact Name</label>
-          <div class="value" id="emergencyName">—</div>
+          <div class="value" id="emergencyName" data-edit-field="emergencyName">—</div>
+        </div>
+      </div>
+
+      <!-- Edit mode actions -->
+      <div class="edit-actions hidden" id="contactActions">
+        <p class="form-note" id="contactNote" role="status" aria-live="polite"></p>
+        <div class="edit-buttons">
+          <button type="button" class="cancel-btn" id="cancelContactBtn">Cancel</button>
+          <button type="button" class="save-btn" id="saveContactBtn">Save Changes</button>
         </div>
       </div>
     </div>
@@ -172,11 +188,20 @@
         </svg>
       </button>
       <label for="cur">Current Password</label>
-      <input id="cur" type="password" placeholder="Enter current password" autocomplete="current-password">
+      <div class="password-field">
+        <input id="cur" type="password" placeholder="Enter current password" autocomplete="current-password">
+        <button type="button" class="password-toggle" data-password-toggle="cur" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+      </div>
       <label for="nw">New Password</label>
-      <input id="nw" type="password" placeholder="Enter new password" autocomplete="new-password">
+      <div class="password-field">
+        <input id="nw" type="password" placeholder="Enter new password" autocomplete="new-password">
+        <button type="button" class="password-toggle" data-password-toggle="nw" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+      </div>
       <label for="cf">Confirm New Password</label>
-      <input id="cf" type="password" placeholder="Re-enter new password" autocomplete="new-password">
+      <div class="password-field">
+        <input id="cf" type="password" placeholder="Re-enter new password" autocomplete="new-password">
+        <button type="button" class="password-toggle" data-password-toggle="cf" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+      </div>
       <p class="msg" id="msg" role="status"></p>
       <button class="save" id="save" type="button">Save Changes</button>
     </div>
@@ -185,6 +210,7 @@
   <!-- ===== SCRIPTS ===== -->
   <script src="../../js/student_page/student-shell.js"></script>
   <script src="../../js/student_page/profile.js"></script>
+  <script src="../../js/password-toggle.js"></script>
 
 </body>
 </html>

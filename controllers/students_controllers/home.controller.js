@@ -1,4 +1,4 @@
-import {getUser, getEnrolledSubjects, getAnnouncements, getStudentProfile, updateStudentPassword} from "../../models/students_models/home.model.js";
+import {getUser, getEnrolledSubjects, getAnnouncements, getStudentProfile, updateStudentProfile, updateStudentPassword} from "../../models/students_models/home.model.js";
 import jwt from "jsonwebtoken";
 
 export const getUserController = (req, res) => {
@@ -28,7 +28,18 @@ export const getEnrolledSubjectsController = (req, res) => {
             console.error('Error fetching enrolled subjects:', err);
             return res.status(500).json({ error: 'Internal Server Error' });
         }
-        res.status(200).json({ subjects: results });
+
+        // The term of the enrollment the subjects belong to (used by the class schedule page)
+        const first = results[0];
+        const term = first
+            ? {
+                academicYear: first.Academic_year ?? null,
+                semester: first.Semester ?? null,
+                yearLevel: first.Year_level ?? null
+            }
+            : null;
+
+        res.status(200).json({ subjects: results, term });
     });
 }
 
@@ -66,6 +77,85 @@ export const getStudentProfileController = (req, res) => {
         res.status(200).json({ user: student, enrollment });
     });
 }
+
+// Save the logged-in student's contact information
+export const updateProfileController = (req, res) => {
+    const idNumber = req.user.id;
+    const {
+        email,
+        contactNumber,
+        currentAddress,
+        emergencyName,
+        emergencyNumber
+    } = req.body;
+
+    const text = (value) => (value === undefined || value === null ? '' : String(value).trim());
+
+    const emailValue = text(email);
+    const contactValue = text(contactNumber);
+    const addressValue = text(currentAddress);
+    const emergencyNameValue = text(emergencyName);
+    const emergencyNumberValue = text(emergencyNumber);
+
+    const missing = [];
+    if (!emailValue) missing.push('College Email');
+    if (!contactValue) missing.push('Contact Number');
+    if (!addressValue) missing.push('Current Address');
+    if (!emergencyNameValue) missing.push('Emergency Contact Name');
+    if (!emergencyNumberValue) missing.push('Emergency Contact Number');
+
+    if (missing.length > 0) {
+        return res.status(400).json({ error: `Please fill in: ${missing.join(', ')}.` });
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue) || emailValue.length > 150) {
+        return res.status(400).json({ error: 'Please enter a valid college email address.' });
+    }
+
+    // Numbers only (a leading +, spaces and dashes are allowed)
+    const phonePattern = /^[0-9+\-\s()]{7,20}$/;
+    if (!phonePattern.test(contactValue)) {
+        return res.status(400).json({ error: 'Please enter a valid contact number (7 to 20 digits).' });
+    }
+    if (!phonePattern.test(emergencyNumberValue)) {
+        return res.status(400).json({ error: 'Please enter a valid emergency contact number (7 to 20 digits).' });
+    }
+
+    if (addressValue.length > 255) {
+        return res.status(400).json({ error: 'Current Address is too long (maximum 255 characters).' });
+    }
+    if (emergencyNameValue.length > 150) {
+        return res.status(400).json({ error: 'Emergency Contact Name is too long (maximum 150 characters).' });
+    }
+
+    const profile = {
+        email: emailValue,
+        contactNumber: contactValue,
+        currentAddress: addressValue,
+        emergencyName: emergencyNameValue,
+        emergencyNumber: emergencyNumberValue
+    };
+
+    updateStudentProfile(idNumber, profile, (err, result) => {
+        if (err) {
+            // Email has a UNIQUE key in the database
+            if (err.code === 'ER_DUP_ENTRY') {
+                return res.status(409).json({ error: 'That email is already used by another student.' });
+            }
+            console.error('Error updating student profile:', err);
+            return res.status(500).json({ error: 'Failed to update your contact information.' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+        res.status(200).json({
+            message: 'Contact information updated successfully.',
+            profile
+        });
+    });
+};
 
 // Change the logged-in student's password
 export const changePasswordController = (req, res) => {

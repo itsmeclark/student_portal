@@ -24,38 +24,38 @@
         <div class="header-actions">
             <div class="student-profile">
                 <div class="student-name">
-                    <strong>Admin User</strong>
-                    <span>Administrator</span>
+                    <strong data-admin-name>Admin</strong>
+                    <span data-admin-role>Administrator</span>
                 </div>
                 <div class="profile-icon">♙</div>
             </div>
-            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+            <button type="button" id="logoutButton" class="logout-button" data-logout>Log Out</button>
         </div>
     </header>
 
     <!-- ================= NAVIGATION BAR ================= -->
     <nav class="navigation">
-        <a href="../admin/index.html" class="nav-item">
-            <span class="nav-icon">⊞</span>Dashboard
+        <a href="index.html" class="nav-item">
+            <img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard
         </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">◁</span>Announcements &amp; Events
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet">
+            <img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events
+        </span>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet">
+            <img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule
+        </span>
+        <a href="Grades_records_admin.html" class="nav-item active">
+            <img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records
         </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">□</span>Class Schedule
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet">
+            <img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment
+        </span>
+        <a href="profileManagement.html" class="nav-item">
+            <img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">Profile Management
         </a>
-        <a href="#" class="nav-item active">
-            <span class="nav-icon">▤</span>Grades &amp; Records
-        </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">▭</span>Tuition Assessment
-        </a>
-        <a href="../admin/profileManagement.html" class="nav-item">
-            <span class="nav-icon">♙</span>Profile Management
-        </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">☼</span>Settings
-        </a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet">
+            <img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings
+        </span>
     </nav>
 
     <!-- ================= MAIN CONTENT CONTAINER ================= -->
@@ -487,24 +487,7 @@
                 editSaveBtn.disabled = false;
             }
         });
-
-        // ==================== LOGOUT ====================
-        document.getElementById('logoutButton').addEventListener('click', async function() {
-            try {
-                const response = await fetch('/auth/admin/logout', {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                if (response.ok) {
-                    window.location.href = '/pages/index.html';
-                } else {
-                    alert('Logout failed. Please try again.');
-                }
-            } catch (error) {
-                console.error(error);
-                alert('Logout failed. Please try again.');
-            }
-        });
     </script>
+    <script src="../../js/admin/admin-shell.js"></script>
 </body>
 </html>

@@ -202,6 +202,153 @@ body {
     color: #c0cbd9;
 }
 
+/* ===== EDIT CONTACT INFORMATION ===== */
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.section-head h2 {
+    margin-bottom: 0;
+}
+
+.edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-blue);
+    color: #fff;
+    border: 0;
+    border-radius: 7px;
+    padding: 9px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 7px rgba(38, 63, 136, 0.18);
+}
+
+.edit-btn:hover {
+    background: var(--head-blue);
+    transform: translateY(-1px);
+}
+
+.edit-btn:disabled {
+    background: #aab4c6;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* The input replaces the read-only value box, so it keeps the same look */
+.info-item input.edit-input {
+    width: 100%;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    background: #fff;
+    border: 1.5px solid var(--accent-blue);
+    border-radius: 8px;
+    padding: 10px 14px;
+    min-height: 42px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info-item input.edit-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(74, 123, 200, 0.15);
+}
+
+.info-item input.edit-input.invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+}
+
+.edit-actions {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.edit-actions.hidden {
+    display: none;
+}
+
+/* After a successful save only the confirmation note stays visible */
+.edit-actions.saved .edit-buttons {
+    display: none;
+}
+
+.edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+    border: 0;
+    border-radius: 7px;
+    padding: 11px 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.save-btn {
+    background: var(--green);
+    color: #fff;
+    box-shadow: 0 2px 7px rgba(9, 182, 64, 0.2);
+}
+
+.save-btn:hover {
+    filter: brightness(0.94);
+    transform: translateY(-1px);
+}
+
+.save-btn:disabled {
+    background: #aab4c6;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.cancel-btn {
+    background: #fff;
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+}
+
+.cancel-btn:hover {
+    background: var(--light-blue);
+}
+
+.form-note {
+    font-size: 0.78rem;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+.form-note:empty {
+    display: none;
+}
+
+.form-note.ok {
+    color: #0a8f34;
+}
+
+.form-note.err {
+    color: #dc3545;
+}
+
 /* ===== CHANGE PASSWORD BUTTON ===== */
 .cp-wrap {
     display: flex;

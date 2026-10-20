@@ -36,9 +36,11 @@
     .nav-item { display: flex; align-items: center; padding: 12px 22px; color: #bcd0f7; cursor: pointer; gap: 14px; font-size: 13.5px; font-weight: 500; transition: all 0.2s ease; text-decoration: none; }
     .nav-item:hover, .nav-item.active { background-color: var(--primary-blue); color: #ffffff; font-weight: 600; }
     .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+    .nav-icon { width: 18px; height: 18px; object-fit: contain; flex: none; }
+    .nav-item.active .nav-icon { filter: brightness(0) saturate(100%) invert(18%) sepia(22%) saturate(2301%) hue-rotate(192deg) brightness(91%) contrast(92%); }
 
     /* A nav entry whose page does not exist yet: rendered without an href */
-    .nav-item.disabled { opacity: 0.45; cursor: not-allowed; }
+    .nav-item.disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
     .nav-item.disabled:hover { background-color: transparent; color: #bcd0f7; font-weight: 500; }
 
     /* Dragon background motif at sidebar bottom */
@@ -290,13 +292,13 @@
       </div>
     </div>
     <ul class="nav-menu">
-      <li><a class="nav-item" href="students_page/index.html"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
-      <li><a class="nav-item active" href="announcements&amp;events.html"><i class="fa-solid fa-bullhorn"></i> Announcements &amp; Events</a></li>
-      <li><span class="nav-item disabled" aria-disabled="true"><i class="fa-regular fa-calendar-days"></i> Class Schedule</span></li>
-      <li><a class="nav-item" href="students_page/grades_records.html"><i class="fa-regular fa-file-lines"></i> Grades &amp; Records</a></li>
-      <li><span class="nav-item disabled" aria-disabled="true"><i class="fa-solid fa-wallet"></i> Tuition &amp; Assesment</span></li>
-      <li><a class="nav-item" href="students_page/profile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
-      <li><span class="nav-item disabled" aria-disabled="true"><i class="fa-solid fa-gear"></i> Settings</span></li>
+      <li><a class="nav-item" href="students_page/index.html"><img class="nav-icon" src="../img/nav/dashboard-icon.png" alt=""> Dashboard</a></li>
+      <li><span class="nav-item disabled" aria-disabled="true"><img class="nav-icon" src="../img/nav/announcement-icon.png" alt=""> Announcements &amp; Events</span></li>
+      <li><a class="nav-item" href="students_page/class-schedule.html"><img class="nav-icon" src="../img/nav/schedule-icon.png" alt=""> Class Schedule</a></li>
+      <li><a class="nav-item" href="students_page/grades_records.html"><img class="nav-icon" src="../img/nav/grades-icon.png" alt=""> Grades &amp; Records</a></li>
+      <li><span class="nav-item disabled" aria-disabled="true"><img class="nav-icon" src="../img/nav/tuition-icon.png" alt=""> Tuition &amp; Assesment</span></li>
+      <li><a class="nav-item" href="students_page/profile.html"><img class="nav-icon" src="../img/nav/profile-icon.png" alt=""> My Profile</a></li>
+      <li><span class="nav-item disabled" aria-disabled="true"><img class="nav-icon" src="../img/nav/setting-icon.png" alt=""> Settings</span></li>
     </ul>
     <div class="sidebar-dragon-bg"></div>
   </div>

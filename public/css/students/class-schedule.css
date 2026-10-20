@@ -1,0 +1,159 @@
+/* =================================================================
+   STUDENT CLASS SCHEDULE
+   Styles moved from group9_cec_portal_html3.0/style.css.
+   Only the schedule page styles live here - the header and the
+   navigation come from student-shell.css.
+   ================================================================= */
+
+/* ---------- Page layout ---------- */
+.main-container {
+    width: calc(100% - 100px);
+    max-width: 1160px;
+    margin: 32px auto;
+}
+
+.schedule-page {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px 28px 30px;
+}
+
+/* ---------- Page title ---------- */
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #183575;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0 0 22px;
+}
+
+.page-title .circle {
+    width: 54px;
+    height: 54px;
+    background: #4c4cff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.page-title .circle img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.page-title .semester {
+    margin-left: auto;
+    color: #334568;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* ---------- Schedule grid ---------- */
+.schedule-wrap {
+    border: 5px solid #4c4cff;
+    border-radius: 38px;
+    padding: 26px;
+    background: #f0f0f0;
+}
+
+.schedule-table {
+    border: 1px solid #aaa;
+    border-radius: 30px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.schedule-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.schedule-table th,
+.schedule-table td {
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    text-align: center;
+}
+
+.schedule-table th {
+    height: 76px;
+    background: #eee;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.schedule-table td {
+    height: 76px;
+    font-weight: 500;
+    line-height: 1.35;
+    vertical-align: top;
+}
+
+.schedule-table td.time {
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    background: #fafafa;
+}
+
+.schedule-table td .subject {
+    display: block;
+    font-weight: 700;
+    color: #183575;
+}
+
+.schedule-table td .detail {
+    display: block;
+    font-size: 12px;
+    color: #555;
+}
+
+.schedule-table td .empty {
+    color: #bbb;
+}
+
+/* ---------- Note + status ---------- */
+.note {
+    margin-top: 10px;
+    color: #9a9a9a;
+    font-size: 12px;
+}
+
+.portal-status {
+    min-height: 1.5em;
+    margin: 10px 0 0;
+    color: #23794e;
+    font-size: 13px;
+}
+
+.portal-status.is-error {
+    color: #c0392b;
+}
+
+.portal-status:empty {
+    display: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+    .main-container { width: calc(100% - 40px); margin: 24px auto; }
+    .schedule-wrap { overflow-x: auto; }
+    .schedule-table { min-width: 850px; }
+}
+
+@media (max-width: 720px) {
+    .main-container { width: calc(100% - 24px); margin: 16px auto; }
+    .schedule-page { border-radius: 18px; padding: 16px 14px 20px; }
+    .page-title { font-size: 24px; gap: 8px; }
+    .page-title .circle { width: 42px; height: 42px; }
+    .page-title .circle img { width: 22px; height: 22px; }
+    .page-title .semester { font-size: 11px; }
+    .schedule-wrap { padding: 12px; border-radius: 24px; }
+}

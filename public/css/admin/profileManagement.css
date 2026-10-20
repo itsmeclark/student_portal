@@ -83,12 +83,13 @@ header {
     top: 0;
     z-index: 100;
     height: 72px;
-    background: #182f70;
+    background: #112353;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 32px;
     color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .school-brand { display: flex; align-items: center; gap: 14px; }
@@ -116,7 +117,7 @@ header {
 
 .profile-icon {
     width: 44px; height: 44px; border-radius: 50%;
-    background: white; color: #182f70;
+    background: white; color: #112353;
     display: flex; align-items: center; justify-content: center;
     font-size: 22px; flex-shrink: 0;
 }
@@ -134,10 +135,11 @@ header {
     white-space: nowrap;
     transition: 0.2s;
 }
-.logout-button:hover { background: white; color: #182f70; }
+.logout-button:hover { background: white; color: #112353; }
 
 /* ================================
    NAVIGATION  (sticky - sits right under the header)
+   Colours match the Grades & Records admin page
 =============================== */
 .navigation {
     position: sticky;
@@ -145,23 +147,27 @@ header {
     z-index: 99;
     min-height: 59px;
     width: 100%;
-    background: #263f88;
+    background: #1c3b87;
     display: flex;
+    justify-content: space-between;
     align-items: stretch;
-    padding: 0 18px;
+    padding: 0 24px;
     box-shadow: 0 2px 6px rgba(23, 43, 82, 0.15);
+    overflow-x: auto;
 }
 
+.navigation::-webkit-scrollbar { display: none; }
+
 .nav-item {
-    flex: 1 1 0;
-    min-width: 0;
-    color: white;
+    flex: 1;
+    min-width: max-content;
+    color: #ffffff;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 0 10px;
+    padding: 0 14px;
     text-align: center;
     font-size: 13px;
     font-weight: 600;
@@ -169,8 +175,26 @@ header {
     transition: 0.2s;
 }
 .nav-item:hover { background: rgba(255,255,255,0.08); }
-.nav-item.active { background: white; color: #1b3477; border-bottom: 4px solid #ffc400; }
-.nav-icon { font-size: 19px; line-height: 1; }
+.nav-item.active { background: #ffffff; color: #112353; border-bottom: 4px solid #ffffff; }
+/* Navigation icons (Group 9 icon set, public/img/nav) */
+.nav-icon {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+    flex: none;
+}
+
+/* The icons are white, so the active item (white background) needs them recoloured */
+.nav-item.active .nav-icon {
+    filter: brightness(0) saturate(100%) invert(11%) sepia(28%) saturate(1800%) hue-rotate(196deg) brightness(88%) contrast(91%);
+}
+
+/* A nav entry whose page does not exist yet: shown greyed out, not clickable */
+.nav-item.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+}
 
 /* --- MAIN CONTENT --- */
 main {

@@ -45,11 +45,9 @@ body {
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(255,255,255,0.8);
 }
 
 .cec-logo img {
@@ -191,16 +189,24 @@ body {
     border-bottom: 4px solid #ffffff;
 }
 
-.nav-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* A nav entry whose page does not exist yet: shown greyed out, not clickable */
+.nav-item.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
-.nav-icon svg {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
+/* Navigation icons (Group 9 icon set, public/img/nav) */
+.nav-icon {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+    flex: none;
+}
+
+/* The icons are white, so the active item (white background) needs them recoloured */
+.nav-item.active .nav-icon {
+    filter: brightness(0) saturate(100%) invert(11%) sepia(28%) saturate(1800%) hue-rotate(196deg) brightness(88%) contrast(91%);
 }
 
 /* ================================

@@ -21,9 +21,15 @@ async function loadShellUser() {
         });
 
         if (!response.ok) {
-            // 401/403 -> not logged in
-            if (response.status === 401 || response.status === 403) {
+            // 401 -> session expired, send the visitor to the login page
+            if (response.status === 401) {
                 window.location.href = STUDENT_LOGIN_PAGE;
+                return;
+            }
+            // 403 -> signed in, but not a student (e.g. an admin opening this page
+            // from the admin portal). The page still works, so do not redirect.
+            if (response.status === 403) {
+                console.log("This page needs a student account.");
                 return;
             }
             throw new Error(`Request failed: ${response.status}`);

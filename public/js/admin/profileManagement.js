@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         openAddModalIcon.addEventListener('click', () => openModal('addModal'));
     }
 
+    // Opened from the dashboard "Add Student" quick action (profileManagement.html#add-student)
+    if (window.location.hash === '#add-student') {
+        openModal('addModal');
+    }
+
     // Function to open Edit Modal: fetch student data and prefill the form
     window.openEditModal = async function(studentId) {
         currentEditId = studentId;
@@ -110,26 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---------- LOGOUT (header button) ----------
-    async function adminLogout() {
-        try {
-            const response = await fetch('/auth/admin/logout', {
-                method: 'POST',
-                credentials: 'include'
-            });
-            if (response.ok) {
-                window.location.href = '/pages/index.html';
-            } else {
-                alert('Logout failed. Please try again.');
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Logout failed. Please try again.');
-        }
-    }
-
-    const headerLogoutBtn = document.getElementById('logoutButton');
-    if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', adminLogout);
+    // ---------- LOGOUT ----------
+    // The header Log Out button is handled by admin-shell.js (shared by every admin page)
 });
 
 // Modal state: which student is being edited/deleted right now

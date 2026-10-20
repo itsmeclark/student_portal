@@ -124,7 +124,18 @@ body {
 }
 .nav-item:hover { background: rgba(255,255,255,0.08); }
 .nav-item.active { background: white; color: #1b3477; border-bottom: 4px solid #ffc400; }
-.nav-icon { font-size: 19px; line-height: 1; }
+/* Navigation icons (Group 9 icon set, public/img/nav) */
+.nav-icon {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+    flex: none;
+}
+
+/* The icons are white, so the active item (white background) needs them recoloured */
+.nav-item.active .nav-icon {
+    filter: brightness(0) saturate(100%) invert(18%) sepia(22%) saturate(2301%) hue-rotate(192deg) brightness(91%) contrast(92%);
+}
 
 /* A nav entry whose page does not exist yet: rendered without an href */
 .nav-item.disabled {

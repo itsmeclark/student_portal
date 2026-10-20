@@ -40,12 +40,13 @@
             top: 0;
             z-index: 100;
             height: 72px;
-            background: #182f70;
+            background: #112353;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 32px;
             color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .school-brand { display: flex; align-items: center; gap: 14px; }
@@ -73,7 +74,7 @@
 
         .profile-icon {
             width: 44px; height: 44px; border-radius: 50%;
-            background: white; color: #182f70;
+            background: white; color: #112353;
             display: flex; align-items: center; justify-content: center;
             font-size: 22px; flex-shrink: 0;
         }
@@ -91,10 +92,11 @@
             white-space: nowrap;
             transition: 0.2s;
         }
-        .logout-button:hover { background: white; color: #182f70; }
+        .logout-button:hover { background: white; color: #112353; }
 
         /* ================================
            NAVIGATION  (sticky - sits right under the header)
+           Colours match the Grades & Records admin page
         ================================ */
         .navigation {
             position: sticky;
@@ -102,23 +104,27 @@
             z-index: 99;
             min-height: 59px;
             width: 100%;
-            background: #263f88;
+            background: #1c3b87;
             display: flex;
+            justify-content: space-between;
             align-items: stretch;
-            padding: 0 18px;
+            padding: 0 24px;
             box-shadow: 0 2px 6px rgba(23, 43, 82, 0.15);
+            overflow-x: auto;
         }
 
+        .navigation::-webkit-scrollbar { display: none; }
+
         .nav-item {
-            flex: 1 1 0;
-            min-width: 0;
-            color: white;
+            flex: 1;
+            min-width: max-content;
+            color: #ffffff;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 0 10px;
+            padding: 0 14px;
             text-align: center;
             font-size: 13px;
             font-weight: 600;
@@ -126,8 +132,26 @@
             transition: 0.2s;
         }
         .nav-item:hover { background: rgba(255,255,255,0.08); }
-        .nav-item.active { background: white; color: #1b3477; border-bottom: 4px solid #ffc400; }
-        .nav-icon { font-size: 19px; line-height: 1; }
+        .nav-item.active { background: #ffffff; color: #112353; border-bottom: 4px solid #ffffff; }
+        /* Navigation icons (Group 9 icon set, public/img/nav) */
+        .nav-icon {
+            width: 19px;
+            height: 19px;
+            object-fit: contain;
+            flex: none;
+        }
+
+        /* The icons are white, so the active item (white background) needs them recoloured */
+        .nav-item.active .nav-icon {
+            filter: brightness(0) saturate(100%) invert(11%) sepia(28%) saturate(1800%) hue-rotate(196deg) brightness(88%) contrast(91%);
+        }
+
+        /* A nav entry whose page does not exist yet: shown greyed out, not clickable */
+        .nav-item.disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
         /* ========== MAIN CONTENT ========== */
         .main-content {
@@ -138,18 +162,8 @@
         }
 
         /* ========== TOP HEADER ========== */
-        .top-header {
-            background: var(--primary-blue);
-            padding: 12px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 900;
-        }
+        /* The header colours live in the .top-header rule at the top of this file,
+           so every admin page shows the same dark navy (#112353). */
 
         .header-left {
             display: flex;
@@ -466,18 +480,6 @@
             border-top: 2px solid var(--border-color);
         }
 
-        .status-badge {
-            display: inline-block;
-            background: rgba(40, 167, 69, 0.12);
-            color: var(--success);
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 20px;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-
         /* ========== RIGHT COLUMN ========== */
         .right-column {
             display: flex;
@@ -539,6 +541,25 @@
             border-color: var(--primary-blue);
         }
 
+        /* A quick action that cannot be performed yet */
+        .quick-action-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .quick-action-item.disabled .qa-icon {
+            background: #9aa5b8;
+        }
+
+        /* Shown when the database has no rows for a list */
+        .empty-state {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            padding: 18px 10px;
+        }
+
         .quick-action-item .qa-icon {
             width: 40px;
             height: 40px;
@@ -585,6 +606,18 @@
 
         .upcoming-events h3 a:hover {
             text-decoration: underline;
+        }
+
+        /* A link whose page does not exist yet */
+        .upcoming-events h3 a.disabled {
+            color: var(--text-light);
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .upcoming-events h3 a.disabled:hover {
+            text-decoration: none;
         }
 
         .event-item {
@@ -901,24 +934,24 @@
         <div class="header-actions">
             <div class="student-profile">
                 <div class="student-name">
-                    <strong>Admin User</strong>
-                    <span>Administrator</span>
+                    <strong data-admin-name>Admin</strong>
+                    <span data-admin-role>Administrator</span>
                 </div>
                 <div class="profile-icon">♙</div>
             </div>
-            <button type="button" id="logoutButton" class="logout-button">Log Out</button>
+            <button type="button" id="logoutButton" class="logout-button" data-logout>Log Out</button>
         </div>
     </header>
 
     <!-- Navigation (sticky) -->
     <nav class="navigation">
-        <a href="#" class="nav-item active"><span class="nav-icon">⊞</span>Dashboard</a>
-        <a href="#" class="nav-item"><span class="nav-icon">◁</span>Announcements &amp; Events</a>
-        <a href="#" class="nav-item"><span class="nav-icon">□</span>Class Schedule</a>
-        <a href="../admin/Grades_records_admin.html" class="nav-item"><span class="nav-icon">▤</span>Grades &amp; Records</a>
-        <a href="#" class="nav-item"><span class="nav-icon">▭</span>Tuition Assessment</a>
-        <a href="../admin/profileManagement.html" class="nav-item"><span class="nav-icon">♙</span>Profile Management</a>
-        <a href="#" class="nav-item"><span class="nav-icon">☼</span>Settings</a>
+        <a href="index.html" class="nav-item active"><img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events</span>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule</span>
+        <a href="Grades_records_admin.html" class="nav-item"><img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment</span>
+        <a href="profileManagement.html" class="nav-item"><img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">Profile Management</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings</span>
     </nav>
 
     <!-- ========== MAIN CONTENT ========== -->
@@ -927,7 +960,7 @@
         <!-- Welcome Banner -->
         <div class="welcome-banner">
             <div class="welcome-text">
-                <h2>Welcome back, <span>Admin!</span></h2>
+                <h2>Welcome back, <span id="welcomeName">Admin</span>!</h2>
                 <p><i class="fa-regular fa-calendar-check"></i> Here's what's happening with your institution today.</p>
             </div>
         </div>
@@ -942,45 +975,45 @@
                 <div class="stats-row">
                     <div class="stat-card total">
                         <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-                        <div class="stat-value">2,845</div>
+                        <div class="stat-value" data-stat="TOTAL">—</div>
                         <div class="stat-label">Total Students</div>
-                        <div class="stat-sub">↑ 12% vs last semester</div>
+                        <div class="stat-sub" data-stat-sub="TOTAL">Loading…</div>
                     </div>
                     <div class="stat-card hm">
                         <div class="stat-icon"><i class="fa-solid fa-utensils"></i></div>
-                        <div class="stat-value">432</div>
+                        <div class="stat-value" data-stat="HM">—</div>
                         <div class="stat-label">HM</div>
-                        <div class="stat-sub">students</div>
+                        <div class="stat-sub" data-stat-sub="HM">students</div>
                     </div>
                     <div class="stat-card tm">
                         <div class="stat-icon"><i class="fa-solid fa-gear"></i></div>
-                        <div class="stat-value">398</div>
+                        <div class="stat-value" data-stat="TM">—</div>
                         <div class="stat-label">TM</div>
-                        <div class="stat-sub">students</div>
+                        <div class="stat-sub" data-stat-sub="TM">students</div>
                     </div>
                     <div class="stat-card crim">
                         <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                        <div class="stat-value">512</div>
+                        <div class="stat-value" data-stat="CRIM">—</div>
                         <div class="stat-label">CRIM</div>
-                        <div class="stat-sub">students</div>
+                        <div class="stat-sub" data-stat-sub="CRIM">students</div>
                     </div>
                     <div class="stat-card it">
                         <div class="stat-icon"><i class="fa-solid fa-laptop-code"></i></div>
-                        <div class="stat-value">476</div>
+                        <div class="stat-value" data-stat="IT">—</div>
                         <div class="stat-label">IT</div>
-                        <div class="stat-sub">students</div>
+                        <div class="stat-sub" data-stat-sub="IT">students</div>
                     </div>
                     <div class="stat-card bsed">
                         <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
-                        <div class="stat-value">363</div>
+                        <div class="stat-value" data-stat="BSED">—</div>
                         <div class="stat-label">BSED</div>
-                        <div class="stat-sub">students</div>
+                        <div class="stat-sub" data-stat-sub="BSED">students</div>
                     </div>
                     <div class="stat-card beed">
                         <div class="stat-icon"><i class="fa-solid fa-children"></i></div>
-                        <div class="stat-value">664</div>
+                        <div class="stat-value" data-stat="BEED">—</div>
                         <div class="stat-label">BEED</div>
-                        <div class="stat-sub">students</div>
+                        <div class="stat-sub" data-stat-sub="BEED">students</div>
                     </div>
                 </div>
 
@@ -995,60 +1028,52 @@
                                     <th>Students</th>
                                     <th>Male</th>
                                     <th>Female</th>
-                                    <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody id="deptTableBody">
+                                <tr data-dept-row="HM">
                                     <td>HM</td>
-                                    <td>520</td>
-                                    <td>272</td>
-                                    <td>248</td>
-                                    <td><span class="status-badge">Active</span></td>
+                                    <td data-dept="HM" data-field="students">—</td>
+                                    <td data-dept="HM" data-field="male">—</td>
+                                    <td data-dept="HM" data-field="female">—</td>
                                 </tr>
-                                <tr>
+                                <tr data-dept-row="TM">
                                     <td>TM</td>
-                                    <td>430</td>
-                                    <td>228</td>
-                                    <td>202</td>
-                                    <td><span class="status-badge">Active</span></td>
+                                    <td data-dept="TM" data-field="students">—</td>
+                                    <td data-dept="TM" data-field="male">—</td>
+                                    <td data-dept="TM" data-field="female">—</td>
                                 </tr>
-                                <tr>
+                                <tr data-dept-row="CRIM">
                                     <td>CRIM</td>
-                                    <td>610</td>
-                                    <td>224</td>
-                                    <td>286</td>
-                                    <td><span class="status-badge">Active</span></td>
+                                    <td data-dept="CRIM" data-field="students">—</td>
+                                    <td data-dept="CRIM" data-field="male">—</td>
+                                    <td data-dept="CRIM" data-field="female">—</td>
                                 </tr>
-                                <tr>
+                                <tr data-dept-row="IT">
                                     <td>IT</td>
-                                    <td>380</td>
-                                    <td>208</td>
-                                    <td>172</td>
-                                    <td><span class="status-badge">Active</span></td>
+                                    <td data-dept="IT" data-field="students">—</td>
+                                    <td data-dept="IT" data-field="male">—</td>
+                                    <td data-dept="IT" data-field="female">—</td>
                                 </tr>
-                                <tr>
+                                <tr data-dept-row="BSED">
                                     <td>BSED</td>
-                                    <td>500</td>
-                                    <td>260</td>
-                                    <td>240</td>
-                                    <td><span class="status-badge">Active</span></td>
+                                    <td data-dept="BSED" data-field="students">—</td>
+                                    <td data-dept="BSED" data-field="male">—</td>
+                                    <td data-dept="BSED" data-field="female">—</td>
                                 </tr>
-                                <tr>
+                                <tr data-dept-row="BEED">
                                     <td>BEED</td>
-                                    <td>405</td>
-                                    <td>220</td>
-                                    <td>185</td>
-                                    <td><span class="status-badge">Active</span></td>
+                                    <td data-dept="BEED" data-field="students">—</td>
+                                    <td data-dept="BEED" data-field="male">—</td>
+                                    <td data-dept="BEED" data-field="female">—</td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td>Total</td>
-                                    <td>2,845</td>
-                                    <td>1,512</td>
-                                    <td>1,333</td>
-                                    <td>Active</td>
+                                    <td data-total="students">—</td>
+                                    <td data-total="male">—</td>
+                                    <td data-total="female">—</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1063,18 +1088,18 @@
                 <div class="quick-actions">
                     <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
                     <div class="quick-action-list">
-                        <a href="#" class="quick-action-item">
+                        <a href="profileManagement.html#add-student" class="quick-action-item">
                             <div class="qa-icon"><i class="fa-solid fa-user-plus"></i></div>
                             Add Student
                         </a>
-                        <a href="#" class="quick-action-item">
+                        <a href="Grades_records_admin.html" class="quick-action-item">
                             <div class="qa-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
                             Upload Grades
                         </a>
-                        <a href="#" class="quick-action-item">
+                        <span class="quick-action-item disabled" aria-disabled="true" title="Not working yet">
                             <div class="qa-icon"><i class="fa-solid fa-bullhorn"></i></div>
                             Post Announcement
-                        </a>
+                        </span>
                     </div>
                 </div>
 
@@ -1082,43 +1107,11 @@
                 <div class="upcoming-events">
                     <h3>
                         <span><i class="fa-solid fa-calendar-days"></i> Upcoming Events</span>
-                        <a href="#">View Calendar</a>
+                        <a class="disabled" aria-disabled="true" title="Not working yet">View Calendar</a>
                     </h3>
 
-                    <div class="event-item">
-                        <div class="event-date">
-                            <div class="month">May</div>
-                            <div class="day">11</div>
-                        </div>
-                        <div class="event-info">
-                            <h4>Final Exam Schedule</h4>
-                            <p>All departments</p>
-                            <p><i class="fa-regular fa-clock"></i> 7:30 AM - 9:00 PM</p>
-                        </div>
-                    </div>
-
-                    <div class="event-item">
-                        <div class="event-date">
-                            <div class="month">June</div>
-                            <div class="day">19</div>
-                        </div>
-                        <div class="event-info">
-                            <h4>Faculty Development Program</h4>
-                            <p>Audio Visual Room</p>
-                            <p><i class="fa-regular fa-clock"></i> 9:00 AM - 12:00 PM</p>
-                        </div>
-                    </div>
-
-                    <div class="event-item">
-                        <div class="event-date">
-                            <div class="month">Aug</div>
-                            <div class="day">28</div>
-                        </div>
-                        <div class="event-info">
-                            <h4>Enrollment for SY 2025-2026</h4>
-                            <p>Registrar</p>
-                            <p><i class="fa-regular fa-clock"></i> All day</p>
-                        </div>
+                    <div id="upcomingEvents">
+                        <div class="empty-state">Loading events…</div>
                     </div>
                 </div>
             </div>
@@ -1131,8 +1124,7 @@
     </div>
 
     <!-- ========== JAVASCRIPT ========== -->
-    <script src="../../js/admin/adminDashboard.js">
-        
-    </script>
+    <script src="../../js/admin/admin-shell.js"></script>
+    <script src="../../js/admin/adminDashboard.js"></script>
 </body>
 </html>

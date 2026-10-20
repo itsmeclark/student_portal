@@ -12,7 +12,8 @@ export const getUser = (student_id,callback) => {
 export const getEnrolledSubjects = (idNumber, callback) => {
     const sql = `
         SELECT s.Subject_id, s.Subject_code, s.Edp_code, s.Subject_name, s.Instructor_name,
-               s.Room, s.Schedule_days, s.Start_time, s.End_time
+               s.Room, s.Schedule_days, s.Start_time, s.End_time,
+               e.Academic_year, e.Semester, e.Year_level
         FROM STUDENTS st
         JOIN ENROLLMENTS e ON e.Student_id = st.Student_id
         JOIN ENROLLMENT_SUBJECTS es ON es.Enrollment_id = e.Enrollment_id
@@ -42,6 +43,26 @@ export const getStudentProfile = (idNumber, callback) => {
         )
         WHERE st.Id_number = ?`;
     db.query(sql, [idNumber], callback);
+}
+
+// Update the student's own contact information (email, phone, address, emergency contact)
+export const updateStudentProfile = (idNumber, profile, callback) => {
+    const sql = `
+        UPDATE STUDENTS
+        SET Email = ?,
+            Contact_num = ?,
+            Current_address = ?,
+            Emergency_contact_name = ?,
+            Emergency_contact_num = ?
+        WHERE Id_number = ?`;
+    db.query(sql, [
+        profile.email,
+        profile.contactNumber,
+        profile.currentAddress,
+        profile.emergencyName,
+        profile.emergencyNumber,
+        idNumber
+    ], callback);
 }
 
 // Update the student's password (stored as plain text, same as the login check)

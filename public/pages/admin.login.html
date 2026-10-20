@@ -16,130 +16,169 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-            background-color: #d9dce6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e6f0ff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            /* faint building background (matches the screenshot) */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" opacity="0.08"><rect width="1200" height="800" fill="%23a0b4d0"/><rect x="100" y="250" width="1000" height="550" fill="%238aa0c0"/><rect x="150" y="300" width="200" height="150" fill="%237a90b0"/><rect x="400" y="300" width="200" height="150" fill="%237a90b0"/><rect x="650" y="300" width="200" height="150" fill="%237a90b0"/><rect x="900" y="300" width="150" height="150" fill="%237a90b0"/><rect x="250" y="550" width="120" height="200" fill="%236a80a0"/><rect x="550" y="550" width="120" height="200" fill="%236a80a0"/><rect x="850" y="550" width="120" height="200" fill="%236a80a0"/><rect x="0" y="780" width="1200" height="20" fill="%235a7090"/></svg>');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
         }
 
         /* ----- HEADER ----- */
+        /* Same header as the student login page (public/css/login.css) */
         header {
-            background-color: #0b1e4b;
-            padding: 14px 40px;
+            background-color: #253b80;
+            color: #fff;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            gap: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Clickable logo + title that returns to the homepage */
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .brand-link:hover {
+            opacity: 0.85;
+        }
+
+        /* "Back to Home" link on the right of the header */
+        .back-home {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 7px;
+            white-space: nowrap;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .back-home:hover {
+            background: #fff;
+            color: #253b80;
+        }
+
+        .back-home i {
+            font-size: 0.8rem;
         }
 
         .logo-placeholder {
-            width: 58px;
-            height: 58px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             flex-shrink: 0;
-            border: 2px solid #ffffff;
         }
 
         .logo-placeholder img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .logo-text h1 {
-            font-size: 1.7rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #ffffff;
             letter-spacing: 0.5px;
-            line-height: 1.15;
         }
 
         .logo-text p {
-            font-size: 1rem;
-            color: #cbd5e1;
+            font-size: 0.8rem;
             font-weight: 400;
-            letter-spacing: 0.3px;
+            opacity: 0.9;
         }
 
         /* ----- MAIN / LOGIN CARD ----- */
+        /* Same card and form styling as the student login page (public/css/login.css) */
         main {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
+            background: linear-gradient(rgba(230, 240, 255, 0.8), rgba(230, 240, 255, 0.8)),
+                        url('../img/biuildingCEC.png');
+            background-position: left;
+            background-repeat: no-repeat;
+            background-size: contain;
         }
 
         .admin-login-card {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 52px 48px 48px;
+            background-color: white;
             width: 100%;
-            max-width: 480px;
-            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.2);
-            transition: box-shadow 0.2s;
-        }
-
-        .admin-login-card:hover {
-            box-shadow: 0 25px 55px -12px rgba(0, 0, 0, 0.25);
+            max-width: 420px;
+            padding: 40px 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
         }
 
         .admin-login-card h2 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #0b1e4b;
-            text-align: center;
-            margin-bottom: 36px;
-            letter-spacing: -0.5px;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .admin-login-card p.subtitle {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 30px;
         }
 
         /* ----- FORM GROUPS ----- */
         .form-group {
-            margin-bottom: 26px;
+            text-align: left;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #0b1e4b;
+            font-size: 0.85rem;
+            font-weight: 700;
             margin-bottom: 8px;
-            letter-spacing: 0.2px;
+            color: #333;
         }
 
         .input-wrapper {
             display: flex;
             align-items: center;
-            background: #d9dce6;
-            border-radius: 10px;
-            padding: 0 22px;
-            height: 58px;
-            transition: background 0.2s, box-shadow 0.2s;
-            border: 2px solid transparent;
+            background-color: #ffffff;
+            border: 1px solid gray;
+            border-radius: 6px;
+            padding: 0 15px;
+            min-height: 48px;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .input-wrapper:focus-within {
-            background: #ffffff;
             border-color: #1a4b9c;
-            box-shadow: 0 0 0 4px rgba(26, 75, 156, 0.15);
+            box-shadow: 0 0 0 3px rgba(26, 75, 156, 0.12);
         }
 
         .input-wrapper i {
-            font-size: 1.2rem;
-            color: #6b7c99;
-            margin-right: 14px;
-            width: 20px;
+            font-size: 1rem;
+            color: #555;
+            margin-right: 10px;
+            width: auto;
             text-align: center;
             transition: color 0.2s;
         }
@@ -152,109 +191,80 @@
             border: none;
             outline: none;
             background: transparent;
-            font-size: 1.05rem;
-            color: #0b1e4b;
+            padding: 14px 0;
+            font-size: 0.9rem;
+            color: #333;
             width: 100%;
-            height: 100%;
             font-weight: 400;
-            letter-spacing: 0.2px;
+            font-family: inherit;
         }
 
         .input-wrapper input::placeholder {
-            color: #6b7c99;
-            font-weight: 400;
-            opacity: 0.9;
+            color: #888;
         }
 
         /* ----- LOGIN BUTTON ----- */
         .btn-admin-login {
             display: block;
             width: 100%;
-            padding: 18px 24px;
-            background: #2e3192;
+            padding: 14px;
+            background-color: #2a3eb1;
             color: #ffffff;
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 600;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
-            margin-top: 14px;
-            letter-spacing: 0.4px;
-            box-shadow: 0 8px 18px -6px rgba(46, 49, 146, 0.4);
+            transition: background-color 0.3s;
         }
 
         .btn-admin-login:hover {
-            background: #1f2270;
-            box-shadow: 0 12px 24px -8px rgba(46, 49, 146, 0.5);
-            transform: translateY(-1px);
+            background: #1e2e8a;
         }
 
         .btn-admin-login:active {
-            transform: translateY(0);
-            box-shadow: 0 6px 12px -4px rgba(46, 49, 146, 0.4);
+            background: #1a2880;
         }
 
         /* ----- RESPONSIVE ----- */
-        @media (max-width: 560px) {
-            header {
-                padding: 12px 20px;
-                gap: 12px;
-            }
-
-            .logo-placeholder {
-                width: 44px;
-                height: 44px;
-            }
-
-            .logo-text h1 {
-                font-size: 1.2rem;
-            }
-
-            .logo-text p {
-                font-size: 0.8rem;
-            }
-
+        @media (max-width: 480px) {
             .admin-login-card {
-                padding: 36px 24px 34px;
-                border-radius: 22px;
+                padding: 30px 20px;
             }
 
             .admin-login-card h2 {
-                font-size: 2.2rem;
-                margin-bottom: 28px;
-            }
-
-            .input-wrapper {
-                height: 52px;
-                padding: 0 18px;
-            }
-
-            .input-wrapper input {
-                font-size: 0.95rem;
-            }
-
-            .btn-admin-login {
-                font-size: 1.1rem;
-                padding: 15px 20px;
+                font-size: 1.8rem;
             }
         }
 
         @media (max-width: 380px) {
+            .admin-login-card {
+                padding: 28px 18px 26px;
+            }
+        }
+
+        /* Header breakpoints - same as the student login page */
+        @media (max-width: 480px) {
             .logo-text h1 {
                 font-size: 1rem;
             }
 
-            .logo-text p {
+            .back-home {
+                padding: 7px 10px;
                 font-size: 0.7rem;
+                gap: 6px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .back-home {
+                font-size: 0;
+                gap: 0;
+                padding: 9px 11px;
             }
 
-            .admin-login-card h2 {
-                font-size: 1.9rem;
-            }
-
-            .admin-login-card {
-                padding: 28px 18px 26px;
+            .back-home i {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -262,19 +272,26 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo-placeholder">
-            <img src="../img/cecLOGO.png" alt="Cebu Eastern College Logo">
-        </div>
-        <div class="logo-text">
-            <h1>CEBU EASTERN COLLEGE</h1>
-            <p>Student Portal</p>
-        </div>
+        <a class="brand-link" href="/" aria-label="Cebu Eastern College - back to homepage">
+            <div class="logo-placeholder">
+                <img src="../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="logo-text">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <p>Student Portal</p>
+            </div>
+        </a>
+
+        <a class="back-home" href="/">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
     </header>
 
     <!-- Main Admin Login Card -->
     <main>
         <div class="admin-login-card">
             <h2>Admin</h2>
+            <p class="subtitle">Sign in to access your account</p>
 
             <form action="" method="POST" id="adminLoginForm">
                 <!-- Full Name Field -->
