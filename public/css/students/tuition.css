@@ -1,0 +1,329 @@
+/* =================================================================
+   TUITION ASSESSMENT - page specific styles
+   Header & navigation come from student-shell.css (same look as the
+   student dashboard). The layout below mirrors Grades & Records
+   (filter card -> program title -> student info -> table) so the two
+   pages read as one system.
+   ================================================================= */
+
+:root {
+    --primary-blue: #1b3a7a;
+    --head-blue: #182f70;
+    --nav-blue: #263f88;
+    --accent-blue: #4a7bc8;
+    --light-blue: #e8f1fc;
+    --text-dark: #333333;
+    --text-muted: #777777;
+    --text-light: #8a9bb8;
+    --bg-color: #f5f7fa;
+    --white: #ffffff;
+    --border-color: #d1d9e6;
+    --table-head: #1b3477;
+    --table-line: #d8deea;
+    --table-zebra: #f4f6fa;
+    --table-hover: #edf2fb;
+    --green: #09b640;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ================================
+   MAIN
+   =============================== */
+.main-container {
+    width: calc(100% - 100px);
+    max-width: 1160px;
+    margin: 32px auto;
+}
+
+/* ================================
+   FILTER CARD
+   =============================== */
+.filter-card {
+    background: var(--white);
+    border-radius: 13px;
+    padding: 28px 29px 24px;
+    box-shadow: 0 2px 5px rgba(23, 43, 82, 0.08);
+    margin-bottom: 24px;
+}
+
+.filter-card h2 {
+    font-family: Georgia, serif;
+    color: #1c3478;
+    font-size: 30px;
+    margin-bottom: 24px;
+}
+
+.filter-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-group label {
+    color: #34426b;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+#semesterSelect {
+    width: 259px;
+}
+
+#termSelect {
+    width: 140px;
+}
+
+/* Custom select */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: "\2304";
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-55%);
+    color: var(--head-blue);
+    font-size: 19px;
+    pointer-events: none;
+    font-weight: bold;
+}
+
+.select-wrapper select {
+    height: 45px;
+    border: 1px solid #8294c3;
+    border-radius: 7px;
+    background: var(--white);
+    color: #26314e;
+    padding: 0 40px 0 13px;
+    font-size: 14px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.select-wrapper select:hover {
+    border-color: var(--nav-blue);
+    box-shadow: 0 2px 7px rgba(38, 63, 136, 0.12);
+}
+
+.select-wrapper select:focus {
+    border-color: var(--nav-blue);
+    box-shadow: 0 0 0 3px rgba(38, 63, 136, 0.12);
+}
+
+/* ================================
+   BUTTON  (View Payment History)
+   =============================== */
+.secondary-button {
+    height: 45px;
+    padding: 0 20px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+    background: var(--white);
+    color: #1b3477;
+    border: 1px solid #1b3477;
+    margin-left: auto;
+}
+
+.secondary-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 7px rgba(38, 63, 136, 0.18);
+}
+
+/* ================================
+   ASSESSMENT CARD
+   =============================== */
+.records-card {
+    background: var(--white);
+    border-radius: 13px;
+    padding: 29px;
+    box-shadow: 0 2px 5px rgba(23, 43, 82, 0.08);
+}
+
+.program-title {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 21px;
+    color: #242c40;
+    margin-bottom: 23px;
+}
+
+/* Student information */
+.student-information {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 21px;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.student-information strong {
+    color: #18233f;
+}
+
+.left-info p,
+.right-info p {
+    margin: 0;
+}
+
+.right-info {
+    text-align: right;
+}
+
+/* ================================
+   FEES TABLE
+   =============================== */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 7px;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #d4dceb;
+    border-radius: 7px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+thead {
+    background: var(--table-head);
+    color: white;
+}
+
+th {
+    height: 44px;
+    padding: 0 10px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: bold;
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+th:last-child,
+td:last-child {
+    border-right: none;
+    text-align: right;
+}
+
+td {
+    height: 48px;
+    text-align: left;
+    padding: 0 15px;
+    border-right: 1px solid var(--table-line);
+    border-bottom: 1px solid var(--table-line);
+    color: #26314e;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+    background: var(--table-zebra);
+}
+
+tbody tr:nth-child(odd) {
+    background: var(--white);
+}
+
+tbody tr:hover {
+    background: var(--table-hover);
+    transition: 0.15s;
+}
+
+/* Amount column */
+td:last-child {
+    font-weight: bold;
+    width: 28%;
+}
+
+/* Total row */
+.total-row td {
+    border-top: 2px solid #9aa8c6;
+    background: var(--white);
+    font-weight: bold;
+}
+
+.total-row td:last-child {
+    font-size: 15px;
+}
+
+/* ================================
+   RESPONSIVE
+   =============================== */
+@media (max-width: 1050px) {
+    .main-container {
+        width: calc(100% - 40px);
+    }
+
+    .filter-row {
+        flex-wrap: wrap;
+    }
+
+    .secondary-button {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 750px) {
+    .main-container {
+        width: calc(100% - 24px);
+        margin: 18px auto;
+    }
+
+    .filter-card h2 {
+        font-size: 25px;
+    }
+
+    .filter-row {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .filter-group,
+    #semesterSelect,
+    #termSelect {
+        width: 100%;
+    }
+
+    .secondary-button {
+        width: 100%;
+    }
+
+    .student-information {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .right-info {
+        text-align: left;
+    }
+
+    th,
+    td {
+        padding: 0 10px;
+        font-size: 13px;
+    }
+}

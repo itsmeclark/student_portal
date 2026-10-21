@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuition Assessment - Cebu Eastern College</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Shared student header & navigation -->
+    <link rel="stylesheet" href="../../css/students/student-shell.css">
+    <!-- Tuition page styles -->
+    <link rel="stylesheet" href="../../css/students/tuition.css">
+</head>
+<body>
+
+    <!-- ===== HEADER (same as the student dashboard) ===== -->
+    <header class="top-header">
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Student Portal</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong data-student-name>Student</strong>
+                    <span data-student-role>Student</span>
+                </div>
+                <div class="profile-icon">♙</div>
+            </div>
+            <button type="button" class="logout-button" data-logout>Log Out</button>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION (same as the student dashboard) ===== -->
+    <nav class="navigation">
+        <a href="index.html" class="nav-item"><img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard</a>
+        <a href="announcements-events.html" class="nav-item"><img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events</a>
+        <a href="class-schedule.html" class="nav-item"><img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule</a>
+        <a href="grades_records.html" class="nav-item"><img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records</a>
+        <a href="tuition.html" class="nav-item active"><img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment</a>
+        <a href="profile.html" class="nav-item"><img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">My Profile</a>
+        <a href="settings.html" class="nav-item"><img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings</a>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-container">
+
+        <!-- Filter -->
+        <div class="filter-card">
+            <h2>Tuition Assessment</h2>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="semesterSelect">Semester</label>
+                    <div class="select-wrapper">
+                        <select id="semesterSelect">
+                            <option>First Semester A.Y 2026-2027</option>
+                            <option>Second Semester A.Y 2026-2027</option>
+                            <option>Summer A.Y 2026-2027</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label for="termSelect">Term</label>
+                    <div class="select-wrapper">
+                        <select id="termSelect">
+                            <option>Prelim</option>
+                            <option>Midterm</option>
+                            <option>Semi-Finals</option>
+                            <option>Finals</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="secondary-button" id="historyBtn" type="button">View Payment History</button>
+            </div>
+        </div>
+
+        <!-- Assessment -->
+        <div class="records-card">
+            <h2 class="program-title" id="tuitionProgram">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h2>
+
+            <!-- Student information -->
+            <div class="student-information">
+                <div class="left-info">
+                    <p><strong>ID Number:</strong> <span id="tuitionId">—</span></p>
+                    <p><strong>Name:</strong> <span id="tuitionName">—</span></p>
+                </div>
+                <div class="right-info">
+                    <p><strong>Section:</strong> <span id="tuitionSection">—</span></p>
+                    <p><strong>Year level:</strong> <span id="tuitionYearLevel">—</span></p>
+                </div>
+            </div>
+
+            <!-- Fees table -->
+            <div class="table-container">
+                <table id="feesTable">
+                    <thead>
+                        <tr>
+                            <th>DESCRIPTION</th>
+                            <th>AMOUNT (PHP)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TUITION FEE ( 12 UNITS )</td>
+                            <td>36,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>LABORATORY FEE</td>
+                            <td>3,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>MISCELLANEOUS FEE</td>
+                            <td>2,500.00</td>
+                        </tr>
+                        <tr>
+                            <td>GUIDANCE &amp; TESTING FEE</td>
+                            <td>1,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>REGISTRATION FEE</td>
+                            <td>500.00</td>
+                        </tr>
+                        <tr>
+                            <td>INTERNET FEE</td>
+                            <td>1,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>STUDENT DEVELOPMENT FEE</td>
+                            <td>1,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>MEDICAL &amp; DENTAL FEE</td>
+                            <td>500.00</td>
+                        </tr>
+                        <!-- Total Row -->
+                        <tr class="total-row">
+                            <td></td>
+                            <td>Total = &nbsp;&nbsp; <span id="totalAmount">45,500.00</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        &copy; 2026 Cebu Eastern College | All Right Reserved.
+    </footer>
+
+    <!-- Shared student header (name + logout) -->
+    <script src="../../js/student_page/student-shell.js"></script>
+
+    <script>
+        // ---------- STUDENT INFORMATION (from the logged-in student) ----------
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = (value === null || value === undefined || value === '') ? '—' : String(value);
+        };
+
+        async function loadStudentInfo() {
+            try {
+                const response = await fetch('/home/profile', {
+                    credentials: 'include'
+                });
+
+                if (!response.ok) return;
+
+                const data = await response.json();
+                const user = data.user || {};
+                const enrollment = data.enrollment || {};
+
+                const fullName = `${user.First_name || ''} ${user.Last_name || ''}`.trim();
+
+                setText('tuitionId', user.Id_number);
+                setText('tuitionName', fullName.toUpperCase());
+                setText('tuitionSection', user.Current_section_num);
+                setText('tuitionYearLevel', enrollment.Year_level || user.Current_year_level);
+
+                // Show the full program name when we know it, otherwise the course code
+                const course = (user.Course || '').trim().toUpperCase();
+                setText('tuitionProgram',
+                    course === 'BSIT' ? 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY' : course);
+            } catch (error) {
+                console.error('Error loading student info:', error);
+            }
+        }
+
+        // ---------- TOTAL (sum of the fee rows, never hardcoded) ----------
+        function computeTotal() {
+            const rows = document.querySelectorAll('#feesTable tbody tr:not(.total-row)');
+
+            let total = 0;
+            rows.forEach(row => {
+                const cell = row.querySelector('td:last-child');
+                const amount = parseFloat(String(cell.textContent).replace(/[^0-9.]/g, ''));
+                if (!isNaN(amount)) total += amount;
+            });
+
+            setText('totalAmount', total.toLocaleString('en-PH', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const termSelect = document.getElementById('termSelect');
+            const historyBtn = document.getElementById('historyBtn');
+
+            semesterSelect.addEventListener('change', (e) => {
+                console.log(`Semester changed to: ${e.target.value}`);
+                // In a real application, this would trigger an API call and re-render the table
+            });
+
+            termSelect.addEventListener('change', (e) => {
+                console.log(`Term changed to: ${e.target.value}`);
+            });
+
+            historyBtn.addEventListener('click', () => {
+                alert('Payment history is not available in the portal yet.');
+            });
+
+            computeTotal();
+            loadStudentInfo();
+        });
+    </script>
+</body>
+</html>

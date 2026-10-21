@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEC Student Portal - Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Shared student header & navigation -->
+  <link rel="stylesheet" href="../../css/students/student-shell.css">
+  <!-- Settings page styles -->
+  <link rel="stylesheet" href="../../css/students/settings.css">
+</head>
+
+<body>
+
+  
+  <!-- ===== HEADER (same as the student dashboard) ===== -->
+  <header class="top-header">
+    <div class="school-brand">
+      <div class="cec-logo">
+        <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+      </div>
+      <div class="school-title">
+        <h1>CEBU EASTERN COLLEGE</h1>
+        <span>Student Portal</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="student-profile">
+        <div class="student-name">
+          <strong data-student-name>Student</strong>
+          <span data-student-role>Student</span>
+        </div>
+        <div class="profile-icon">♙</div>
+      </div>
+      <button type="button" class="logout-button" data-logout>Log Out</button>
+    </div>
+  </header>
+
+  <!-- ===== NAVIGATION (same as the student dashboard) ===== -->
+  <nav class="navigation">
+    <a href="index.html" class="nav-item"><img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard</a>
+    <a href="announcements-events.html" class="nav-item"><img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events</a>
+    <a href="class-schedule.html" class="nav-item"><img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule</a>
+    <a href="grades_records.html" class="nav-item"><img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records</a>
+    <a href="tuition.html" class="nav-item"><img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment</a>
+    <a href="profile.html" class="nav-item"><img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">My Profile</a>
+    <a href="settings.html" class="nav-item active"><img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings</a>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+
+    
+  <main class="main-content">
+
+    <div class="page-title">
+      <div class="icon-wrap"><i class="fa-solid fa-gear"></i></div>
+      <h1>Settings</h1>
+    </div>
+    <p class="page-sub">Manage your notifications and privacy, read our policies, and share your feedback.</p>
+
+      
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="notifications">Notifications</button>
+        <button class="tab" data-tab="privacy">Privacy &amp; Security</button>
+        <button class="tab" data-tab="faq">FAQ</button>
+        <button class="tab" data-tab="terms">Terms of Service</button>
+        <button class="tab" data-tab="recognition">Recognition</button>
+        <button class="tab" data-tab="feedback">Feedback</button>
+      </div>
+
+      
+      <div class="panel active" id="panel-notifications">
+        <div class="card">
+          <h2>Notification Preferences</h2>
+          <div class="sub">Choose what you want to be notified about, and how.</div>
+
+          <div class="divider first">Delivery Channels</div>
+          <div class="row"><div><div class="row-label">Email notifications</div><div class="row-sub">Get updates sent to your registered email</div></div><label class="switch"><input type="checkbox" id="n-email" checked><span class="slider"></span></label></div>
+          <div class="row"><div><div class="row-label">SMS notifications</div><div class="row-sub">Get text messages for urgent updates</div></div><label class="switch"><input type="checkbox" id="n-sms"><span class="slider"></span></label></div>
+          <div class="row"><div><div class="row-label">Push notifications</div><div class="row-sub">Get alerts on this device when using the portal</div></div><label class="switch"><input type="checkbox" id="n-push" checked><span class="slider"></span></label></div>
+
+          <div class="divider">What to notify me about</div>
+          <div class="row"><div><div class="row-label">Grade updates</div><div class="row-sub">When a new grade is posted</div></div><label class="switch"><input type="checkbox" id="n-grades" checked><span class="slider"></span></label></div>
+          <div class="row"><div><div class="row-label">Announcements</div><div class="row-sub">School-wide news and event updates</div></div><label class="switch"><input type="checkbox" id="n-announce" checked><span class="slider"></span></label></div>
+          <div class="row"><div><div class="row-label">Enrollment reminders</div><div class="row-sub">Deadlines for enrollment and requirements</div></div><label class="switch"><input type="checkbox" id="n-enroll" checked><span class="slider"></span></label></div>
+          <div class="row"><div><div class="row-label">Tuition &amp; payment reminders</div><div class="row-sub">Upcoming due dates and payment confirmations</div></div><label class="switch"><input type="checkbox" id="n-tuition"><span class="slider"></span></label></div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="saveNotif" type="button">Save Preferences</button>
+            <span class="toast" id="notifToast">&#10003; Preferences saved</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="panel" id="panel-privacy">
+        <div class="card">
+          <h2>Privacy &amp; Security</h2>
+          <div class="sub">Manage your login protection and active sessions.</div>
+
+          <div class="divider first">Login Protection</div>
+          <div class="row"><div><div class="row-label">Two-factor authentication</div><div class="row-sub">Require a one-time code in addition to your password</div></div><label class="switch"><input type="checkbox" id="p-2fa"><span class="slider"></span></label></div>
+
+          <div class="divider">Active Sessions</div>
+          
+          <div class="row">
+            <div><div class="row-label">Chrome on Windows &middot; Cebu City</div><div class="row-sub">Current session</div></div>
+            <span class="pill">Active now</span>
+          </div>
+          <div class="row" id="session2">
+            <div><div class="row-label">CEC Portal App &middot; Android</div><div class="row-sub">Last active 2 days ago</div></div>
+            <button class="btn-line" type="button" id="endSession">Log out</button>
+          </div>
+
+          <div class="divider">Danger Zone</div>
+          <div class="danger-box">
+            <div><div class="row-label">Delete my account</div><div class="row-sub">This permanently removes your account and all your data. This cannot be undone.</div></div>
+            <button class="btn btn-danger" type="button" id="deleteBtn">Delete Account</button>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="savePrivacy" type="button">Save Changes</button>
+            <span class="toast" id="privacyToast">&#10003; Changes saved</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="panel" id="panel-faq">
+        <div class="card">
+          <h2>Frequently Asked Questions</h2>
+          <div class="sub">Quick answers about using the portal.</div>
+
+          <div class="faq-item">
+            <div class="faq-q">How do I view my class schedule?
+              <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="faq-a">Go to Class Schedule from the menu bar. It shows your weekly timetable with subject times, days, rooms, and instructors.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How do I enroll in a course?
+              <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="faq-a">Course enrolment is not published in the portal yet, so there is no Enrolment item in the menu bar. For now, coordinate with your class officer or the Registrar&#39;s Office.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Where can I check my grades?
+              <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="faq-a">Go to Grades &amp; Records from the menu bar to view your grades per subject and semester, along with your academic standing.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How can I check my attendance and assignments?
+              <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="faq-a">Assignments and attendance are not published in the portal yet. Watch the Announcements &amp; Events page for deadlines, and ask your class officer for your personal attendance record.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How do I check my tuition assessment?
+              <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="faq-a">Go to Tuition Assessment from the menu bar to view your fee breakdown and total assessment for the selected semester and term.</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="panel" id="panel-terms">
+        <div class="card">
+          <h2>Terms of Service</h2>
+          <div class="sub">Last updated: September 2026</div>
+          <div class="terms-box">
+            <p><b>1. Introduction</b><br>These Terms of Service govern your use of the Cebu Eastern College (CEC) Student Portal. By creating an account, you agree to these terms.</p>
+            <p><b>2. User Responsibilities</b><br>You are responsible for keeping your login credentials confidential and for all activity under your account. Do not share your password with others.</p>
+            <p><b>3. Acceptable Use</b><br>The portal is intended for legitimate academic purposes only. Attempting to access another student's records, disrupt the system, or submit false information is prohibited.</p>
+            <p><b>4. Data Privacy</b><br>Your personal and academic data is collected and stored to provide portal services (enrollment, grades, announcements, billing). CEC will not share your data with third parties except as required by law.</p>
+            <p><b>5. Account Termination</b><br>CEC may suspend or terminate accounts found in violation of these terms. Students may also request account deletion at any time through Settings.</p>
+            <p><b>6. Changes to These Terms</b><br>CEC may update these terms from time to time. Continued use of the portal after changes take effect means you accept the updated terms.</p>
+            <p><b>7. Contact</b><br>Questions about these terms can be sent to registrar@cec.edu.ph.</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="panel" id="panel-recognition">
+        <div class="recog-card">
+          <div class="rc-title">Recognition</div>
+          <div class="rc-intro">With thanks to the classmates and team members who worked on this project. I LOVE YOU ALL!</div>
+
+          <div class="rc-heading">Project Manager</div>
+          <div class="rc-list" id="rc-managers"></div>
+
+          <div class="rc-heading">Leaders</div>
+          <div class="rc-list" id="rc-leaders"></div>
+
+          <div class="rc-heading">Members</div>
+          <div class="rc-list" id="rc-members"></div>
+
+          <div class="rc-thanks">
+            <h4>Special thanks</h4>
+            <p>To our instructor and classmates across the other groups for their feedback during wireframe critiques, and to everyone in the section who helped test this prototype.</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="panel" id="panel-feedback">
+        <div class="card">
+          <h2>Send Feedback</h2>
+          <div class="sub">Tell us how the portal is working for you.</div>
+
+          <div class="last-feedback" id="lastFeedback"></div>
+
+          <div class="field">
+            <label>How would you rate the portal?</label>
+            <div class="stars" id="stars">
+              <button class="star" type="button" data-value="1">&#9733;</button>
+              <button class="star" type="button" data-value="2">&#9733;</button>
+              <button class="star" type="button" data-value="3">&#9733;</button>
+              <button class="star" type="button" data-value="4">&#9733;</button>
+              <button class="star" type="button" data-value="5">&#9733;</button>
+            </div>
+            <div class="error" id="ratingError">Please choose a rating.</div>
+          </div>
+
+          <div class="field">
+            <label>Category</label>
+            <select id="fbCategory">
+              <option>General feedback</option>
+              <option>Bug report</option>
+              <option>Feature request</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Your message</label>
+            <textarea id="fbMessage" placeholder="Write your feedback here..."></textarea>
+            <div class="error" id="messageError">Please write a message.</div>
+          </div>
+
+          <div class="actions">
+            <!-- TODO (backend): send the rating, category, and message to the server -->
+            <button class="btn btn-primary" id="sendFeedback" type="button">Submit Feedback</button>
+            <span class="toast" id="feedbackToast">&#10003; Thank you for your feedback!</span>
+          </div>
+        </div>
+      </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    &copy; 2026 Cebu Eastern College | All Right Reserved.
+  </footer>
+
+  <!-- Shared student header (name + logout) -->
+  <script src="../../js/student_page/student-shell.js"></script>
+
+<script>
+  
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
+  
+  function showToast(id){
+    var toast = document.getElementById(id);
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+
+  
+  // ===== SAVED SETTINGS (static page: stored in the browser only) =====
+  var STORAGE_KEY = 'cecPortal.settings';
+
+  // Toggle id -> key used in the saved object
+  var TOGGLE_IDS = {
+    'n-email':    'email',
+    'n-sms':      'sms',
+    'n-push':     'push',
+    'n-grades':   'grades',
+    'n-announce': 'announce',
+    'n-enroll':   'enroll',
+    'n-tuition':  'tuition'
+  };
+
+  function loadSettings(){
+    try{
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    }catch(e){
+      // Private browsing / storage disabled -> fall back to no saved settings
+      return null;
+    }
+  }
+
+  function saveSettings(patch){
+    try{
+      var current = loadSettings() || {};
+      var next = {
+        notifications: current.notifications || {},
+        privacy:      current.privacy      || {},
+        feedback:     current.feedback     || {}
+      };
+      if(patch.notifications) next.notifications = patch.notifications;
+      if(patch.privacy)      next.privacy      = patch.privacy;
+      if(patch.feedback)     next.feedback     = patch.feedback;
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function restoreSettings(){
+    var saved = loadSettings();
+    if(!saved){ return; }
+
+    // Notification toggles
+    var notif = saved.notifications || {};
+    Object.keys(TOGGLE_IDS).forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && typeof notif[TOGGLE_IDS[id]] === 'boolean'){
+        el.checked = notif[TOGGLE_IDS[id]];
+      }
+    });
+
+    // Two-factor toggle
+    var twoFa = document.getElementById('p-2fa');
+    if(twoFa && saved.privacy && typeof saved.privacy.twoFactor === 'boolean'){
+      twoFa.checked = saved.privacy.twoFactor;
+    }
+
+    // Last feedback is shown as a receipt, the form itself starts empty
+    renderLastFeedback(saved.feedback || {});
+  }
+
+  // Shows the last submitted feedback above the form
+  function renderLastFeedback(fb){
+    var note = document.getElementById('lastFeedback');
+    if(!note){ return; }
+
+    if(!fb || !fb.rating){
+      note.textContent = '';
+      return;
+    }
+
+    var parts = ['Last submitted: ' + fb.rating + '/5'];
+    if(fb.category){ parts.push(fb.category); }
+    if(fb.message){ parts.push('"' + fb.message + '"'); }
+    note.textContent = parts.join(' - ');
+  }
+
+  
+  var tabButtons = document.querySelectorAll('.tab');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var name = btn.getAttribute('data-tab');
+
+      document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+
+      btn.classList.add('active');
+      document.getElementById('panel-' + name).classList.add('active');
+    });
+  });
+
+  
+  document.getElementById('saveNotif').addEventListener('click', function(){
+    
+    var prefs = {
+      email:    document.getElementById('n-email').checked,
+      sms:      document.getElementById('n-sms').checked,
+      push:     document.getElementById('n-push').checked,
+      grades:   document.getElementById('n-grades').checked,
+      announce: document.getElementById('n-announce').checked,
+      enroll:   document.getElementById('n-enroll').checked,
+      tuition:  document.getElementById('n-tuition').checked
+    };
+    saveSettings({ notifications: prefs });
+    console.log('Notification preferences:', prefs);
+    showToast('notifToast');
+  });
+
+  
+  document.getElementById('savePrivacy').addEventListener('click', function(){
+    
+    var twoFactor = document.getElementById('p-2fa').checked;
+    saveSettings({ privacy: { twoFactor: twoFactor } });
+    console.log('Two-factor enabled:', twoFactor);
+    showToast('privacyToast');
+  });
+
+  document.getElementById('endSession').addEventListener('click', function(){
+    
+    var row = document.getElementById('session2');
+    row.parentNode.removeChild(row);
+  });
+
+ 
+  var deleteBtn = document.getElementById('deleteBtn');
+  var deleteTimer = null;
+  deleteBtn.addEventListener('click', function(){
+    if(deleteBtn.getAttribute('data-confirm') !== 'yes'){
+      deleteBtn.setAttribute('data-confirm', 'yes');
+      deleteBtn.textContent = 'Click again to confirm';
+      deleteTimer = setTimeout(resetDeleteBtn, 3000);
+    } else {
+      clearTimeout(deleteTimer);
+      resetDeleteBtn();
+      
+      alert('Account deletion is not connected to the backend yet.');
+    }
+  });
+  function resetDeleteBtn(){
+    deleteBtn.setAttribute('data-confirm', 'no');
+    deleteBtn.textContent = 'Delete Account';
+  }
+
+  
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      q.parentNode.classList.toggle('open');
+    });
+  });
+
+  
+  var rating = 0;
+  var starButtons = document.querySelectorAll('.star');
+
+  function paintStars(){
+    starButtons.forEach(function(s){
+      var v = parseInt(s.getAttribute('data-value'), 10);
+      if(v <= rating){ s.classList.add('on'); } else { s.classList.remove('on'); }
+    });
+  }
+  starButtons.forEach(function(s){
+    s.addEventListener('click', function(){
+      rating = parseInt(s.getAttribute('data-value'), 10);
+      paintStars();
+      document.getElementById('ratingError').classList.remove('show');
+    });
+  });
+
+  document.getElementById('sendFeedback').addEventListener('click', function(){
+    var message = document.getElementById('fbMessage').value.trim();
+    var ok = true;
+
+    if(rating === 0){
+      document.getElementById('ratingError').classList.add('show');
+      ok = false;
+    }
+    if(message === ''){
+      document.getElementById('messageError').classList.add('show');
+      ok = false;
+    } else {
+      document.getElementById('messageError').classList.remove('show');
+    }
+    if(!ok){ return; }
+
+    
+    console.log('Feedback:', {
+      rating: rating,
+      category: document.getElementById('fbCategory').value,
+      message: message
+    });
+
+    saveSettings({ feedback: {
+      rating: rating,
+      category: document.getElementById('fbCategory').value,
+      message: message
+    }});
+    renderLastFeedback({
+      rating: rating,
+      category: document.getElementById('fbCategory').value,
+      message: message
+    });
+
+    showToast('feedbackToast');
+    document.getElementById('fbMessage').value = '';
+    rating = 0;
+    paintStars();
+  });
+
+  
+
+  var MANAGERS = [
+    { name: "Enopia, Gemar A.",          role: "Oversees the group's overall progress and deliverables." },
+    { name: "Arcala, Ashley Rochell B.", role: "Oversees the group's overall progress and deliverables." }
+  ];
+
+  
+  var LEADERS = [
+    "Berdin, Ritzelyn S.",     "Jabaybay, John Rey C.",
+    "Cagang, Nino Cesar M.",   "Layos, Clark C.",
+    "Capul, Roland B.",        "Libusada, Jason Scott D.",
+    "Cuizon, Maria Sofia E.",  "Rona, Keith C.",
+    "Flores, Jomar R.",        "Segales, Chris Niño G."
+  ];
+
+  var MEMBERS = [
+    "Alga, Daryl A.",               "Mendoza, Rica Z.",
+    "Apolinar, Geean P.",           "Mina, Beveymae E.",
+    "Aranas, Karl Matthew G.",      "Pahilangco, Glyan Marie L.",
+    "Bayrante, Jamir F.",           "Panlaan, Geoffrey Jr. T.",
+    "Bitos, Meil John",             "Pojas, Ashli Pauly C.",
+    "Cabilao, Gevirick Vincent",    "Polosan, Rhea Lyn C.",
+    "Dandan, Reese Nesniel A.",     "Ponce, John Lloyd P.",
+    "Dela Cruz, Icy Jake A.",       "Rivera, John Ashley C.",
+    "Dela Cruz, Jay Kyle A.",       "Romales, Eleiza Bell S.",
+    "Donaire, Andoni Johannes P.",  "Ropal, Juricar L.",
+    "Enriquez, Kirk Benedict A.",   "Rosales, Mark V.",
+    "Esgana, Kylene B.",            "Sabado, Sunshine B.",
+    "Estores, Adrian R.",           "Solasco, Mera N.",
+    "Lawas, Rubbie Ann P.",         "Souquiño, Cris John D.",
+    "Macalua, Jerome R",            "Suerte, John Francis A.",
+    "Manguilimutan, Lovely Chloe N.", "Tecson, Vincemar S.",
+    "Matugas, Joshryl A.",          "Villaneza, Philip A."
+  ];
+
+  
+  var PHOTOS = {
+    
+  };
+
+  function makePerson(name, role, fullWidth){
+    var item = document.createElement('div');
+    item.className = 'rc-item' + (fullWidth ? ' full' : '');
+
+    var pic = document.createElement('div');
+    pic.className = 'pic';
+    if(PHOTOS[name]){
+      var img = document.createElement('img');
+      img.src = PHOTOS[name];
+      img.alt = name;
+      pic.appendChild(img);
+    } else {
+      // No photo on file, show the initials instead of an empty grey circle
+      pic.textContent = initialsOf(name);
+    }
+
+    var info = document.createElement('div');
+    var n = document.createElement('div');
+    n.className = 'rc-name';
+    n.textContent = name;
+    info.appendChild(n);
+    if(role){
+      var r = document.createElement('div');
+      r.className = 'rc-role';
+      r.textContent = role;
+      info.appendChild(r);
+    }
+
+    item.appendChild(pic);
+    item.appendChild(info);
+    return item;
+  }
+
+  function fillList(boxId, list, fullWidth){
+    var box = document.getElementById(boxId);
+    list.forEach(function(p){
+      if(typeof p === 'string'){ box.appendChild(makePerson(p, '', fullWidth)); }
+      else { box.appendChild(makePerson(p.name, p.role, fullWidth)); }
+    });
+  }
+
+  // "Enopia, Gemar A." -> "EG"
+  function initialsOf(name){
+    var text = String(name || '').trim();
+    if(!text){ return '?'; }
+
+    if(text.indexOf(',') !== -1){
+      var parts = text.split(',');
+      var surname = parts[0].trim();
+      var given = (parts[1] || '').trim();
+      return (surname.charAt(0) + (given.charAt(0) || '')).toUpperCase();
+    }
+
+    var words = text.split(/\s+/).filter(Boolean);
+    if(words.length === 1){ return words[0].charAt(0).toUpperCase(); }
+    return (words[0].charAt(0) + words[words.length - 1].charAt(0)).toUpperCase();
+  }
+
+  fillList('rc-managers', MANAGERS, true);
+  fillList('rc-leaders', LEADERS, false);
+  fillList('rc-members', MEMBERS, false);
+
+  // Restore whatever was saved in this browser
+  restoreSettings();
+</script>
+
+</body>
+</html>

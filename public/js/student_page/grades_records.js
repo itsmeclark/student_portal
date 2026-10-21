@@ -1,5 +1,8 @@
 // Login page for the student portal (student-shell.js uses the same target)
-const STUDENT_LOGIN_PAGE = "/pages/index.html";
+// NOTE: do NOT name this STUDENT_LOGIN_PAGE at top level. student-shell.js
+// already declares that name globally, and two classic scripts sharing a
+// top-level "const" throws a SyntaxError that kills this whole script.
+const GRADES_LOGIN_PAGE = "/pages/index.html";
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -45,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (response.status === 401) {
-                window.location.href = STUDENT_LOGIN_PAGE;
+                window.location.href = GRADES_LOGIN_PAGE;
                 return;
             }
             // 403 -> signed in but wrong role (e.g. an admin opening this page).
@@ -100,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (response.status === 401) {
-                window.location.href = STUDENT_LOGIN_PAGE;
+                window.location.href = GRADES_LOGIN_PAGE;
                 return;
             }
             // 403 -> signed in but wrong role (e.g. an admin opening this page).
