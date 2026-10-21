@@ -8,6 +8,7 @@
     --bg-gray: #f4f7fc;
     --danger: #dc3545;
     --success: #28a745;
+    --warning: #b45309;
 }
 
 * {
@@ -335,6 +336,16 @@ th {
 
 .status-active {
     color: var(--success);
+    font-weight: 500;
+}
+
+.status-inactive {
+    color: var(--danger);
+    font-weight: 500;
+}
+
+.status-dropout {
+    color: var(--warning);
     font-weight: 500;
 }
 

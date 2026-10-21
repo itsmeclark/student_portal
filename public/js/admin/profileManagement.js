@@ -1,3 +1,15 @@
+// ---------- STATUS -> CSS CLASS ----------
+const STATUS_CLASSES = {
+    ACTIVE: 'status-active',
+    INACTIVE: 'status-inactive',
+    DROPOUT: 'status-dropout'
+};
+
+function statusClass(status) {
+    const key = String(status || '').trim().toUpperCase();
+    return STATUS_CLASSES[key] || 'status-active';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Modal Functions
     window.openModal = function(modalId) {
@@ -163,7 +175,7 @@ async function loadStudents() {
                 <td>${student.Email}</td>
                 <td>${student.Course}</td>
                 <td>${student.Current_year_level}</td>
-                <td class="status-active">${student.Status}</td>
+                <td class="${statusClass(student.Status)}">${student.Status}</td>
                 <td class="actions">
                     <button class="btn-action btn-edit" onclick="openEditModal(${student.Student_id})"><i class="fas fa-edit"></i> Edit</button>
                     <button class="btn-action btn-delete" onclick="openDeleteModal(${student.Student_id})"><i class="fas fa-trash-alt"></i> Delete</button>
