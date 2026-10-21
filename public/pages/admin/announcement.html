@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements &amp; Events - Cebu Eastern College</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Your Custom CSS -->
+    <link href="../../css/admin/announcement.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header (sticky) -->
+    <header class="top-header">
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Admin Portal</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong data-admin-name>Admin</strong>
+                    <span data-admin-role>Administrator</span>
+                </div>
+                <div class="profile-icon">♙</div>
+            </div>
+            <button type="button" id="logoutButton" class="logout-button" data-logout>Log Out</button>
+        </div>
+    </header>
+
+    <!-- Navigation (sticky) -->
+    <nav class="navigation">
+        <a href="index.html" class="nav-item"><img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard</a>
+        <a href="announcement.html" class="nav-item active"><img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events</a>
+        <a href="class-schedule-admin.html" class="nav-item"><img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule</a>
+        <a href="Grades_records_admin.html" class="nav-item"><img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment</span>
+        <a href="profileManagement.html" class="nav-item"><img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">Profile Management</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings</span>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="page-title">Announcements &amp; Events</div>
+
+        <!-- Manage Notices Section -->
+        <div class="page-header">
+            <div class="notice-heading">
+                <h2>Manage Notices</h2>
+                <p>Create, edit, pin, or remove announcements shown to students</p>
+            </div>
+            <button class="btn-primary" id="openPostModal" type="button">
+                <i class="fa-solid fa-plus"></i> Post Notice
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="statActive">0</div>
+                <div class="stat-label">Active Notices</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statPinned">0</div>
+                <div class="stat-label">Pinned</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statDraft">0</div>
+                <div class="stat-label">Draft</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">1,204</div>
+                <div class="stat-label">Views this week</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-row">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search notices by title or department...">
+            </div>
+            <div class="filter-pills" id="filterPills">
+                <button class="pill active" type="button" data-category="All">All</button>
+                <button class="pill" type="button" data-category="Important">Important</button>
+                <button class="pill" type="button" data-category="Event">Event</button>
+                <button class="pill" type="button" data-category="Scholarship">Scholarship</button>
+                <button class="pill" type="button" data-category="General">General</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Notice</th>
+                        <th style="width: 15%;">Category</th>
+                        <th style="width: 15%;">Department</th>
+                        <th style="width: 15%;">Date posted</th>
+                        <th style="width: 10%;">Status</th>
+                        <th style="width: 10%; text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="noticeTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content">
+            <div class="delete-icon-wrapper">
+                <i class="fa-regular fa-trash-can"></i>
+            </div>
+            <h3>Remove this notice from the student portal?</h3>
+            <p id="deleteMessage">This can't be undone.</p>
+            <div class="modal-actions">
+                <button class="btn-outline" type="button" id="cancelDeleteBtn">Cancel</button>
+                <button class="btn-danger" type="button" id="confirmDeleteBtn">Remove notice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post/Edit Announcement Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content edit-modal">
+            <div class="modal-header">
+                <h3 id="editModalTitle">Edit Announcement</h3>
+                <button class="close-btn" type="button" id="closeEditBtn" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="noticeForm">
+                <div class="form-group">
+                    <label for="noticeTitle">Notice Title *</label>
+                    <input type="text" class="form-control" id="noticeTitle" placeholder="e.g. Schedule of Midterm Examinations..." required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="noticeCategory">Category</label>
+                        <select class="form-control" id="noticeCategory">
+                            <option>Important</option>
+                            <option>Event</option>
+                            <option>Scholarship</option>
+                            <option>General</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="noticeDepartment">Issuing Department</label>
+                        <input type="text" class="form-control" id="noticeDepartment" placeholder="Registrar's Office">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="noticeStatus">Status</label>
+                        <select class="form-control" id="noticeStatus">
+                            <option>Published</option>
+                            <option>Draft</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="tagImportant">
+                        <label for="tagImportant">Tag as <strong>IMPORTANT</strong> notice</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="noticeSummary">Short Summary (Display on card) *</label>
+                    <textarea class="form-control" id="noticeSummary" placeholder="Brief 1-2 sentence overview for the card..." rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="noticeContent">Full Notice Content (Optional)</label>
+                    <textarea class="form-control" id="noticeContent" placeholder="Detailed instructions or Guidelines..." rows="5"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Shared admin header (name + logout) -->
+    <script src="../../js/admin/admin-shell.js"></script>
+    <script src="../../js/admin/announcement-admin.js"></script>
+</body>
+</html>

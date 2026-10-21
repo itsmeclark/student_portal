@@ -9,6 +9,8 @@ export const getUser = (student_id,callback) => {
 
 // Enrolled subjects for the student's LATEST enrollment (current semester),
 // resolved from Id_number (that's what's stored in the JWT)
+// The subjects are the ones the student picked for their enrollment PLUS the
+// ones the admin scheduled for their section (SUBJECTS.Section_id).
 export const getEnrolledSubjects = (idNumber, callback) => {
     const sql = `
         SELECT s.Subject_id, s.Subject_code, s.Edp_code, s.Subject_name, s.Instructor_name,
@@ -16,8 +18,15 @@ export const getEnrolledSubjects = (idNumber, callback) => {
                e.Academic_year, e.Semester, e.Year_level
         FROM STUDENTS st
         JOIN ENROLLMENTS e ON e.Student_id = st.Student_id
-        JOIN ENROLLMENT_SUBJECTS es ON es.Enrollment_id = e.Enrollment_id
-        JOIN SUBJECTS s ON s.Subject_id = es.Subject_id
+        JOIN SUBJECTS s ON s.Subject_id IN (
+            SELECT es.Subject_id
+            FROM ENROLLMENT_SUBJECTS es
+            WHERE es.Enrollment_id = e.Enrollment_id
+            UNION
+            SELECT sec.Subject_id
+            FROM SUBJECTS sec
+            WHERE sec.Section_id = e.Section_id
+        )
         WHERE st.Id_number = ?
           AND e.Enrollment_id = (
               SELECT MAX(e2.Enrollment_id)

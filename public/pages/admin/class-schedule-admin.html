@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Schedule Management - Cebu Eastern College</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Your Custom CSS -->
+    <link href="../../css/admin/class-schedule-admin.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header (sticky) -->
+    <header class="top-header">
+        <div class="school-brand">
+            <div class="cec-logo">
+                <img src="../../img/cecLOGO.png" alt="Cebu Eastern College Logo">
+            </div>
+            <div class="school-title">
+                <h1>CEBU EASTERN COLLEGE</h1>
+                <span>Admin Portal</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="student-profile">
+                <div class="student-name">
+                    <strong data-admin-name>Admin</strong>
+                    <span data-admin-role>Administrator</span>
+                </div>
+                <div class="profile-icon">♙</div>
+            </div>
+            <button type="button" id="logoutButton" class="logout-button" data-logout>Log Out</button>
+        </div>
+    </header>
+
+    <!-- Navigation (sticky) -->
+    <nav class="navigation">
+        <a href="index.html" class="nav-item"><img class="nav-icon" src="../../img/nav/dashboard-icon.png" alt="">Dashboard</a>
+        <a href="announcement.html" class="nav-item"><img class="nav-icon" src="../../img/nav/announcement-icon.png" alt="">Announcements &amp; Events</a>
+        <a href="class-schedule-admin.html" class="nav-item active"><img class="nav-icon" src="../../img/nav/schedule-icon.png" alt="">Class Schedule</a>
+        <a href="Grades_records_admin.html" class="nav-item"><img class="nav-icon" src="../../img/nav/grades-icon.png" alt="">Grades &amp; Records</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/tuition-icon.png" alt="">Tuition Assessment</span>
+        <a href="profileManagement.html" class="nav-item"><img class="nav-icon" src="../../img/nav/profile-icon.png" alt="">Profile Management</a>
+        <span class="nav-item disabled" aria-disabled="true" title="Not working yet"><img class="nav-icon" src="../../img/nav/setting-icon.png" alt="">Settings</span>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="page-title">Class Schedule Management</div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Manage Class Schedules</h2>
+                <div class="search-add">
+                    <input type="text" class="search-box" placeholder="Search by subject, room or instructor..." id="searchInput">
+                    <button class="btn-add" id="openAddModal">ADD SCHEDULE</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SUBJECT</th>
+                            <th>SECTION</th>
+                            <th>DAY</th>
+                            <th>TIME</th>
+                            <th>ROOM</th>
+                            <th>INSTRUCTOR</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleTableBody"></tbody>
+                </table>
+            </div>
+
+            <p class="portal-status" id="scheduleStatus" role="status" aria-live="polite"></p>
+        </div>
+    </main>
+
+    <!-- ==================== ADD / EDIT SCHEDULE MODAL ==================== -->
+    <div class="modal-overlay" id="scheduleModal">
+        <div class="modal-form">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-alt"></i> <span id="modalTitle">ADD SCHEDULE</span></h3>
+                <button class="close-btn" type="button" id="closeScheduleModal" aria-label="Close"><i class="fas fa-times-circle"></i></button>
+            </div>
+            <form id="scheduleForm">
+                <div class="modal-body">
+
+                    <!-- Room availability warning -->
+                    <div class="conflict-warning" id="conflictWarning" role="alert">
+                        <span class="conflict-tag">OCCUPIED</span>
+                        <span id="conflictMessage"></span>
+                    </div>
+
+                    <!-- Section A -->
+                    <div class="form-section">
+                        <div class="section-title">A. SUBJECT</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Subject Code</label>
+                                <input type="text" placeholder="e.g. IT105" id="Subject_code" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Subject Name</label>
+                                <input type="text" placeholder="e.g. Data Structures" id="Subject_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>EDP Code</label>
+                                <input type="text" placeholder="e.g. EDP005" id="Edp_code">
+                            </div>
+                            <div class="form-group">
+                                <label>Section</label>
+                                <select id="Section_id" required>
+                                    <option value="">Select Section</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section B -->
+                    <div class="form-section">
+                        <div class="section-title">B. SCHEDULE</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Meeting Days</label>
+                                <div class="day-picker" id="dayPicker">
+                                    <label class="day-option" title="Monday"><input type="checkbox" value="M"><span>M</span></label>
+                                    <label class="day-option" title="Tuesday"><input type="checkbox" value="T"><span>T</span></label>
+                                    <label class="day-option" title="Wednesday"><input type="checkbox" value="W"><span>W</span></label>
+                                    <label class="day-option" title="Thursday"><input type="checkbox" value="H"><span>H</span></label>
+                                    <label class="day-option" title="Friday"><input type="checkbox" value="F"><span>F</span></label>
+                                    <label class="day-option" title="Saturday"><input type="checkbox" value="S"><span>S</span></label>
+                                </div>
+                                <div class="day-hint">M Monday &middot; T Tuesday &middot; W Wednesday &middot; H Thursday &middot; F Friday &middot; S Saturday</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="time" id="Start_time" required>
+                            </div>
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="time" id="End_time" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Room</label>
+                                <input type="text" placeholder="e.g. Room 201" id="Room" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Instructor</label>
+                                <input type="text" placeholder="e.g. Prof. Cruz" id="Instructor_name" required>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" type="button" id="cancelScheduleModal">Cancel</button>
+                    <button class="btn-submit" type="submit" id="saveScheduleBtn">SAVE SCHEDULE</button>
+                    <span class="footer-note">A room can only be used by one class at a time.</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== DELETE CONFIRM MODAL ==================== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-delete">
+            <h3><i class="fas fa-trash"></i> Confirm Delete</h3>
+            <p id="deleteMessage">Are you sure you want to delete this schedule?</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" type="button" id="cancelDeleteBtn">Cancel</button>
+                <button class="btn-confirm-delete" type="button" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shared admin header (name + logout) -->
+    <script src="../../js/admin/admin-shell.js"></script>
+    <script src="../../js/admin/class-schedule-admin.js"></script>
+</body>
+</html>

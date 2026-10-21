@@ -246,20 +246,22 @@ CREATE TABLE `SUBJECTS` (
   `Room` varchar(50) NOT NULL,
   `Schedule_days` varchar(50) NOT NULL,
   `Start_time` varchar(50) NOT NULL,
-  `End_time` varchar(50) NOT NULL
+  `End_time` varchar(50) NOT NULL,
+  `Section_id` int(11) DEFAULT NULL,
+  KEY `idx_subjects_section` (`Section_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `SUBJECTS`
 --
 
-INSERT INTO `SUBJECTS` (`Subject_id`, `Subject_code`, `Edp_code`, `Subject_name`, `Instructor_name`, `Room`, `Schedule_days`, `Start_time`, `End_time`) VALUES
-(1, 'IT101', 'EDP001', 'Intro to Computing', 'Prof. Cruz', 'Room 201', 'MWF', '08:00', '09:00'),
-(2, 'IT102', 'EDP002', 'Computer Programming 1', 'Prof. Garcia', 'Room 202', 'MWF', '09:00', '10:00'),
-(3, 'IT103', 'EDP003', 'Discrete Mathematics', 'Prof. Lopez', 'Room 203', 'TTH', '10:00', '11:30'),
-(4, 'IT201', 'EDP004', 'Data Structures', 'Prof. Mendoza', 'Room 301', 'MWF', '13:00', '14:00'),
-(5, 'IT202', 'EDP005', 'Object-Oriented Programming', 'Prof. Tan', 'Room 302', 'TTH', '14:00', '15:30'),
-(6, 'GE101', 'EDP006', 'Understanding the Self', 'Prof. Ramos', 'Room 401', 'SAT', '08:00', '11:00');
+INSERT INTO `SUBJECTS` (`Subject_id`, `Subject_code`, `Edp_code`, `Subject_name`, `Instructor_name`, `Room`, `Schedule_days`, `Start_time`, `End_time`, `Section_id`) VALUES
+(1, 'IT101', 'EDP001', 'Intro to Computing', 'Prof. Cruz', 'Room 201', 'MWF', '08:00', '09:00', 1),
+(2, 'IT102', 'EDP002', 'Computer Programming 1', 'Prof. Garcia', 'Room 202', 'MWF', '09:00', '10:00', 1),
+(3, 'IT103', 'EDP003', 'Discrete Mathematics', 'Prof. Lopez', 'Room 203', 'TTH', '10:00', '11:30', 1),
+(4, 'IT201', 'EDP004', 'Data Structures', 'Prof. Mendoza', 'Room 301', 'MWF', '13:00', '14:00', 3),
+(5, 'IT202', 'EDP005', 'Object-Oriented Programming', 'Prof. Tan', 'Room 302', 'TTH', '14:00', '15:30', 3),
+(6, 'GE101', 'EDP006', 'Understanding the Self', 'Prof. Ramos', 'Room 401', 'SAT', '08:00', '11:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -444,6 +446,12 @@ ALTER TABLE `ENROLLMENT_SUBJECTS`
 --
 ALTER TABLE `GRADES`
   ADD CONSTRAINT `GRADES_ibfk_1` FOREIGN KEY (`Enrollments_subject_id`) REFERENCES `ENROLLMENT_SUBJECTS` (`Enrollments_subject_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `SUBJECTS`
+--
+ALTER TABLE `SUBJECTS`
+  ADD CONSTRAINT `SUBJECTS_ibfk_1` FOREIGN KEY (`Section_id`) REFERENCES `SECTIONS` (`Section_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `TUITION`
