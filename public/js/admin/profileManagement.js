@@ -138,7 +138,7 @@ let currentDeleteId = null;
 // Redirect to login when the server says we're not authenticated
 function handleAuthError(status) {
     if (status === 401 || status === 403) {
-        window.location.href = '/pages/index.html';
+        window.location.href = '/pages/admin.login.html';
         return true;
     }
     return false;

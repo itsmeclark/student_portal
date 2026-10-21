@@ -1,3 +1,6 @@
+// Login page for the student portal (student-shell.js uses the same target)
+const STUDENT_LOGIN_PAGE = "/pages/index.html";
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const termSelect   = document.getElementById('term');
@@ -41,8 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 credentials: 'include'
             });
 
-            if (response.status === 401 || response.status === 403) {
-                window.location.href = "/pages/login.html";
+            if (response.status === 401) {
+                window.location.href = STUDENT_LOGIN_PAGE;
+                return;
+            }
+            // 403 -> signed in but wrong role (e.g. an admin opening this page).
+            // The page still works, so don't redirect. Same rule as student-shell.js.
+            if (response.status === 403) {
+                console.log("This page needs a student account.");
                 return;
             }
 
@@ -90,8 +99,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 credentials: 'include'
             });
 
-            if (response.status === 401 || response.status === 403) {
-                window.location.href = "/pages/login.html";
+            if (response.status === 401) {
+                window.location.href = STUDENT_LOGIN_PAGE;
+                return;
+            }
+            // 403 -> signed in but wrong role (e.g. an admin opening this page).
+            // The page still works, so don't redirect. Same rule as student-shell.js.
+            if (response.status === 403) {
+                console.log("This page needs a student account.");
                 return;
             }
 

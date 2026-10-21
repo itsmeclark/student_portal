@@ -2,9 +2,10 @@
    STUDENT PORTAL - SHARED HEADER & NAVIGATION
    Single source of truth used by every student page:
      - students_page/index.html      (Dashboard)
-     - students_page/grades_records.html
-     - students_page/profile.html
-     - pages/announcements&events.html
+     - students_page/announcements-events.html (Announcements & Events)
+     - students_page/class-schedule.html      (Class Schedule)
+     - students_page/grades_records.html      (Grades & Records)
+     - students_page/profile.html             (My Profile)
    Keep this file in sync with the dashboard design.
    ================================================================= */
 

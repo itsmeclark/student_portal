@@ -187,6 +187,9 @@
 
     <script>
         // ==================== GLOBAL STATE ====================
+        // Admin login page (admin-shell.js uses the same target)
+        const ADMIN_LOGIN_PAGE = "/pages/admin.login.html";
+
         let currentStudentId = null;
         let currentStudentData = null;
         let editingEnrollmentsSubjectId = null;
@@ -206,7 +209,7 @@
                     credentials: 'include'
                 });
                 if (response.status === 401 || response.status === 403) {
-                    window.location.href = "/pages/index.html";
+                    window.location.href = ADMIN_LOGIN_PAGE;
                     return;
                 }
                 if (!response.ok) throw new Error(`Request failed: ${response.status}`);
@@ -263,7 +266,7 @@
                     credentials: 'include'
                 });
                 if (response.status === 401 || response.status === 403) {
-                    window.location.href = "/pages/index.html";
+                    window.location.href = ADMIN_LOGIN_PAGE;
                     return;
                 }
                 if (!response.ok) throw new Error(`Request failed: ${response.status}`);
@@ -447,7 +450,7 @@
                 });
 
                 if (response.status === 401 || response.status === 403) {
-                    window.location.href = "/pages/index.html";
+                    window.location.href = ADMIN_LOGIN_PAGE;
                     return;
                 }
 
